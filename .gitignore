@@ -1,0 +1,13 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+Icon?
+*.log
+.env*
+!.env.local.example
+admin-local.html
+src/admin/
+backup/
+backup2/

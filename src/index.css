@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --color-indigo-ink: #533afd;
+  --color-indigo-hover: #7389ff;
+  --color-midnight-ink: #061b31;
+  --color-slate: #64748d;
+  --color-steel: #50617a;
+  --color-smoke: #839bc8;
+  --color-pure-white: #ffffff;
+  --color-mist: #f8fafd;
+  --color-frost: #e5edf5;
+  --color-lavender-border: #b9b9f9;
+  --color-lilac-border: #d6d9fc;
+  --color-periwinkle-wash: #e8e9ff;
+  --color-deep-violet: #182659;
+  --color-amethyst-edge: #7f71e6;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-full: 9999px;
+}
+
+@layer base {
+  * {
+    border-color: #e5edf5;
+  }
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    color: #061b31;
+    background-color: #ffffff;
+    font-feature-settings: 'ss01' on, 'tnum' on;
+    font-weight: 300;
+  }
+}
+
+/* Whisper-weight typography utility classes */
+.font-whisper {
+  font-weight: 300;
+}
+
+.tracking-display {
+  letter-spacing: -1.4px;
+}
+
+.tracking-headline-lg {
+  letter-spacing: -0.96px;
+}
+
+.tracking-headline-md {
+  letter-spacing: -0.64px;
+}
+
+.tracking-headline-sm {
+  letter-spacing: -0.26px;
+}
+
+.tracking-subheading {
+  letter-spacing: -0.22px;
+}
+
+/* Image zoom & hover transitions */
+.image-parallax-container {
+  overflow: hidden;
+}
+
+.image-parallax {
+  transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.group:hover .image-parallax {
+  transform: scale(1.035);
+}
+
+/* Custom scrollbar for clean editorial look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #e5edf5;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748d;
+}
