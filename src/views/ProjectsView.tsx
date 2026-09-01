@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { 
   Filter, 
   Sparkles, 
-  LayoutGrid, 
   Columns, 
   Grid, 
+  List, 
   RotateCcw
 } from 'lucide-react';
 import { Project, AppView } from '../types';
@@ -21,7 +21,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
 }) => {
   const { projects } = usePortfolioData();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [layoutMode, setLayoutMode] = useState<'masonry' | 'editorial' | 'grid'>('masonry');
+  const [layoutMode, setLayoutMode] = useState<'masonry' | 'editorial' | 'rows'>('masonry');
 
   const categories = [
     { id: 'all', label: 'Todos los proyectos' },
@@ -113,16 +113,16 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
           </button>
 
           <button
-            onClick={() => setLayoutMode('grid')}
+            onClick={() => setLayoutMode('rows')}
             className={`px-2.5 py-1 rounded-[3px] text-[12px] font-normal transition-colors flex items-center gap-1.5 cursor-pointer ${
-              layoutMode === 'grid' 
+              layoutMode === 'rows' 
                 ? 'bg-white text-[#533afd] border border-[#e5edf5]' 
                 : 'text-[#64748d] hover:text-[#061b31]'
             }`}
-            title="Vista en cuadrícula (3 columnas)"
+            title="Vista en filas"
           >
-            <LayoutGrid className="w-3.5 h-3.5" strokeWidth={1.5} />
-            <span className="hidden sm:inline">Cuadrícula</span>
+            <List className="w-3.5 h-3.5" strokeWidth={1.5} />
+            <span className="hidden sm:inline">Filas</span>
           </button>
         </div>
       </div>
@@ -171,13 +171,13 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+        <div className="flex flex-col gap-4 pt-2">
           {filteredProjects.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
               onSelect={onSelectProject}
-              layoutVariant="grid"
+              layoutVariant="row"
             />
           ))}
         </div>

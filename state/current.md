@@ -1,6 +1,6 @@
 # Estado actual
 
-Actualizado: 2026-08-27.
+Actualizado: 2026-09-01.
 
 ## Hecho
 
@@ -12,8 +12,9 @@ Actualizado: 2026-08-27.
 - Build público configurado con una sola entrada: `index.html`.
 - Home configurado para mostrar hasta seis proyectos publicados y principales, con fallback a publicados.
 - Header público con navegación desktop y menú hamburguesa en mobile, sin scroll horizontal.
+- Catálogo: vista Mosaico mantiene 3 columnas desktop; vista Editorial mantiene 2 columnas; vista Filas reemplaza Cuadrícula con una card full-width por proyecto y altura uniforme.
 - Repositorio Git local inicializado en rama `main`; remoto planificado: `cmontesc/CM_Portafolio`.
-- `npm run lint` y `npm run build` pasan al 2026-08-27.
+- `npm run lint` y `npm run build` pasan al 2026-09-01.
 - Memoria persistente inicial instalada en `AGENTS.md`, `state/`, `decisions/`, `gotchas/`, `logs/` y `skills/`.
 
 ## Pendiente priorizado

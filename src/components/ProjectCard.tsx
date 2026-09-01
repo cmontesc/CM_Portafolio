@@ -10,19 +10,23 @@ import {
 } from 'lucide-react';
 import { Project } from '../types';
 
+type ProjectCardLayoutVariant = 'masonry' | 'editorial' | 'row';
+
 interface ProjectCardProps {
   project: Project;
   onSelect: (project: Project) => void;
-  layoutVariant?: string;
+  layoutVariant?: ProjectCardLayoutVariant;
   featuredIndex?: number;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
-  onSelect
+  onSelect,
+  layoutVariant = 'masonry'
 }) => {
   // Extract primary metric or key outcome if available
   const topMetric = project.caseStudy?.metrics?.[0];
+  const visibleTags = project.tags.slice(0, 4);
   const projectLinks = [
     project.links?.figma || project.prototypeUrl ? 'Figma' : '',
     project.links?.vercel ? 'Vercel' : '',
@@ -44,15 +48,123 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     }
   };
 
+  const handleSelect = () => {
+    onSelect(project);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onSelect(project);
+    }
+  };
+
+  if (layoutVariant === 'row') {
+    return (
+      <article
+        onClick={handleSelect}
+        onKeyDown={handleKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-label={`Ver caso de estudio UX: ${project.title} (${project.company})`}
+        className="group relative w-full h-[430px] sm:h-[340px] lg:h-[300px] cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#533afd] focus-visible:ring-offset-2 rounded-[4px] overflow-hidden bg-[#f8fafd] border border-[#e5edf5] transition-colors duration-300"
+      >
+        <img
+          src={project.coverImage}
+          alt={`Mockup y artefactos de ${project.title}`}
+          className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          loading="lazy"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-[#061b31]/76 transition-colors duration-300 group-hover:bg-[#061b31]/82" />
+
+        <div className="relative z-10 h-full p-5 sm:p-6 lg:p-7 text-white flex flex-col justify-between gap-5">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white text-[#061b31] border border-white/70 rounded-full text-[11px] font-normal">
+                <span className="text-[#533afd]">{getCategoryIcon()}</span>
+                <span>{project.categoryLabel}</span>
+              </span>
+
+              {projectLinks.map((label) => (
+                <span key={label} className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#533afd] text-white rounded-full text-[10px] font-normal">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                  <span>{label}</span>
+                </span>
+              ))}
+            </div>
+
+            <span className="inline-flex items-center px-2.5 py-1 bg-white/10 text-white border border-white/20 rounded-full text-[11px] font-normal">
+              {project.year || project.period}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(250px,320px)] gap-5 lg:gap-8 items-end">
+            <div className="min-w-0 space-y-3 max-w-3xl">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-white/78">
+                <span className="font-normal text-white">{project.company}</span>
+                <span aria-hidden="true">/</span>
+                <span>{project.role}</span>
+                <span aria-hidden="true" className="hidden sm:inline">/</span>
+                <span className="hidden sm:inline">{project.platform}</span>
+              </div>
+
+              <h3 className="text-[24px] sm:text-[30px] lg:text-[34px] font-light text-white leading-[1.05] line-clamp-2">
+                {project.title}
+              </h3>
+
+              <p className="text-[13px] sm:text-[15px] text-white/84 font-light leading-relaxed line-clamp-3 lg:line-clamp-2 max-w-2xl">
+                {project.subtitle}
+              </p>
+
+              {visibleTags.length > 0 && (
+                <div className="hidden md:flex flex-wrap gap-1.5 pt-1">
+                  {visibleTags.map((tag) => (
+                    <span key={tag} className="px-2.5 py-1 bg-white/10 text-white/86 border border-white/15 rounded-full text-[11px] font-normal">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="min-w-0 space-y-4 border-t border-white/18 pt-4 lg:border-t-0 lg:border-l lg:pl-6 lg:pt-0">
+              <div className="space-y-1.5">
+                <div className="text-[11px] uppercase text-[#b9b9f9] font-normal">
+                  Impacto del proyecto
+                </div>
+                {topMetric ? (
+                  <>
+                    <div className="flex items-baseline gap-2 text-white">
+                      <span className="text-[24px] sm:text-[28px] font-light leading-none">{topMetric.metric}</span>
+                      <span className="text-[13px] text-white/86">{topMetric.label}</span>
+                    </div>
+                    <p className="text-[12px] text-white/72 font-light leading-relaxed line-clamp-2">
+                      {topMetric.description}
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-[13px] text-white/84 font-light leading-relaxed line-clamp-3">
+                    {project.outcome}
+                  </p>
+                )}
+              </div>
+
+              <div className="inline-flex items-center gap-2 text-[13px] font-normal text-white group-hover:text-[#e8e9ff] transition-colors">
+                <span>Ver caso de estudio</span>
+                <ArrowUpRight className="w-4 h-4 text-[#b9b9f9] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={1.5} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
   return (
     <article
-      onClick={() => onSelect(project)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onSelect(project);
-        }
-      }}
+      onClick={handleSelect}
+      onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
       aria-label={`Ver caso de estudio UX: ${project.title} (${project.company})`}
