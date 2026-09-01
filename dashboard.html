@@ -1,0 +1,1782 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mapa de carpeta - CM_Portafolio</title>
+    <meta
+      name="description"
+      content="Mapa navegable y simple de la carpeta CM_Portafolio."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #080b12;
+        --panel: #111723;
+        --panel-2: #151d2b;
+        --panel-3: #1a2433;
+        --line: #2a3648;
+        --line-soft: #202b3b;
+        --text: #f4f7fb;
+        --muted: #aab6c8;
+        --soft: #d6deea;
+        --blue: #7db8ff;
+        --green: #66d19e;
+        --green-bg: #0f3327;
+        --amber: #ffd166;
+        --amber-bg: #3a2c0f;
+        --red: #ff8a8a;
+        --red-bg: #3a171a;
+        --violet: #b9a7ff;
+        --surface: #0d121c;
+        --focus: #ffffff;
+        --shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-height: 100%;
+        background: var(--bg);
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(180deg, rgba(13, 18, 28, 0.86), rgba(8, 11, 18, 1) 42%),
+          var(--bg);
+        color: var(--text);
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      a {
+        color: var(--blue);
+      }
+
+      code {
+        padding: 0.08rem 0.35rem;
+        border: 1px solid var(--line-soft);
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--soft);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.86em;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      .app-shell {
+        display: grid;
+        grid-template-columns: 300px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: auto;
+        border-right: 1px solid var(--line);
+        background: rgba(9, 13, 21, 0.96);
+        padding: 22px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 26px;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid #33506f;
+        border-radius: 8px;
+        background: #132033;
+        color: var(--blue);
+        font-weight: 800;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 1.06rem;
+      }
+
+      .brand p {
+        margin: 3px 0 0;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .side-label {
+        margin: 22px 0 10px;
+        color: #7f8da2;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .nav-list,
+      .unit-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .nav-button,
+      .unit-button {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .nav-button {
+        padding: 11px 12px;
+      }
+
+      .unit-button {
+        align-items: flex-start;
+        padding: 12px;
+        border-color: var(--line-soft);
+        background: rgba(255, 255, 255, 0.025);
+      }
+
+      .nav-button:hover,
+      .unit-button:hover {
+        border-color: #3b4b63;
+        background: rgba(255, 255, 255, 0.055);
+        color: var(--text);
+      }
+
+      .nav-button[aria-current="page"],
+      .unit-button[aria-pressed="true"] {
+        border-color: #4c6f96;
+        background: #142033;
+        color: var(--text);
+      }
+
+      .nav-button svg,
+      .unit-button svg {
+        flex: 0 0 auto;
+        color: var(--blue);
+      }
+
+      .unit-copy strong {
+        display: block;
+        color: var(--text);
+        font-size: 0.9rem;
+      }
+
+      .unit-copy span {
+        display: block;
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.4;
+      }
+
+      .mini-card {
+        margin-top: 18px;
+        padding: 14px;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.035);
+      }
+
+      .mini-card strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--soft);
+        font-size: 0.84rem;
+      }
+
+      .mini-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .main {
+        min-width: 0;
+        padding: 34px;
+      }
+
+      .topbar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: start;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        color: var(--blue);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .topbar h2 {
+        margin: 0;
+        max-width: 920px;
+        font-size: clamp(2rem, 5vw, 4.3rem);
+        line-height: 0.98;
+      }
+
+      .topbar p {
+        margin: 14px 0 0;
+        max-width: 880px;
+        color: var(--soft);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .status-stack {
+        display: grid;
+        gap: 8px;
+        min-width: 210px;
+      }
+
+      .status-chip,
+      .plain-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 11px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--soft);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .status-chip {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--blue);
+      }
+
+      .dot.green {
+        background: var(--green);
+      }
+
+      .dot.amber {
+        background: var(--amber);
+      }
+
+      .dot.red {
+        background: var(--red);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .summary-item {
+        min-height: 116px;
+        padding: 16px;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .summary-item span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .summary-item strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 1.55rem;
+      }
+
+      .summary-item p {
+        margin: 7px 0 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+
+      .view {
+        display: none;
+      }
+
+      .view.active {
+        display: block;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .section-head h3 {
+        margin: 0;
+        font-size: 1.4rem;
+      }
+
+      .section-head p {
+        margin: 6px 0 0;
+        max-width: 760px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .map-wrap {
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background:
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          var(--surface);
+        background-size: 32px 32px;
+        padding: 24px;
+      }
+
+      .flow-row {
+        display: flex;
+        align-items: stretch;
+        min-width: 980px;
+      }
+
+      .node-button {
+        display: grid;
+        align-content: space-between;
+        width: 190px;
+        min-height: 190px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(17, 23, 35, 0.96);
+        color: inherit;
+        cursor: pointer;
+        padding: 16px;
+        text-align: left;
+      }
+
+      .node-button:hover {
+        border-color: #5c789c;
+        background: #151f2f;
+      }
+
+      .node-button .stage {
+        color: var(--blue);
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .node-button h4 {
+        margin: 9px 0 8px;
+        color: var(--text);
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+
+      .node-button p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        width: fit-content;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 9px;
+        font-size: 0.75rem;
+        font-weight: 800;
+      }
+
+      .status-badge.Listo {
+        border-color: rgba(102, 209, 158, 0.42);
+        background: var(--green-bg);
+        color: #d8ffe9;
+      }
+
+      .status-badge.Amedias {
+        border-color: rgba(255, 209, 102, 0.46);
+        background: var(--amber-bg);
+        color: #fff0c2;
+      }
+
+      .status-badge.Falta {
+        border-color: rgba(255, 138, 138, 0.48);
+        background: var(--red-bg);
+        color: #ffe1e1;
+      }
+
+      .arrow {
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        width: 92px;
+        color: var(--muted);
+        padding: 0 10px;
+      }
+
+      .arrow svg {
+        width: 50px;
+        height: 28px;
+        color: #5e718d;
+      }
+
+      .arrow span {
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .plain-panel {
+        margin-top: 16px;
+        padding: 18px;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .plain-panel h4 {
+        margin: 0 0 8px;
+      }
+
+      .plain-panel p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .column {
+        min-height: 420px;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 14px;
+      }
+
+      .column h4 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 12px;
+        font-size: 0.95rem;
+      }
+
+      .count {
+        display: inline-grid;
+        place-items: center;
+        min-width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.075);
+        color: var(--soft);
+        font-size: 0.75rem;
+      }
+
+      .task-card,
+      .risk-card,
+      .cost-card {
+        width: 100%;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.04);
+        color: inherit;
+        text-align: left;
+      }
+
+      .task-card {
+        margin-top: 10px;
+        padding: 13px;
+        cursor: pointer;
+      }
+
+      .task-card:hover,
+      .risk-card:hover {
+        border-color: #506987;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .task-card strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .task-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+
+      .risk-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .risk-card {
+        padding: 18px;
+        cursor: pointer;
+      }
+
+      .risk-card h4 {
+        margin: 0 0 12px;
+        font-size: 1.05rem;
+      }
+
+      .risk-line {
+        margin: 11px 0;
+        color: var(--soft);
+        line-height: 1.55;
+      }
+
+      .risk-line strong {
+        color: var(--blue);
+      }
+
+      .risk-card ol {
+        margin: 8px 0 0 20px;
+        padding: 0;
+        color: var(--soft);
+        line-height: 1.55;
+      }
+
+      .risk-card li {
+        margin: 5px 0;
+      }
+
+      .link-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 9px;
+      }
+
+      .link-row a {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        background: rgba(125, 184, 255, 0.09);
+        color: #cce5ff;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .link-row a:hover {
+        border-color: #6c92bf;
+        background: rgba(125, 184, 255, 0.15);
+      }
+
+      .cost-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: 14px;
+      }
+
+      .cost-card {
+        padding: 20px;
+      }
+
+      .empty-state {
+        display: grid;
+        place-items: center;
+        min-height: 280px;
+        border: 1px dashed #41546d;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.035);
+        padding: 28px;
+        text-align: center;
+      }
+
+      .empty-state svg {
+        color: var(--blue);
+      }
+
+      .empty-state h4 {
+        margin: 14px 0 8px;
+        font-size: 1.25rem;
+      }
+
+      .empty-state p {
+        margin: 0;
+        max-width: 540px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 70;
+        display: none;
+        background: rgba(0, 0, 0, 0.58);
+      }
+
+      .drawer-backdrop.open {
+        display: block;
+      }
+
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 80;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        width: min(540px, 100vw);
+        height: 100vh;
+        border-left: 1px solid var(--line);
+        background: #0d131e;
+        box-shadow: var(--shadow);
+        transform: translateX(100%);
+        transition: transform 180ms ease;
+      }
+
+      .drawer.open {
+        transform: translateX(0);
+      }
+
+      .drawer-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .drawer-head h3 {
+        margin: 6px 0 0;
+        font-size: 1.4rem;
+        line-height: 1.2;
+      }
+
+      .drawer-kind {
+        color: var(--blue);
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .close-button {
+        display: inline-grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .close-button:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .drawer-body {
+        overflow: auto;
+        padding: 22px;
+      }
+
+      .drawer-section {
+        margin-bottom: 20px;
+      }
+
+      .drawer-section h4 {
+        margin: 0 0 8px;
+        color: var(--blue);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+      }
+
+      .drawer-section p {
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.65;
+      }
+
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .tag-list li {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        background: rgba(255, 255, 255, 0.045);
+        color: var(--soft);
+        font-size: 0.8rem;
+      }
+
+      .text-list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--soft);
+        line-height: 1.65;
+      }
+
+      .text-list li {
+        margin: 6px 0;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
+
+      @media (max-width: 1100px) {
+        .app-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: relative;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .nav-list {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .unit-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .summary-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .main {
+          padding: 22px;
+        }
+
+        .topbar {
+          grid-template-columns: 1fr;
+        }
+
+        .summary-grid,
+        .board,
+        .risk-grid,
+        .cost-grid,
+        .nav-list,
+        .unit-list {
+          grid-template-columns: 1fr;
+        }
+
+        .section-head {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .drawer {
+          width: 100vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navegacion principal">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">CM</div>
+          <div>
+            <h1>CM_Portafolio</h1>
+            <p>Mapa simple de la carpeta</p>
+          </div>
+        </div>
+
+        <div class="side-label">Vistas</div>
+        <nav class="nav-list" aria-label="Cambiar vista">
+          <button class="nav-button" type="button" data-view="map" aria-current="page">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-width="2" d="M4 7h6v6H4zM14 4h6v6h-6zM14 14h6v6h-6zM10 10l4-3M10 10l4 7" />
+            </svg>
+            <span>MAPA</span>
+          </button>
+          <button class="nav-button" type="button" data-view="tasks">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-width="2" d="M4 5h16M4 12h16M4 19h16M8 5v14M16 5v14" />
+            </svg>
+            <span>TAREAS</span>
+          </button>
+          <button class="nav-button" type="button" data-view="risks">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-width="2" d="M12 3l9 16H3L12 3zM12 9v5M12 17h.01" />
+            </svg>
+            <span>RIESGOS</span>
+          </button>
+          <button class="nav-button" type="button" data-view="costs">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="none" stroke="currentColor" stroke-width="2" d="M4 7h16v10H4zM8 11h.01M12 11h4M8 15h8" />
+            </svg>
+            <span>COSTOS</span>
+          </button>
+        </nav>
+
+        <div class="side-label">Unidad activa</div>
+        <div class="unit-list" id="unitList"></div>
+
+        <div class="mini-card">
+          <strong>Lectura corta</strong>
+          <p>
+            Un producto publicable y una herramienta local de apoyo. No vi un
+            servidor propio ni una base compartida.
+          </p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">
+              <span class="dot green" aria-hidden="true"></span>
+              Carpeta leida sin mezclar unidades
+            </div>
+            <h2>Portafolio publico con trastienda local para Excel.</h2>
+            <p>
+              Esta carpeta arma el sitio profesional de Carlos Montes y trae una
+              herramienta local para actualizar textos, proyectos y curriculum
+              desde planillas. Los datos viven dentro del proyecto o en el
+              navegador de quien los carga; no hay una base de datos compartida.
+            </p>
+          </div>
+          <div class="status-stack" aria-label="Estado general">
+            <div class="status-chip"><span class="dot green"></span> Chequeo automatico: paso</div>
+            <div class="status-chip"><span class="dot amber"></span> Estado: listo con pendientes</div>
+            <div class="status-chip"><span class="dot red"></span> Costos IA: sin registro</div>
+          </div>
+        </header>
+
+        <section class="summary-grid" aria-label="Resumen rapido">
+          <div class="summary-item">
+            <span>Producto</span>
+            <strong>1</strong>
+            <p>El portafolio publico que una persona visita.</p>
+          </div>
+          <div class="summary-item">
+            <span>Herramienta interna</span>
+            <strong>1</strong>
+            <p>Administrador local para Excel, separado del sitio publicado.</p>
+          </div>
+          <div class="summary-item">
+            <span>Pantallas publicas</span>
+            <strong>6</strong>
+            <p>Inicio, curriculum, proyectos, detalle, contacto y sistema visual.</p>
+          </div>
+          <div class="summary-item">
+            <span>Casos cargados</span>
+            <strong>7</strong>
+            <p>Proyectos base incluidos dentro de la carpeta.</p>
+          </div>
+        </section>
+
+        <section class="view active" id="view-map" aria-labelledby="mapTitle">
+          <div class="section-head">
+            <div>
+              <h3 id="mapTitle">MAPA</h3>
+              <p id="mapIntro"></p>
+            </div>
+            <span class="plain-chip" id="unitStatus"></span>
+          </div>
+          <div class="map-wrap" aria-label="Mapa de flujo">
+            <div class="flow-row" id="flowRow"></div>
+          </div>
+          <div class="plain-panel">
+            <h4>Como esta armada</h4>
+            <p id="plainExplanation"></p>
+          </div>
+        </section>
+
+        <section class="view" id="view-tasks" aria-labelledby="tasksTitle">
+          <div class="section-head">
+            <div>
+              <h3 id="tasksTitle">TAREAS</h3>
+              <p>
+                Tablero separado por unidad. Falta es lo que conviene resolver
+                antes de crecer; A medias funciona, pero necesita cierre; Listo
+                ya tiene una forma clara.
+              </p>
+            </div>
+            <span class="plain-chip" id="tasksUnit"></span>
+          </div>
+          <div class="board" id="taskBoard"></div>
+        </section>
+
+        <section class="view" id="view-risks" aria-labelledby="risksTitle">
+          <div class="section-head">
+            <div>
+              <h3 id="risksTitle">RIESGOS</h3>
+              <p>
+                Riesgos reales vistos en los archivos. La idea no es asustar:
+                es mostrar que pasa, por que importa y como se hace bien.
+              </p>
+            </div>
+            <span class="plain-chip" id="risksUnit"></span>
+          </div>
+          <div class="risk-grid" id="riskGrid"></div>
+        </section>
+
+        <section class="view" id="view-costs" aria-labelledby="costsTitle">
+          <div class="section-head">
+            <div>
+              <h3 id="costsTitle">COSTOS</h3>
+              <p>
+                Solo se muestran gastos de IA cuando hay registros reales de uso.
+                No se estiman numeros.
+              </p>
+            </div>
+            <span class="plain-chip">Tokens de IA</span>
+          </div>
+          <div class="cost-grid">
+            <div class="empty-state">
+              <div>
+                <svg width="42" height="42" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="none" stroke="currentColor" stroke-width="2" d="M4 7h16v10H4zM7 10h10M7 14h6" />
+                </svg>
+                <h4>No hay registro de tokens en esta carpeta</h4>
+                <p>
+                  Vi la palabra tokens en textos del sistema visual, pero no vi
+                  bitacoras, consumos ni precios reales de inteligencia artificial.
+                </p>
+              </div>
+            </div>
+            <div class="cost-card">
+              <h4>Lectura humana</h4>
+              <p>
+                Es como revisar una cuenta bancaria y encontrar nombres de
+                categorias, pero ningun movimiento de dinero. Hay referencias a
+                diseno, no a gasto.
+              </p>
+              <div class="plain-panel">
+                <h4>Decision</h4>
+                <p>
+                  El tablero deja costos vacios porque inventar numeros daria una
+                  falsa sensacion de control.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <aside
+      class="drawer"
+      id="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="drawerTitle"
+      aria-hidden="true"
+    >
+      <div class="drawer-head">
+        <div>
+          <div class="drawer-kind" id="drawerKind">Detalle</div>
+          <h3 id="drawerTitle">Detalle</h3>
+        </div>
+        <button class="close-button" id="drawerClose" type="button" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="none" stroke="currentColor" stroke-width="2" d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-body" id="drawerBody"></div>
+    </aside>
+
+    <script>
+      const statusClass = {
+        "Listo": "Listo",
+        "A medias": "Amedias",
+        "Falta": "Falta"
+      };
+
+      const statusDots = {
+        "Listo": "green",
+        "A medias": "amber",
+        "Falta": "red"
+      };
+
+      const sources = {
+        owaspSecrets: {
+          label: "OWASP secretos",
+          url: "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html"
+        },
+        owaspAuth: {
+          label: "OWASP entrada segura",
+          url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+        },
+        viteEnv: {
+          label: "Vite variables visibles",
+          url: "https://vite.dev/guide/env-and-mode"
+        },
+        viteBuild: {
+          label: "Vite publicar",
+          url: "https://vite.dev/guide/build"
+        },
+        mdnStorage: {
+          label: "MDN memoria del navegador",
+          url: "https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API"
+        },
+        mdnFiles: {
+          label: "MDN lectura de archivos",
+          url: "https://developer.mozilla.org/en-US/docs/Web/API/File_API"
+        },
+        reactLazy: {
+          label: "React carga por partes",
+          url: "https://react.dev/reference/react/lazy"
+        }
+      };
+
+      const units = {
+        portfolio: {
+          kind: "PRODUCTO",
+          name: "Portafolio publico",
+          shortName: "Portafolio",
+          status: "Listo",
+          goal: "Que alguien entienda rapido la experiencia de Carlos y pueda contactarlo.",
+          intro: "El producto principal es el sitio que se publica. Recibe datos del portafolio, los ordena y los muestra como experiencia, proyectos y contacto.",
+          plain:
+            "Imagina una vitrina: la libreta de contenidos esta dentro del local, las pantallas acomodan esa informacion y las puertas de salida llevan a WhatsApp, correo, LinkedIn o Figma. El backend, o trastienda de datos, no es un servidor: es el archivo de datos del proyecto y, si se carga Excel, la memoria del navegador de esa maquina.",
+          nodes: [
+            {
+              id: "base-data",
+              stage: "ENTRA",
+              title: "Libreta del portafolio",
+              summary: "Guarda textos, experiencia, contacto y 7 casos de estudio.",
+              status: "Listo",
+              files: ["src/data/portfolioData.ts", "src/types.ts", "src/assets/images/echomusic_mockup_1787164821112.jpg"],
+              tech: ["Datos escritos en el proyecto", "Imagen local para Echomusic", "Tipos de datos como contrato interno"],
+              tasks: ["Mantener los textos clave en espanol consistente.", "Respaldar imagenes externas importantes."],
+              decisions: ["El sitio ya trae contenido base.", "El inicio muestra hasta 6 proyectos destacados.", "Los proyectos se ordenan por ano."]
+            },
+            {
+              id: "data-holder",
+              stage: "PROCESA",
+              title: "Centro de datos",
+              summary: "Decide si mostrar datos base o datos cargados desde Excel.",
+              status: "A medias",
+              files: ["src/context/PortfolioDataContext.tsx", "src/services/excelService.ts"],
+              tech: ["Memoria del navegador", "Lectura y escritura de Excel", "Funciones del navegador para guardar datos"],
+              tasks: ["Separar la lectura de Excel para que el sitio publico no cargue peso innecesario.", "Aclarar en pantalla que los cambios por Excel son locales."],
+              decisions: ["Si hay Excel cargado, gana sobre los datos base.", "Si se restaura, vuelve a la libreta original."]
+            },
+            {
+              id: "public-screens",
+              stage: "PROCESA",
+              title: "Pantallas publicas",
+              summary: "Convierte los datos en paginas navegables.",
+              status: "Listo",
+              files: ["src/App.tsx", "src/views/HomeView.tsx", "src/views/CurriculumView.tsx", "src/views/ProjectsView.tsx", "src/views/ProjectDetailView.tsx", "src/views/ContactView.tsx"],
+              tech: ["React, la forma de armar pantallas por piezas", "Vite, la herramienta para correr y publicar", "Tailwind, reglas visuales reutilizables"],
+              tasks: ["Traducir los textos visibles que quedaron en ingles si el publico sera hispano.", "Probar el sitio en celular real antes de publicar cambios grandes."],
+              decisions: ["No usa rutas de servidor; cambia de pantalla dentro de la misma pagina.", "Actualiza titulo y descripcion segun la pantalla."]
+            },
+            {
+              id: "visual-system",
+              stage: "PROCESA",
+              title: "Sistema visual Olivia",
+              summary: "Define colores, bordes, tipografia y reglas de interfaz.",
+              status: "Listo",
+              files: ["DESIGN.md", "src/index.css", "src/views/DesignSystemView.tsx"],
+              tech: ["Reglas visuales documentadas", "Componentes repetibles", "Chequeo de contraste como criterio"],
+              tasks: ["Decidir si la pantalla del sistema visual debe estar publica o solo como documento interno."],
+              decisions: ["Bordes de 4px.", "Colores sobrios.", "Sin sombras pesadas."]
+            },
+            {
+              id: "contact-exits",
+              stage: "SALE",
+              title: "Puertas de contacto",
+              summary: "Abre WhatsApp, correo, telefono, LinkedIn y Figma.",
+              status: "Listo",
+              files: ["src/components/Header.tsx", "src/components/Footer.tsx", "src/views/ContactView.tsx", "src/views/ProjectDetailView.tsx"],
+              tech: ["Enlaces a servicios externos", "Copiar correo o telefono", "Prototipo Figma dentro de una ficha"],
+              tasks: ["Revisar cada cierto tiempo que los enlaces externos sigan vivos."],
+              decisions: ["WhatsApp es la accion principal.", "Correo y telefono quedan como apoyo.", "Figma solo aparece cuando un proyecto trae prototipo."]
+            },
+            {
+              id: "publish",
+              stage: "SALE",
+              title: "Publicacion",
+              summary: "Prepara el sitio publico y deja fuera el administrador local.",
+              status: "A medias",
+              files: ["index.html", "vite.config.ts", ".gitignore", "README.md"],
+              tech: ["Publicar el sitio para visitas", "Metadatos para buscadores", "Administrador excluido del paquete final"],
+              tasks: ["Medir el peso final antes de publicar.", "Confirmar que el administrador nunca se suba por accidente."],
+              decisions: ["El paquete final toma solo index.html.", "admin-local.html y src/admin estan ignorados."]
+            }
+          ],
+          tasks: {
+            "Falta": [
+              {
+                title: "Decidir si habra trastienda real de datos",
+                body: "Hoy no hay base compartida. Si mas personas editan contenido, conviene una trastienda con usuarios, respaldo e historial."
+              },
+              {
+                title: "Respaldar imagenes externas",
+                body: "Varios proyectos dependen de imagenes de Unsplash. Si cambian o fallan, la vitrina pierde piezas visuales."
+              },
+              {
+                title: "Revisar textos en ingles",
+                body: "Aparecen textos como Professional Summary o Design System. Si el publico es hispano, conviene unificar idioma."
+              }
+            ],
+            "A medias": [
+              {
+                title: "Excel vive mezclado con el sitio publico",
+                body: "El centro de datos del portafolio importa la herramienta de Excel. Puede hacer mas pesado el sitio que visita la gente."
+              },
+              {
+                title: "Cambios locales no se comparten",
+                body: "Si cargas Excel, el cambio queda en ese navegador. No viaja solo a otras maquinas."
+              },
+              {
+                title: "Publicacion sin medicion reciente aqui",
+                body: "No cree una nueva publicacion para no generar archivos extra. La revision de consistencia paso."
+              }
+            ],
+            "Listo": [
+              {
+                title: "Pantallas principales armadas",
+                body: "Inicio, curriculum, proyectos, detalle, contacto y sistema visual estan conectadas."
+              },
+              {
+                title: "Contenido base suficiente",
+                body: "La carpeta trae 7 proyectos, experiencia, estudios, cursos, idiomas y datos de contacto."
+              },
+              {
+                title: "Administrador fuera de la publicacion",
+                body: "La configuracion publica solo usa index.html y la carpeta ignora el admin local."
+              },
+              {
+                title: "Chequeo automatico paso",
+                body: "La revision de consistencia del codigo termino sin errores."
+              }
+            ]
+          },
+          risks: [
+            {
+              title: "La clave local no es una puerta segura para crecer",
+              severity: "Importante",
+              what: "El administrador usa usuario y clave desde archivos locales y los compara en el navegador. Sirve como puerta de uso personal, no como seguridad de produccion.",
+              why: "Cuando el proyecto crece, una clave que llega al navegador puede copiarse, compartirse o quedar guardada en una maquina.",
+              good: "El control de entrada debe vivir en una trastienda real: un servidor decide quien entra y nunca manda la clave al visitante.",
+              steps: [
+                "Mantener el administrador solo local mientras sea una herramienta personal.",
+                "No publicar archivos de entorno ni claves reales.",
+                "Si se vuelve multiusuario, mover la entrada a un servicio con usuarios, permisos y cambio de claves."
+              ],
+              links: [sources.owaspSecrets, sources.owaspAuth, sources.viteEnv],
+              files: [".env.local", ".env.local.example", "src/admin/AdminView.tsx", "src/admin/main.tsx"]
+            },
+            {
+              title: "El Excel cambia solo esta maquina",
+              severity: "Medio",
+              what: "La carga de Excel guarda datos en la memoria del navegador. Es como dejar una nota pegada en un computador, no en una oficina compartida.",
+              why: "Al crecer, distintas personas podrian ver versiones distintas del portafolio y no habria historial claro para recuperar cambios.",
+              good: "Los datos que se editan seguido deben vivir en una trastienda comun con respaldo, permisos y registro de cambios.",
+              steps: [
+                "Mostrar una nota clara: los cambios cargados por Excel son locales.",
+                "Exportar un Excel de respaldo despues de cada edicion importante.",
+                "Si el contenido se mantiene en equipo, elegir una base compartida o gestor de contenidos."
+              ],
+              links: [sources.mdnStorage, sources.mdnFiles],
+              files: ["src/context/PortfolioDataContext.tsx", "src/services/excelService.ts"]
+            },
+            {
+              title: "La vitrina puede cargar peso que no necesita",
+              severity: "Medio",
+              what: "El sitio publico trae funciones de Excel desde el centro de datos, aunque quien visita el portafolio no edita planillas.",
+              why: "Al crecer, cada kilo extra hace que la primera carga sea mas lenta, sobre todo en celular o redes moviles.",
+              good: "La vitrina publica deberia llevar solo lo necesario para mostrar contenido; la edicion debe cargarse aparte cuando se abre el administrador.",
+              steps: [
+                "Separar la parte de Excel para que viva solo en el administrador.",
+                "Medir el peso de la publicacion antes y despues.",
+                "Cargar herramientas pesadas solo cuando se necesitan."
+              ],
+              links: [sources.viteBuild, sources.reactLazy],
+              files: ["src/context/PortfolioDataContext.tsx", "src/services/excelService.ts", "package.json"]
+            },
+            {
+              title: "Imagenes y prototipos dependen de otros sitios",
+              severity: "Medio",
+              what: "Varias imagenes vienen de Unsplash y un prototipo viene de Figma. Si esos servicios cambian, fallan o tardan, la pagina pierde contenido visual.",
+              why: "Cuando el portafolio se comparte con reclutadores o clientes, una imagen rota baja confianza aunque el trabajo sea bueno.",
+              good: "Los materiales criticos conviene guardarlos como archivos propios o tener una alternativa local.",
+              steps: [
+                "Descargar y optimizar imagenes clave del portafolio.",
+                "Mantener enlaces externos solo cuando agreguen valor interactivo.",
+                "Probar la pagina con internet lento antes de publicarla."
+              ],
+              links: [sources.viteBuild],
+              files: ["src/data/portfolioData.ts", "src/views/ProjectDetailView.tsx", "src/views/DesignSystemView.tsx"]
+            }
+          ]
+        },
+        admin: {
+          kind: "HERRAMIENTA INTERNA",
+          name: "Administrador local",
+          shortName: "Admin local",
+          status: "A medias",
+          goal: "Que Carlos pueda editar su portafolio con Excel sin tocar codigo.",
+          intro: "La herramienta interna funciona como una trastienda local. Abre solo en desarrollo, pide una clave local y permite descargar o cargar planillas.",
+          plain:
+            "Piensalo como una bodega privada dentro del computador. Descargas una planilla, la editas, la vuelves a subir y el sitio de esa misma maquina muestra los cambios. No hay un mostrador central donde todos vean lo mismo.",
+          nodes: [
+            {
+              id: "admin-entry",
+              stage: "ENTRA",
+              title: "Entrada local",
+              summary: "Solo abre en localhost o 127.0.0.1 durante desarrollo.",
+              status: "Listo",
+              files: ["admin-local.html", "src/admin/main.tsx"],
+              tech: ["Bloqueo por maquina local", "Pagina separada del sitio publico"],
+              tasks: ["Mantenerlo fuera de la publicacion publica."],
+              decisions: ["Si no esta en entorno local, muestra un bloqueo."]
+            },
+            {
+              id: "admin-login",
+              stage: "PROCESA",
+              title: "Puerta con clave",
+              summary: "Compara usuario y clave local antes de mostrar el gestor.",
+              status: "A medias",
+              files: [".env.local", ".env.local.example", "src/admin/AdminView.tsx"],
+              tech: ["Archivo local de claves", "Sesion guardada en el navegador"],
+              tasks: ["No tratar esta clave como seguridad real de produccion.", "Cambiarla si se comparte el entorno."],
+              decisions: ["La sesion dura mientras el navegador la conserve."]
+            },
+            {
+              id: "excel-export",
+              stage: "PROCESA",
+              title: "Plantillas Excel",
+              summary: "Genera archivos de curriculum y proyectos para editar.",
+              status: "Listo",
+              files: ["src/services/excelService.ts", "src/admin/AdminView.tsx"],
+              tech: ["Planillas .xlsx", "Una pestana por empresa o proyecto"],
+              tasks: ["Mantener reglas de columnas simples para evitar errores de carga."],
+              decisions: ["Cada pestana de proyecto se convierte en un caso del portafolio."]
+            },
+            {
+              id: "excel-import",
+              stage: "PROCESA",
+              title: "Carga de Excel",
+              summary: "Lee planillas y transforma filas en contenido del sitio.",
+              status: "A medias",
+              files: ["src/services/excelService.ts", "src/context/PortfolioDataContext.tsx"],
+              tech: ["Lectura local de archivos", "Reglas para interpretar filas"],
+              tasks: ["Agregar validaciones mas claras antes de aceptar un Excel.", "Mostrar un resumen de cambios antes de guardar."],
+              decisions: ["Si falta un campo, usa valores por defecto para que la pagina no se rompa."]
+            },
+            {
+              id: "local-save",
+              stage: "SALE",
+              title: "Guardado en navegador",
+              summary: "Deja el contenido cargado en esta maquina.",
+              status: "A medias",
+              files: ["src/context/PortfolioDataContext.tsx"],
+              tech: ["Memoria del navegador", "Restaurar a datos originales"],
+              tasks: ["Explicar que no es una base compartida.", "Crear respaldo automatico si el uso aumenta."],
+              decisions: ["Restaurar borra lo cargado y vuelve a los datos base."]
+            },
+            {
+              id: "admin-output",
+              stage: "SALE",
+              title: "Portafolio local actualizado",
+              summary: "El sitio publico de esa maquina muestra los datos cargados.",
+              status: "A medias",
+              files: ["src/App.tsx", "src/context/PortfolioDataContext.tsx"],
+              tech: ["Mismo origen del navegador", "Datos locales compartidos entre paginas"],
+              tasks: ["Definir como llevar esos cambios al sitio publicado si se aprueban."],
+              decisions: ["La herramienta ayuda a editar, pero no publica por si sola."]
+            }
+          ],
+          tasks: {
+            "Falta": [
+              {
+                title: "Definir camino de publicacion de cambios",
+                body: "Despues de cargar Excel localmente, falta decidir como esos cambios llegan al sitio real."
+              },
+              {
+                title: "Agregar resumen antes de guardar",
+                body: "Seria util ver que proyectos o empresas cambiaran antes de aceptar una planilla."
+              },
+              {
+                title: "Cerrar estrategia de claves",
+                body: "La clave local debe tratarse como apoyo de uso personal, no como puerta para usuarios reales."
+              }
+            ],
+            "A medias": [
+              {
+                title: "Entrada protegida solo en local",
+                body: "La herramienta se bloquea fuera de la maquina local, pero la clave igual vive del lado del navegador."
+              },
+              {
+                title: "Validacion de Excel basica",
+                body: "Lee muchas variantes y usa valores por defecto. Falta avisar mejor cuando un archivo viene incompleto."
+              },
+              {
+                title: "Guardado local sin historial",
+                body: "Permite restaurar, pero no guarda versiones ni muestra quien cambio que."
+              }
+            ],
+            "Listo": [
+              {
+                title: "Admin separado del sitio publico",
+                body: "Tiene su propia entrada y el paquete final del sitio no lo incluye."
+              },
+              {
+                title: "Descarga de planillas",
+                body: "Puede generar curriculum y proyectos en Excel."
+              },
+              {
+                title: "Carga de curriculum y proyectos",
+                body: "Puede leer planillas y convertirlas en contenido visible localmente."
+              }
+            ]
+          },
+          risks: [
+            {
+              title: "La herramienta puede dar sensacion falsa de seguridad",
+              severity: "Importante",
+              what: "Pide clave y usuario, pero la comprobacion ocurre en el navegador. Eso esta bien para uso local, no para abrirlo a mas gente.",
+              why: "Al crecer, una persona con acceso al paquete o al navegador podria descubrir como entrar.",
+              good: "La entrada segura se decide fuera del navegador, en una trastienda que no revela claves y que puede bloquear o registrar intentos.",
+              steps: [
+                "Mantener admin-local.html solo para desarrollo.",
+                "No subir claves reales a repositorios o paquetes publicos.",
+                "Si se comparte con equipo, usar un servicio de entrada con usuarios reales."
+              ],
+              links: [sources.owaspAuth, sources.owaspSecrets, sources.viteEnv],
+              files: ["src/admin/AdminView.tsx", "src/admin/main.tsx", ".env.local"]
+            },
+            {
+              title: "Un Excel mal armado puede dejar datos raros",
+              severity: "Medio",
+              what: "La herramienta intenta completar campos faltantes con valores por defecto para que el sitio no se caiga.",
+              why: "Al crecer, un error silencioso puede publicar un proyecto con datos inventados por defecto y confundir a visitantes.",
+              good: "Antes de guardar, la herramienta deberia revisar campos obligatorios y mostrar una lista clara de errores.",
+              steps: [
+                "Marcar campos obligatorios en las plantillas.",
+                "Mostrar una vista previa con cambios y alertas.",
+                "No guardar si faltan titulo, contacto o datos clave."
+              ],
+              links: [sources.mdnFiles],
+              files: ["src/services/excelService.ts", "src/admin/AdminView.tsx"]
+            },
+            {
+              title: "La memoria local no reemplaza una base compartida",
+              severity: "Medio",
+              what: "Los cambios quedan guardados en el navegador que los hizo.",
+              why: "Si el computador se cambia, se borra la memoria o otra persona abre el sitio, puede ver otra version.",
+              good: "Para trabajo en equipo, los datos deben vivir en una base comun con copias de seguridad.",
+              steps: [
+                "Exportar respaldo despues de editar.",
+                "Documentar donde queda la version aprobada.",
+                "Migrar a una trastienda compartida si mas de una persona edita."
+              ],
+              links: [sources.mdnStorage],
+              files: ["src/context/PortfolioDataContext.tsx"]
+            }
+          ]
+        }
+      };
+
+      let activeUnitId = "portfolio";
+      let activeView = "map";
+      let lastOpener = null;
+
+      const unitList = document.getElementById("unitList");
+      const flowRow = document.getElementById("flowRow");
+      const mapIntro = document.getElementById("mapIntro");
+      const unitStatus = document.getElementById("unitStatus");
+      const plainExplanation = document.getElementById("plainExplanation");
+      const taskBoard = document.getElementById("taskBoard");
+      const taskUnit = document.getElementById("tasksUnit");
+      const riskGrid = document.getElementById("riskGrid");
+      const risksUnit = document.getElementById("risksUnit");
+      const drawer = document.getElementById("drawer");
+      const drawerBackdrop = document.getElementById("drawerBackdrop");
+      const drawerClose = document.getElementById("drawerClose");
+      const drawerKind = document.getElementById("drawerKind");
+      const drawerTitle = document.getElementById("drawerTitle");
+      const drawerBody = document.getElementById("drawerBody");
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function statusBadge(status) {
+        const css = statusClass[status] || "Amedias";
+        const dot = statusDots[status] || "amber";
+        return `<span class="status-badge ${css}"><span class="dot ${dot}"></span>${escapeHtml(status)}</span>`;
+      }
+
+      function iconForUnit(kind) {
+        if (kind === "PRODUCTO") {
+          return `<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 5h16v14H4zM4 9h16M8 13h3M8 16h8"/></svg>`;
+        }
+        return `<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M6 7h12M8 7V5h8v2M6 7l1 12h10l1-12M10 11v5M14 11v5"/></svg>`;
+      }
+
+      function renderUnits() {
+        unitList.innerHTML = Object.entries(units)
+          .map(([id, unit]) => {
+            const active = id === activeUnitId;
+            return `
+              <button class="unit-button" type="button" data-unit="${escapeHtml(id)}" aria-pressed="${active}">
+                ${iconForUnit(unit.kind)}
+                <span class="unit-copy">
+                  <strong>${escapeHtml(unit.shortName)}</strong>
+                  <span>${escapeHtml(unit.kind.toLowerCase())} - ${escapeHtml(unit.status)}</span>
+                </span>
+              </button>
+            `;
+          })
+          .join("");
+      }
+
+      function renderMap() {
+        const unit = units[activeUnitId];
+        mapIntro.textContent = unit.intro;
+        unitStatus.innerHTML = `${escapeHtml(unit.name)} ${statusBadge(unit.status)}`;
+        plainExplanation.textContent = unit.plain;
+
+        flowRow.innerHTML = unit.nodes
+          .map((node, index) => {
+            const nodeMarkup = `
+              <button class="node-button" type="button" data-detail="node:${escapeHtml(node.id)}">
+                <span class="stage">${escapeHtml(node.stage)}</span>
+                <span>
+                  <h4>${escapeHtml(node.title)}</h4>
+                  <p>${escapeHtml(node.summary)}</p>
+                </span>
+                ${statusBadge(node.status)}
+              </button>
+            `;
+            if (index === unit.nodes.length - 1) return nodeMarkup;
+            return `
+              ${nodeMarkup}
+              <div class="arrow" aria-hidden="true">
+                <svg viewBox="0 0 80 32">
+                  <path fill="none" stroke="currentColor" stroke-width="2" d="M4 16h62" />
+                  <path fill="none" stroke="currentColor" stroke-width="2" d="M56 7l10 9-10 9" />
+                </svg>
+                <span>${index === 0 ? "pasa datos" : index === unit.nodes.length - 2 ? "sale" : "ordena"}</span>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderTasks() {
+        const unit = units[activeUnitId];
+        taskUnit.textContent = unit.name;
+        const columns = ["Falta", "A medias", "Listo"];
+        taskBoard.innerHTML = columns
+          .map((column) => {
+            const tasks = unit.tasks[column] || [];
+            return `
+              <section class="column" aria-label="${escapeHtml(column)}">
+                <h4>${escapeHtml(column)} <span class="count">${tasks.length}</span></h4>
+                ${tasks
+                  .map((task, index) => `
+                    <button class="task-card" type="button" data-detail="task:${escapeHtml(column)}:${index}">
+                      <strong>${escapeHtml(task.title)}</strong>
+                      <span>${escapeHtml(task.body)}</span>
+                    </button>
+                  `)
+                  .join("")}
+              </section>
+            `;
+          })
+          .join("");
+      }
+
+      function renderRisks() {
+        const unit = units[activeUnitId];
+        risksUnit.textContent = unit.name;
+        if (!unit.risks.length) {
+          riskGrid.innerHTML = `
+            <div class="empty-state">
+              <div>
+                <h4>No encontre riesgos graves</h4>
+                <p>Eso no significa que no existan; significa que no vi senales obvias en los archivos.</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+        riskGrid.innerHTML = unit.risks
+          .map((risk, index) => `
+            <article class="risk-card" role="button" tabindex="0" data-detail="risk:${index}" aria-label="Abrir riesgo: ${escapeHtml(risk.title)}">
+              <span class="plain-chip">${escapeHtml(risk.severity)}</span>
+              <h4>${escapeHtml(risk.title)}</h4>
+              <p class="risk-line"><strong>Qué pasa →</strong> ${escapeHtml(risk.what)}</p>
+              <p class="risk-line"><strong>Por qué importa (al crecer) →</strong> ${escapeHtml(risk.why)}</p>
+              <p class="risk-line"><strong>Cómo se hace bien →</strong> ${escapeHtml(risk.good)}</p>
+              <div class="risk-line"><strong>pasos concretos →</strong>
+                <ol>${risk.steps.map((step) => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+              </div>
+              <div class="risk-line"><strong>1–3 links reales →</strong>
+                <div class="link-row">
+                  ${risk.links.map((link) => `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`).join("")}
+                </div>
+              </div>
+            </article>
+          `)
+          .join("");
+      }
+
+      function renderAll() {
+        renderUnits();
+        renderMap();
+        renderTasks();
+        renderRisks();
+      }
+
+      function switchView(viewId) {
+        activeView = viewId;
+        document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
+        document.getElementById(`view-${viewId}`).classList.add("active");
+        document.querySelectorAll(".nav-button").forEach((button) => {
+          button.setAttribute("aria-current", button.dataset.view === viewId ? "page" : "false");
+        });
+      }
+
+      function switchUnit(unitId) {
+        activeUnitId = unitId;
+        renderAll();
+      }
+
+      function listMarkup(items) {
+        if (!items || !items.length) return "<p>No hay datos para esta seccion.</p>";
+        return `<ul class="text-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+      }
+
+      function tagsMarkup(items) {
+        if (!items || !items.length) return "<p>No hay datos para esta seccion.</p>";
+        return `<ul class="tag-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+      }
+
+      function drawerNode(node) {
+        drawerKind.textContent = `${units[activeUnitId].kind} - ${node.stage}`;
+        drawerTitle.textContent = node.title;
+        drawerBody.innerHTML = `
+          <div class="drawer-section">
+            <h4>Estado</h4>
+            ${statusBadge(node.status)}
+          </div>
+          <div class="drawer-section">
+            <h4>Que hace</h4>
+            <p>${escapeHtml(node.summary)}</p>
+          </div>
+          <div class="drawer-section">
+            <h4>Donde esta</h4>
+            ${tagsMarkup(node.files)}
+          </div>
+          <div class="drawer-section">
+            <h4>De que esta hecha</h4>
+            ${listMarkup(node.tech)}
+          </div>
+          <div class="drawer-section">
+            <h4>Pendiente</h4>
+            ${listMarkup(node.tasks)}
+          </div>
+          <div class="drawer-section">
+            <h4>Decisiones vistas</h4>
+            ${listMarkup(node.decisions)}
+          </div>
+        `;
+      }
+
+      function drawerTask(column, index) {
+        const task = units[activeUnitId].tasks[column][index];
+        drawerKind.textContent = `${units[activeUnitId].name} - ${column}`;
+        drawerTitle.textContent = task.title;
+        drawerBody.innerHTML = `
+          <div class="drawer-section">
+            <h4>Que significa</h4>
+            <p>${escapeHtml(task.body)}</p>
+          </div>
+          <div class="drawer-section">
+            <h4>Lectura simple</h4>
+            <p>${column === "Listo" ? "Esta parte ya tiene una forma clara." : column === "A medias" ? "Funciona, pero todavia conviene cerrarla mejor." : "Conviene resolverlo antes de depender mas de esta unidad."}</p>
+          </div>
+        `;
+      }
+
+      function drawerRisk(index) {
+        const risk = units[activeUnitId].risks[index];
+        drawerKind.textContent = `${units[activeUnitId].name} - riesgo ${risk.severity.toLowerCase()}`;
+        drawerTitle.textContent = risk.title;
+        drawerBody.innerHTML = `
+          <div class="drawer-section">
+            <h4>Qué pasa</h4>
+            <p>${escapeHtml(risk.what)}</p>
+          </div>
+          <div class="drawer-section">
+            <h4>Por qué importa al crecer</h4>
+            <p>${escapeHtml(risk.why)}</p>
+          </div>
+          <div class="drawer-section">
+            <h4>Cómo se hace bien</h4>
+            <p>${escapeHtml(risk.good)}</p>
+          </div>
+          <div class="drawer-section">
+            <h4>Pasos concretos</h4>
+            ${listMarkup(risk.steps)}
+          </div>
+          <div class="drawer-section">
+            <h4>Archivos relacionados</h4>
+            ${tagsMarkup(risk.files)}
+          </div>
+          <div class="drawer-section">
+            <h4>Links reales</h4>
+            <div class="link-row">
+              ${risk.links.map((link) => `<a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      function openDrawer(detail, opener) {
+        lastOpener = opener;
+        const [type, a, b] = detail.split(":");
+        const unit = units[activeUnitId];
+        if (type === "node") {
+          const node = unit.nodes.find((item) => item.id === a);
+          if (node) drawerNode(node);
+        }
+        if (type === "task") drawerTask(a, Number(b));
+        if (type === "risk") drawerRisk(Number(a));
+
+        drawer.classList.add("open");
+        drawerBackdrop.classList.add("open");
+        drawer.setAttribute("aria-hidden", "false");
+        drawerClose.focus();
+      }
+
+      function closeDrawer() {
+        drawer.classList.remove("open");
+        drawerBackdrop.classList.remove("open");
+        drawer.setAttribute("aria-hidden", "true");
+        if (lastOpener && typeof lastOpener.focus === "function") {
+          lastOpener.focus();
+        }
+      }
+
+      document.addEventListener("click", (event) => {
+        const navButton = event.target.closest("[data-view]");
+        if (navButton) switchView(navButton.dataset.view);
+
+        const unitButton = event.target.closest("[data-unit]");
+        if (unitButton) switchUnit(unitButton.dataset.unit);
+
+        const detailButton = event.target.closest("[data-detail]");
+        if (detailButton) openDrawer(detailButton.dataset.detail, detailButton);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && drawer.classList.contains("open")) closeDrawer();
+        if ((event.key === "Enter" || event.key === " ") && event.target.matches(".risk-card")) {
+          event.preventDefault();
+          openDrawer(event.target.dataset.detail, event.target);
+        }
+      });
+
+      drawerClose.addEventListener("click", closeDrawer);
+      drawerBackdrop.addEventListener("click", closeDrawer);
+
+      renderAll();
+    </script>
+  </body>
+</html>
