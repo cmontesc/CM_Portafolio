@@ -1,6 +1,6 @@
 # Estado actual
 
-Actualizado: 2026-09-01.
+Actualizado: 2026-09-04.
 
 ## Hecho
 
@@ -13,8 +13,9 @@ Actualizado: 2026-09-01.
 - Home configurado para mostrar hasta seis proyectos publicados y principales, con fallback a publicados.
 - Header público con navegación desktop y menú hamburguesa en mobile, sin scroll horizontal.
 - Catálogo: vista Mosaico mantiene 3 columnas desktop; vista Editorial mantiene 2 columnas; vista Filas reemplaza Cuadrícula con una card full-width por proyecto y altura uniforme.
-- Repositorio Git local inicializado en rama `main`; remoto planificado: `cmontesc/CM_Portafolio`.
-- `npm run lint` y `npm run build` pasan al 2026-09-01.
+- Repositorio Git inicializado en `main` y enlazado al remoto público `https://github.com/cmontesc/CM_Portafolio`.
+- Google Analytics configurado en el sitio público con la propiedad `G-RG7VERNXSH`.
+- `npm run lint` y `npm run build` pasan al 2026-09-04.
 - Memoria persistente inicial instalada en `AGENTS.md`, `state/`, `decisions/`, `gotchas/`, `logs/` y `skills/`.
 
 ## Pendiente priorizado
@@ -27,7 +28,7 @@ Actualizado: 2026-09-01.
 
 ## Bloqueos
 
-- Creación del remoto GitHub pendiente: el navegador no tiene sesión iniciada y `gh` no está instalado en la máquina.
+- No hay bloqueo técnico actual.
 
 ## Verificación rápida
 
