@@ -1,0 +1,7 @@
+#!/bin/sh
+
+git add -- src/data/portfolioContent.json
+
+if [ -d public/uploads ]; then
+  git add -- public/uploads
+fi

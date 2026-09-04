@@ -24,6 +24,36 @@ import {
   SKILL_CATEGORIES,
   WORK_EXPERIENCE
 } from '../data/portfolioData';
+import versionedPortfolioContent from '../data/portfolioContent.json';
+
+type RepositorySyncStatus = 'idle' | 'syncing' | 'synced' | 'error';
+type VersionedPortfolioContent = Partial<PortfolioContentSnapshot>;
+
+const VERSIONED_CONTENT = versionedPortfolioContent as VersionedPortfolioContent;
+const CONTENT_ASSET_MODULES = import.meta.glob('../assets/**/*.{avif,gif,jpeg,jpg,png,svg,webp}', {
+  eager: true,
+  import: 'default',
+  query: '?url'
+}) as Record<string, string>;
+const LOCAL_ADMIN_SYNC_PATH = '/__portfolio-admin/sync';
+const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
+
+const resolveVersionedImage = (image: string) => {
+  if (!image.startsWith('asset:')) return image;
+  const assetPath = `../assets/${image.slice('asset:'.length)}`;
+  return CONTENT_ASSET_MODULES[assetPath] || image;
+};
+
+const getInitialProjects = () => {
+  const source = Array.isArray(VERSIONED_CONTENT.projects) && VERSIONED_CONTENT.projects.length > 0
+    ? VERSIONED_CONTENT.projects
+    : FEATURED_PROJECTS;
+
+  return source.map((project) => ({
+    ...clone(project),
+    coverImage: resolveVersionedImage(project.coverImage)
+  }));
+};
 
 export interface CurriculumEditableData {
   owner?: PortfolioOwner;
@@ -53,6 +83,8 @@ interface PortfolioDataContextType {
   };
   versions: PortfolioVersion[];
   imageAssets: ImageAsset[];
+  repositorySyncStatus: RepositorySyncStatus;
+  repositorySyncMessage: string;
   saveProfile: (owner: PortfolioOwner) => { success: boolean; message: string };
   saveCurriculum: (data: CurriculumEditableData) => { success: boolean; message: string };
   applyCurriculumImport: (data: CurriculumEditableData) => { success: boolean; message: string };
@@ -116,13 +148,13 @@ const normalizeExperience = (experience: ExperienceItem): ExperienceItem => ({
 });
 
 const defaultCurriculumPayload = (): CurriculumEditableData => ({
-  owner: clone(PORTFOLIO_OWNER),
-  experiences: WORK_EXPERIENCE.map(normalizeExperience),
-  previousExperiences: clone(PREVIOUS_EXPERIENCE),
-  education: clone(EDUCATION_ITEMS),
-  courses: clone(COURSE_ITEMS),
-  languages: clone(LANGUAGE_ITEMS),
-  metrics: clone(RECRUITER_METRICS)
+  owner: clone(VERSIONED_CONTENT.portfolioOwner || PORTFOLIO_OWNER),
+  experiences: clone(VERSIONED_CONTENT.experiences || WORK_EXPERIENCE).map(normalizeExperience),
+  previousExperiences: clone(VERSIONED_CONTENT.previousExperiences || PREVIOUS_EXPERIENCE),
+  education: clone(VERSIONED_CONTENT.education || EDUCATION_ITEMS),
+  courses: clone(VERSIONED_CONTENT.courses || COURSE_ITEMS),
+  languages: clone(VERSIONED_CONTENT.languages || LANGUAGE_ITEMS),
+  metrics: clone(VERSIONED_CONTENT.recruiterMetrics || RECRUITER_METRICS)
 });
 
 const getImageUrl = (image: Project['coverImage']) => {
@@ -281,7 +313,7 @@ const buildDuplicatedProjectId = (projectId: string, projectsList: Project[]) =>
 
 export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const defaultCurriculum = defaultCurriculumPayload();
-  const initialSortedProjects = formatDefaultProjects(FEATURED_PROJECTS);
+  const initialSortedProjects = formatDefaultProjects(getInitialProjects());
 
   const [portfolioOwner, setPortfolioOwner] = useState<PortfolioOwner>(defaultCurriculum.owner || PORTFOLIO_OWNER);
   const [experiences, setExperiences] = useState<ExperienceItem[]>(defaultCurriculum.experiences);
@@ -297,6 +329,9 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
     const storedAssets = loadStoredValue<ImageAsset[]>(LOCAL_STORAGE_KEY_IMAGES, []);
     return syncImageRepository(initialSortedProjects, storedAssets);
   });
+  const [hasHydratedStoredData, setHasHydratedStoredData] = useState(false);
+  const [repositorySyncStatus, setRepositorySyncStatus] = useState<RepositorySyncStatus>('idle');
+  const [repositorySyncMessage, setRepositorySyncMessage] = useState('Esperando cambios del administrador.');
 
   const [activeExcelSource, setActiveExcelSource] = useState<{
     curriculum: 'default' | 'custom';
@@ -364,8 +399,71 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     } catch (err) {
       console.warn('Error reading custom portfolio state from localStorage:', err);
+    } finally {
+      setHasHydratedStoredData(true);
     }
   }, []);
+
+  useEffect(() => {
+    const isLocalAdmin = import.meta.env.DEV
+      && LOCAL_HOSTS.has(window.location.hostname)
+      && window.location.pathname.endsWith('/admin-local.html');
+
+    if (!hasHydratedStoredData || !isLocalAdmin) return;
+
+    const timeoutId = window.setTimeout(() => {
+      const snapshot: PortfolioContentSnapshot = {
+        portfolioOwner: clone(portfolioOwner),
+        projects: clone(projects),
+        experiences: clone(experiences),
+        previousExperiences: clone(previousExperiences),
+        education: clone(education),
+        courses: clone(courses),
+        languages: clone(languages),
+        recruiterMetrics: clone(recruiterMetrics)
+      };
+
+      setRepositorySyncStatus('syncing');
+      setRepositorySyncMessage('Guardando contenido para el próximo commit...');
+
+      void fetch(LOCAL_ADMIN_SYNC_PATH, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Portfolio-Admin-Sync': '1'
+        },
+        body: JSON.stringify(snapshot)
+      })
+        .then(async (response) => {
+          const result = await response.json() as { success?: boolean; changed?: boolean; message?: string };
+          if (!response.ok || !result.success) {
+            throw new Error(result.message || 'No se pudo guardar el contenido en el repositorio.');
+          }
+          setRepositorySyncStatus('synced');
+          setRepositorySyncMessage(result.changed
+            ? 'Contenido guardado en src/data/portfolioContent.json.'
+            : 'Contenido del repositorio al día.');
+        })
+        .catch((error: unknown) => {
+          const message = error instanceof Error ? error.message : 'No se pudo sincronizar el contenido.';
+          console.warn('Error syncing portfolio content with the local repository:', error);
+          setRepositorySyncStatus('error');
+          setRepositorySyncMessage(message);
+        });
+    }, 350);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [
+    hasHydratedStoredData,
+    portfolioOwner,
+    projects,
+    experiences,
+    previousExperiences,
+    education,
+    courses,
+    languages,
+    recruiterMetrics
+  ]);
 
   useEffect(() => {
     if (versions.length > 0) return;
@@ -608,7 +706,7 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem(LOCAL_STORAGE_KEY_PROJECTS);
 
     const nextCurriculum = defaultCurriculumPayload();
-    const defaultSorted = formatDefaultProjects(FEATURED_PROJECTS);
+    const defaultSorted = formatDefaultProjects(getInitialProjects());
 
     setPortfolioOwner(nextCurriculum.owner || PORTFOLIO_OWNER);
     setExperiences(nextCurriculum.experiences);
@@ -803,6 +901,8 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
         activeExcelSource,
         versions,
         imageAssets,
+        repositorySyncStatus,
+        repositorySyncMessage,
         saveProfile,
         saveCurriculum,
         applyCurriculumImport,

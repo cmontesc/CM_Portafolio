@@ -24,7 +24,7 @@ El objetivo es mantener un portafolio público rápido, coherente y publicable s
 - No editar `dist/` directamente: es salida generada por `npm run build`.
 - El build público debe seguir tomando solo `index.html`; `admin-local.html` y `src/admin/` son locales.
 - No presentar la autenticación del admin como seguridad de producción: las credenciales se validan en el cliente.
-- No asumir que el contenido del admin está respaldado: currículum, proyectos, versiones e imágenes viven en `localStorage`.
+- No asumir que todo el admin está respaldado: el contenido se sincroniza a `src/data/portfolioContent.json` solo con Vite local activo; versiones e historial siguen en `localStorage` y Excel continúa como respaldo portable.
 - En Home mostrar como máximo seis proyectos publicados y principales; si no hay principales, usar hasta seis publicados.
 - Conservar IDs de proyecto únicos y los estados `published`, `draft` o `archived`.
 - Respetar las invariantes visuales de Olivia descritas en `DESIGN.md` y resumidas en `contexto/design.md`.
@@ -53,7 +53,7 @@ No cargar por defecto:
 
 - Entrada pública: `index.html` → `src/main.tsx` → `src/App.tsx`.
 - Navegación pública: estado React mediante `AppView`; no hay router ni rutas de servidor.
-- Datos base: `src/data/portfolioData.ts` y tipos en `src/types.ts`.
+- Datos: snapshot versionado en `src/data/portfolioContent.json`, fallback en `src/data/portfolioData.ts` y tipos en `src/types.ts`.
 - Estado editable: `src/context/PortfolioDataContext.tsx`.
 - Excel: `src/services/excelService.ts`, cargado dinámicamente desde el admin.
 - Entrada local: `admin-local.html` → `src/admin/main.tsx` → `src/admin/AdminView.tsx`.
@@ -66,7 +66,7 @@ No cargar por defecto:
 - UI, estilos, componentes o responsive: leer `contexto/design.md`; abrir `DESIGN.md` si se necesita detalle.
 - Arquitectura, persistencia, publicación o cambio de alcance: revisar `contexto/decisiones.md` y registrar una decisión si cambia un compromiso vigente.
 - CMS, Excel, imágenes o versiones: revisar `gotchas/known-issues.md` antes de editar.
-- Contenido del portafolio: modificar la sección puntual en `src/data/portfolioData.ts` y comprobar estados/IDs.
+- Contenido del portafolio: preferir el administrador para actualizar `src/data/portfolioContent.json`; editar `src/data/portfolioData.ts` solo como fallback y comprobar estados/IDs.
 - Diagnóstico: ejecutar búsquedas focalizadas; no modificar hasta que la petición incluya el arreglo.
 
 ## Comportamiento con el contexto

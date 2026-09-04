@@ -10,6 +10,7 @@ Portafolio profesional de **Carlos Montes, Senior Product Designer**. Presenta s
 - Sección de contacto.
 - Documentación visual del sistema de diseño Olivia.
 - Contenido tipado con TypeScript y estados `published`, `draft` y `archived`.
+- Sincronización automática del contenido local con un snapshot versionado.
 - Build público separado de las herramientas de administración local.
 
 ## Tecnologías
@@ -64,14 +65,16 @@ index.html
         ├── src/views/
         ├── src/components/
         ├── src/context/PortfolioDataContext.tsx
-        └── src/data/portfolioData.ts
+        ├── src/data/portfolioData.ts
+        └── src/data/portfolioContent.json
 ```
 
 Rutas y archivos principales:
 
 - `src/App.tsx`: composición de vistas y navegación.
 - `src/data/portfolioData.ts`: contenido base del portafolio.
-- `src/context/PortfolioDataContext.tsx`: estado editable y persistencia local.
+- `src/data/portfolioContent.json`: último snapshot guardado desde el administrador.
+- `src/context/PortfolioDataContext.tsx`: estado editable, persistencia local y sincronización.
 - `src/types.ts`: contratos de datos compartidos.
 - `src/index.css`: estilos globales y tokens visuales.
 - `DESIGN.md`: especificación del sistema de diseño Olivia.
@@ -79,7 +82,7 @@ Rutas y archivos principales:
 
 ## Contenido y persistencia
 
-El contenido base vive en `src/data/portfolioData.ts`. Los proyectos conservan IDs únicos y solo pueden usar los estados `published`, `draft` o `archived`.
+El fallback de contenido vive en `src/data/portfolioData.ts`. Cuando existe un snapshot guardado por el administrador, `src/data/portfolioContent.json` pasa a ser la fuente inicial. Los proyectos conservan IDs únicos y solo pueden usar los estados `published`, `draft` o `archived`.
 
 La vista pública:
 
@@ -87,7 +90,9 @@ La vista pública:
 - muestra como máximo seis proyectos en Home;
 - prioriza proyectos publicados y marcados como principales.
 
-Las ediciones realizadas con las herramientas locales se guardan en `localStorage`. Ese almacenamiento pertenece al navegador y **no es un respaldo remoto**.
+Las ediciones se guardan primero en `localStorage` y, mientras Vite está activo en localhost, se sincronizan automáticamente con `src/data/portfolioContent.json`. Las portadas cargadas desde el equipo se escriben en `public/uploads/`. Ambos cambios quedan visibles para Git y pueden incluirse en el siguiente commit.
+
+El historial de versiones continúa en `localStorage`: pertenece al navegador y **no es un respaldo remoto**. Excel sigue siendo el formato de respaldo e intercambio portable.
 
 ## Administrador local
 
@@ -106,6 +111,10 @@ cp .env.local.example .env.local
 ```
 
 `.env.local` está ignorado por Git y nunca debe versionarse. La validación de credenciales ocurre en el cliente y sirve únicamente como barrera de conveniencia local; no constituye autenticación segura para producción.
+
+Cuando el indicador del administrador muestra **«Listo para el próximo commit»**, el snapshot ya fue escrito en el repositorio. La sincronización prepara archivos, pero no crea commits ni ejecuta `git push` automáticamente.
+
+Este repositorio configura `.githooks/pre-commit` para agregar automáticamente el snapshot y las imágenes sincronizadas al siguiente commit. El hook no incorpora otros cambios ni publica nada por sí solo.
 
 ## Build de producción
 

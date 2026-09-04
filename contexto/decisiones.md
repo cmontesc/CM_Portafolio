@@ -7,6 +7,7 @@ Los registros canónicos viven en `../decisions/`; este archivo solo permite des
   - ADR-002: contenido base en código y personalización en `localStorage`/Excel.
   - ADR-003: navegación SPA con estado React y sin router.
   - ADR-004: memoria persistente en archivos pequeños y mantenimiento al cerrar hitos.
+- `../decisions/2026-09-04-contenido-versionado-desde-admin.md`
+  - ADR-005: snapshot versionado y portadas persistentes desde el administrador local.
 
 Para una decisión nueva, añadir un registro fechado en `decisions/` y una sola línea aquí. No copiar el razonamiento completo.
-

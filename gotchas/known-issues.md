@@ -1,10 +1,10 @@
 # Gotchas conocidos
 
-## Datos editados solo en el navegador
+## La sincronización del admin requiere Vite local
 
-- Señal: otro navegador/equipo muestra el contenido base o se pierden cambios al limpiar datos.
-- Causa: currículum, proyectos, versiones e imágenes usan `localStorage`.
-- Mitigación: exportar Excel antes de limpiar/migrar; no prometer sincronización ni respaldo remoto.
+- Señal: el administrador muestra un error de sincronización o Git no detecta una edición reciente.
+- Causa: el snapshot versionado se escribe mediante el middleware local de Vite; `localStorage` por sí solo no puede modificar archivos.
+- Mitigación: mantener `npm run dev` activo, comprobar el indicador «Listo para el próximo commit» y revisar `src/data/portfolioContent.json`. El historial de versiones permanece solo en el navegador y Excel sigue siendo el respaldo portable.
 
 ## El login local no protege un despliegue público
 
@@ -29,10 +29,4 @@
 - Señal: afirma, por ejemplo, que no existe historial aunque el código ya mantiene hasta 30 versiones.
 - Causa: es un diagnóstico estático de 1.782 líneas, no una fuente de ejecución.
 - Mitigación: confirmar contra código y `state/current.md`; consultar solo secciones puntuales.
-
-## La carpeta no tiene historial Git
-
-- Señal: `git status` responde que no es un repositorio.
-- Causa: no existe `.git` en la carpeta actual.
-- Mitigación: verificar cambios por contenido, fechas y pruebas; inicializar Git solo por petición explícita.
 

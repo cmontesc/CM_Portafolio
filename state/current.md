@@ -15,6 +15,7 @@ Actualizado: 2026-09-04.
 - Catálogo: vista Mosaico mantiene 3 columnas desktop; vista Editorial mantiene 2 columnas; vista Filas reemplaza Cuadrícula con una card full-width por proyecto y altura uniforme.
 - Repositorio Git inicializado en `main` y enlazado al remoto público `https://github.com/cmontesc/CM_Portafolio`.
 - Google Analytics configurado en el sitio público con la propiedad `G-RG7VERNXSH`.
+- El administrador sincroniza contenido automáticamente con `src/data/portfolioContent.json`; las portadas locales persistentes se guardan en `public/uploads/`.
 - `npm run lint` y `npm run build` pasan al 2026-09-04.
 - Memoria persistente inicial instalada en `AGENTS.md`, `state/`, `decisions/`, `gotchas/`, `logs/` y `skills/`.
 
