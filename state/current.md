@@ -1,6 +1,6 @@
 # Estado actual
 
-Actualizado: 2026-09-04.
+Actualizado: 2026-09-05.
 
 ## Hecho
 
@@ -17,7 +17,8 @@ Actualizado: 2026-09-04.
 - Repositorio Git inicializado en `main` y enlazado al remoto público `https://github.com/cmontesc/CM_Portafolio`.
 - Google Analytics configurado en el sitio público con la propiedad `G-RG7VERNXSH`.
 - El administrador sincroniza contenido automáticamente con `src/data/portfolioContent.json`; las portadas locales persistentes se guardan en `public/uploads/`.
-- `npm run lint` y `npm run build` pasan al 2026-09-04.
+- La edición de portadas ya no muestra el catálogo completo del repositorio; las imágenes archivadas y sin uso se pueden borrar definitivamente desde la sección Imágenes.
+- `npm run lint` y `npm run build` pasan al 2026-09-05.
 - Memoria persistente inicial instalada en `AGENTS.md`, `state/`, `decisions/`, `gotchas/`, `logs/` y `skills/`.
 
 ## Pendiente priorizado

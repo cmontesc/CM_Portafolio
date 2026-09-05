@@ -110,6 +110,7 @@ interface PortfolioDataContextType {
   addImageAsset: (asset: { name: string; url: string; source?: ImageAsset['source'] }) => { success: boolean; message: string; asset?: ImageAsset };
   archiveImageAsset: (assetId: string) => { success: boolean; message: string };
   restoreImageAsset: (assetId: string) => { success: boolean; message: string };
+  deleteImageAsset: (assetId: string) => { success: boolean; message: string };
 }
 
 const PortfolioDataContext = createContext<PortfolioDataContextType | undefined>(undefined);
@@ -902,6 +903,31 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
     };
   };
 
+  const deleteImageAsset = (assetId: string): { success: boolean; message: string } => {
+    const asset = imageAssets.find((item) => item.id === assetId);
+    if (!asset) {
+      return {
+        success: false,
+        message: 'No se encontró esa imagen.'
+      };
+    }
+
+    if (asset.usedBy.length > 0) {
+      return {
+        success: false,
+        message: 'No puedes borrar una imagen mientras esté asociada a un proyecto.'
+      };
+    }
+
+    const nextAssets = imageAssets.filter((item) => item.id !== assetId);
+    setImageAssets(nextAssets);
+    saveStoredValue(LOCAL_STORAGE_KEY_IMAGES, nextAssets);
+    return {
+      success: true,
+      message: 'Imagen borrada del repositorio local.'
+    };
+  };
+
   const isCustomData = activeExcelSource.curriculum === 'custom' || activeExcelSource.projects === 'custom';
 
   return (
@@ -936,7 +962,8 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
         deleteVersion,
         addImageAsset,
         archiveImageAsset,
-        restoreImageAsset
+        restoreImageAsset,
+        deleteImageAsset
       }}
     >
       {children}

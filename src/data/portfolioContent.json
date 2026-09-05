@@ -18,69 +18,6 @@
   },
   "projects": [
     {
-      "id": "schwager-rediseño-web",
-      "title": "Rediseño Web End-to-End & Arquitectura SEO Schwager",
-      "subtitle": "Rediseño integral del sitio web institucional de Schwager con desarrollo de plugins a medida y tableros de KPIs.",
-      "category": "saas",
-      "categoryLabel": "Web & Enterprise Architecture",
-      "tags": [
-        "Stakeholder Interviews",
-        "Content Architecture",
-        "SEO Optimization",
-        "KPI Dashboards",
-        "WordPress"
-      ],
-      "company": "Schwager SA",
-      "period": "2026",
-      "role": "UX Engineer",
-      "team": "UX Engineer (Carlos), Desarrolladores WordPress/PHP, Content & SEO Manager",
-      "platform": "Plataforma Web Responsive",
-      "duration": "2026 (Proyecto independiente)",
-      "outcome": "Arquitectura de información redefinida, plugins a medida y KPIs en tiempo real",
-      "summary": "Entrevistas a stakeholders clave, estructuración de la arquitectura de contenidos, desarrollo de extensiones a medida y definición de tableros de medición de KPIs.",
-      "coverImage": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-      "aspectRatioClass": "aspect-[16/11]",
-      "accentTint": "#2563eb",
-      "isFeaturedMarquee": true,
-      "caseStudy": {
-        "overview": "Schwager SA requería renovar por completo su presencia digital para comunicar con solidez sus diversas líneas de negocio industriales y corporativas.",
-        "problem": "El sitio web presentaba una estructura desactualizada, dificultades para que los equipos internos publicaran contenidos y nula visibilidad sobre el rendimiento del tráfico y KPIs.",
-        "myRole": "Lideré el rediseño end-to-end: entrevistas a stakeholders clave, definición de la arquitectura de información, desarrollo personalizado de plugins en WordPress/PHP, mejoras en SEO y creación de tableros de KPIs.",
-        "team": "1 UX Engineer (Carlos), Equipo de Desarrollo Web, Stakeholders de Negocio.",
-        "duration": "2026",
-        "platform": "Web Desktop & Mobile (WordPress / PHP / Custom Stack)",
-        "researchMethodology": [
-          "Entrevistas individuales con directores y líderes de las unidades de negocio.",
-          "Auditoría heurística de contenidos y análisis de posicionamiento SEO existente.",
-          "Benchmarking de sitios corporativos industriales globales."
-        ],
-        "keyInsights": [
-          "Los clientes corporativos necesitan acceder directamente a fichas técnicas y certificaciones en menos de dos clics.",
-          "Los editores de contenido requerían un panel simplificado que evitara errores de formato."
-        ],
-        "designHighlights": [
-          "Desarrollo personalizado de plugins para agilizar y estandarizar la publicación de noticias y servicios.",
-          "Jerarquía visual moderna optimizada para indexación y posicionamiento orgánico en motores de búsqueda.",
-          "Tableros de control con KPIs clave configurados para seguimiento continuo del equipo directivo."
-        ],
-        "metrics": [
-          {
-            "metric": "+45%",
-            "label": "Rendimiento SEO",
-            "description": "Mejora en visibilidad orgánica y arquitectura semántica estructurada."
-          },
-          {
-            "metric": "100%",
-            "label": "Stakeholders Alineados",
-            "description": "Integración de las necesidades de todas las divisiones corporativas en un único ecosistema."
-          }
-        ]
-      },
-      "year": 2026,
-      "isPrincipal": true,
-      "status": "published"
-    },
-    {
       "id": "isapre-esencial-licencias",
       "title": "Mejora del flujo de Licencias Médicas",
       "subtitle": "Rediseño del proceso digital de licencias médicas de Isapre Esencial: menos incertidumbre, menos reclamos, más claridad en cada estado del trámite.",
@@ -159,6 +96,77 @@
           "author": "Aprendizaje Clave del Proyecto",
           "position": "Mejora del flujo de Licencias Médicas · Isapre Esencial"
         }
+      }
+    },
+    {
+      "id": "schwager-rediseño-web",
+      "title": "Rediseño Web End-to-End & Arquitectura SEO Schwager",
+      "subtitle": "Rediseño integral del sitio web institucional de Schwager con desarrollo de plugins a medida y tableros de KPIs.",
+      "company": "Schwager SA",
+      "category": "saas",
+      "categoryLabel": "B2B",
+      "year": 2026,
+      "status": "published",
+      "isPrincipal": true,
+      "period": "2026",
+      "role": "UX Engineer",
+      "team": "UX Engineer (Carlos), Desarrolladores WordPress/PHP, Content & SEO Manager",
+      "platform": "Plataforma Web Responsive",
+      "duration": "2026 (Proyecto independiente)",
+      "outcome": "Arquitectura de información redefinida, plugins a medida y KPIs en tiempo real",
+      "summary": "Entrevistas a stakeholders clave, estructuración de la arquitectura de contenidos, desarrollo de extensiones a medida y definición de tableros de medición de KPIs.",
+      "coverImage": "/uploads/af3a33cdfd12cc83.png",
+      "accentTint": "#2563eb",
+      "tags": [
+        "Stakeholder Interviews",
+        "Content Architecture",
+        "SEO Optimization",
+        "KPI Dashboards",
+        "WordPress"
+      ],
+      "caseStudy": {
+        "overview": "Schwager SA requería renovar por completo su presencia digital para comunicar con solidez sus diversas líneas de negocio industriales y corporativas.",
+        "problem": "El sitio web presentaba una estructura desactualizada, dificultades para que los equipos internos publicaran contenidos y nula visibilidad sobre el rendimiento del tráfico y KPIs.",
+        "myRole": "Lideré el rediseño end-to-end: entrevistas a stakeholders clave, definición de la arquitectura de información, desarrollo personalizado de plugins en WordPress/PHP, mejoras en SEO y creación de tableros de KPIs.",
+        "team": "UX Engineer (Carlos), Desarrolladores WordPress/PHP, Content & SEO Manager",
+        "duration": "2026 (Proyecto independiente)",
+        "platform": "Plataforma Web Responsive",
+        "researchMethodology": [
+          "Entrevistas individuales con directores y líderes de las unidades de negocio.",
+          "Auditoría heurística de contenidos y análisis de posicionamiento SEO existente.",
+          "Benchmarking de sitios corporativos industriales globales."
+        ],
+        "keyInsights": [
+          "Los clientes corporativos necesitan acceder directamente a fichas técnicas y certificaciones en menos de dos clics.",
+          "Los editores de contenido requerían un panel simplificado que evitara errores de formato."
+        ],
+        "designHighlights": [
+          "Desarrollo personalizado de plugins para agilizar y estandarizar la publicación de noticias y servicios.",
+          "Jerarquía visual moderna optimizada para indexación y posicionamiento orgánico en motores de búsqueda.",
+          "Tableros de control con KPIs clave configurados para seguimiento continuo del equipo directivo."
+        ],
+        "metrics": [
+          {
+            "metric": "+15%",
+            "label": "Rendimiento SEO",
+            "description": "Mejora en visibilidad orgánica y arquitectura semántica estructurada."
+          },
+          {
+            "metric": "100%",
+            "label": "Stakeholders Alineados",
+            "description": "Integración de las necesidades de todas las divisiones corporativas en un único ecosistema."
+          },
+          {
+            "metric": "Design System",
+            "label": "Implementación",
+            "description": "Documentación y aplicación en la totalidad del sitio, cumpliendo normas AA de accesibilidad."
+          },
+          {
+            "metric": "Personalización",
+            "label": "Administración",
+            "description": "Desarrollo de plugins con el fin de optimizar y facilitar la actualización de contenidos."
+          }
+        ]
       }
     },
     {
