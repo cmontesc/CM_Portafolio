@@ -134,24 +134,24 @@
         ],
         "metrics": [
           {
-            "metric": "Menos Reclamos",
-            "label": "Reducción de Reclamos",
+            "metric": "10%",
+            "label": "Menos Reclamos",
             "description": "Reducción esperada de reclamos asociados al proceso de licencias médicas."
           },
           {
             "metric": "Comprensión",
-            "label": "Más Comprensión",
-            "description": "Mejor entendimiento del flujo completo por parte del usuario final."
+            "label": "Mejor entendimiento del flujo completo por parte del usuario final.",
+            "description": ""
           },
           {
             "metric": "Transparencia",
-            "label": "Más Transparencia",
-            "description": "Visibilidad clara de cada estado del proceso, de principio a fin, reduciendo la incertidumbre."
+            "label": "Visibilidad clara de cada estado del proceso, de principio a fin, reduciendo la incertidumbre.",
+            "description": ""
           },
           {
-            "metric": "Claridad",
-            "label": "Menos Incertidumbre",
-            "description": "Claridad sobre montos y plazos de pago del subsidio."
+            "metric": "Menos Incertidumbre",
+            "label": "Claridad sobre montos y plazos de pago del subsidio.",
+            "description": ""
           }
         ],
         "testimonial": {
