@@ -194,6 +194,7 @@ export const generateProjectsWorkbook = (projects = FEATURED_PROJECTS): XLSX.Wor
       ['Metodología de Investigación', p.caseStudy.researchMethodology.join('\n'), 'Puntos clave de research (uno por línea)'],
       ['Hallazgos & Insights Clave', p.caseStudy.keyInsights.join('\n'), 'Hallazgos de investigación (uno por línea)'],
       ['Puntos Destacados de Diseño', p.caseStudy.designHighlights.join('\n'), 'Decisiones de diseño y UX (uno por línea)'],
+      ['Imágenes Interfaz / Carrusel', (p.caseStudy.interfaceImages || []).join('\n'), 'Opcional: URLs una por línea, sin título visible en el sitio'],
       ['Métrica 1', formatMetric(p.caseStudy.metrics[0]), 'Formato: Valor | Etiqueta | Descripción'],
       ['Métrica 2', formatMetric(p.caseStudy.metrics[1]), 'Formato: Valor | Etiqueta | Descripción'],
       ['Métrica 3', formatMetric(p.caseStudy.metrics[2]), 'Formato: Valor | Etiqueta | Descripción'],
@@ -568,6 +569,15 @@ export const parseProjectsExcel = async (
       'Componentes reutilizables bajo estándares de accesibilidad.',
       'Flujos optimizados con validación instantánea de estados.'
     ]);
+    const interfaceImages = parseListOrLines(
+      pMap['imágenes interfaz / carrusel']
+        || pMap['imagenes interfaz / carrusel']
+        || pMap['imágenes interfaz']
+        || pMap['imagenes interfaz']
+        || pMap['carrusel']
+        || '',
+      []
+    );
 
     // Metrics
     const metrics: Project['caseStudy']['metrics'] = [];
@@ -622,6 +632,7 @@ export const parseProjectsExcel = async (
         researchMethodology,
         keyInsights,
         designHighlights,
+        interfaceImages: interfaceImages.length > 0 ? interfaceImages : undefined,
         metrics,
         testimonial: quote ? { quote, author: author || 'Cliente', position: position || 'Líder del Proyecto' } : undefined
       }

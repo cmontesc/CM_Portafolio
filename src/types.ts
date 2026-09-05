@@ -30,6 +30,7 @@ export interface ProjectCaseStudy {
   researchMethodology: string[];
   keyInsights: string[];
   designHighlights: string[];
+  interfaceImages?: string[];
   systemComponents?: string[];
   metrics: {
     metric: string;

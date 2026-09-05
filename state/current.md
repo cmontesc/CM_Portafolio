@@ -13,6 +13,7 @@ Actualizado: 2026-09-04.
 - Home configurado para mostrar hasta seis proyectos publicados y principales, con fallback a publicados.
 - Header público con navegación desktop y menú hamburguesa en mobile, sin scroll horizontal.
 - Catálogo: vista Mosaico mantiene 3 columnas desktop; vista Editorial mantiene 2 columnas; vista Filas reemplaza Cuadrícula con una card full-width por proyecto y altura uniforme.
+- Los casos de estudio admiten un carrusel opcional de imágenes de interfaz, persistido desde el admin y compatible con Excel.
 - Repositorio Git inicializado en `main` y enlazado al remoto público `https://github.com/cmontesc/CM_Portafolio`.
 - Google Analytics configurado en el sitio público con la propiedad `G-RG7VERNXSH`.
 - El administrador sincroniza contenido automáticamente con `src/data/portfolioContent.json`; las portadas locales persistentes se guardan en `public/uploads/`.

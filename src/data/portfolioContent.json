@@ -97,8 +97,9 @@
       "duration": "Discovery → Test de usabilidad",
       "outcome": "Foco: Comunicación, pagos y estados (Menos reclamos e incertidumbre)",
       "summary": "Rediseño del proceso digital de licencias médicas de Isapre Esencial. Diagnóstico y rediseño integral para reducir reclamos, aportar transparencia y brindar certeza a los afiliados en cada etapa del trámite.",
-      "coverImage": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1600&auto=format&fit=crop",
+      "coverImage": "/uploads/1d84c0d5c7150497.jpg",
       "accentTint": "#0284c7",
+      "prototypeUrl": "https://embed.figma.com/proto/79w1icC2FjkMTtjJ27o6D4/%F0%9F%94%96--Seccio%CC%81n_-Licencias-Me%CC%81dicas?node-id=449-32393&viewport=1486%2C1210%2C0.54&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=449%3A32393&page-id=449%3A32391&embed-host=share",
       "tags": [
         "Discovery",
         "UX/UI",
@@ -133,12 +134,12 @@
         ],
         "metrics": [
           {
-            "metric": "10%",
-            "label": "Menos Reclamos",
-            "description": "Asociados al proceso de licencias médicas."
+            "metric": "Menos Reclamos",
+            "label": "Reducción de Reclamos",
+            "description": "Reducción esperada de reclamos asociados al proceso de licencias médicas."
           },
           {
-            "metric": "90%",
+            "metric": "Comprensión",
             "label": "Más Comprensión",
             "description": "Mejor entendimiento del flujo completo por parte del usuario final."
           },
@@ -164,12 +165,15 @@
       "id": "accuhealth-telemedicina",
       "title": "Rediseño de App de Salud & Telemonitoreo Clínico",
       "subtitle": "Evolución de la experiencia de la aplicación de salud con foco prioritario en la adopción de usuarios y simplificación de arquitectura.",
-      "company": "AccuHealth",
       "category": "mobile",
       "categoryLabel": "Healthtech & Mobile",
-      "year": 2025,
-      "status": "published",
-      "isPrincipal": true,
+      "tags": [
+        "Card Sorting",
+        "Information Architecture",
+        "User Flows",
+        "Dev Handoff"
+      ],
+      "company": "AccuHealth",
       "period": "2024 — 2025",
       "role": "Senior UX Designer",
       "team": "1 UX Designer (Carlos), 1 Medical Lead, 1 PM, 4 Mobile Engineers",
@@ -178,20 +182,16 @@
       "outcome": "+30% de incremento en la tasa de adopción de pacientes",
       "summary": "Reestructuración completa de la arquitectura de información mediante card sorting, redefinición de flujos de monitoreo de signos vitales y handoff detallado para desarrollo.",
       "coverImage": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1600&auto=format&fit=crop",
+      "aspectRatioClass": "aspect-[4/5]",
       "accentTint": "#059669",
-      "tags": [
-        "Card Sorting",
-        "Information Architecture",
-        "User Flows",
-        "Dev Handoff"
-      ],
+      "isFeaturedMarquee": true,
       "caseStudy": {
         "overview": "AccuHealth es una plataforma de salud y telemonitoreo donde pacientes crónicos registran sus métricas diarias y reciben seguimiento por parte de equipos clínicos.",
         "problem": "La versión anterior presentaba baja recurrencia de uso y abandono en la carga de signos vitales debido a una navegación sobrecargada y menús poco intuitivos.",
         "myRole": "Lideré el diagnóstico heurístico, sesiones de Card Sorting con pacientes, diseño de flujos de usuario (user flows), prototipado y acompañamiento constante en el handoff a desarrollo.",
-        "team": "1 UX Designer (Carlos), 1 Medical Lead, 1 PM, 4 Mobile Engineers",
+        "team": "1 Senior UX Designer (Carlos), 1 Asesor Clínico, 1 PM, 4 Desarrolladores Móviles.",
         "duration": "2024 — 2025",
-        "platform": "iOS & Android Mobile App",
+        "platform": "App Móvil iOS / Android",
         "researchMethodology": [
           "Sesiones de Card Sorting abierto y cerrado con pacientes de diversos rangos etarios.",
           "Mapeo de User Flows para el registro diario de signos vitales (presión, glucosa, peso).",
@@ -218,12 +218,15 @@
             "description": "Seguimiento riguroso de implementación garantizando fidelidad entre diseño y código."
           },
           {
-            "metric": "4.0★",
+            "metric": "4.8★",
             "label": "Satisfacción de Uso",
             "description": "Mejora en la valoración y cumplimiento del plan de telemonitoreo por parte de pacientes."
           }
         ]
-      }
+      },
+      "year": 2025,
+      "isPrincipal": true,
+      "status": "published"
     },
     {
       "id": "twobrains-mexico-credito",

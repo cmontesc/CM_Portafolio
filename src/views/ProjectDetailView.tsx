@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, MessageSquare, CheckCircle2, Quote, Users, Calendar, Laptop, Target, Award, Figma, Github, Globe2 } from 'lucide-react';
 import { Project, AppView } from '../types';
 import { usePortfolioData } from '../context/PortfolioDataContext';
@@ -15,6 +15,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
   onSelectProject
 }) => {
   const { projects, portfolioOwner } = usePortfolioData();
+  const [activeInterfaceImageIndex, setActiveInterfaceImageIndex] = useState(0);
   const publishedProjects = projects.filter((p) => p.status === 'published');
   const currentIndex = publishedProjects.findIndex((p) => p.id === project.id);
   const prevProject = currentIndex > 0 ? publishedProjects[currentIndex - 1] : null;
@@ -41,6 +42,15 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
     project.links?.vercel ? { label: 'Vercel', href: project.links.vercel, icon: Globe2 } : null,
     project.links?.git ? { label: 'Git', href: project.links.git, icon: Github } : null
   ].filter(Boolean) as Array<{ label: string; href: string; icon: typeof Figma }>;
+  const interfaceImages = useMemo(() => {
+    return (project.caseStudy.interfaceImages || [])
+      .map((image) => image.trim())
+      .filter(Boolean);
+  }, [project.caseStudy.interfaceImages]);
+  const normalizedInterfaceImageIndex = interfaceImages.length > 0
+    ? activeInterfaceImageIndex % interfaceImages.length
+    : 0;
+  const activeInterfaceImage = interfaceImages[normalizedInterfaceImageIndex];
 
   return (
     <div className="flex flex-col gap-12 py-8 md:py-12 animate-in fade-in duration-200">
@@ -232,6 +242,53 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
           ))}
         </div>
       </div>
+
+      {activeInterfaceImage && (
+        <div className="relative w-full overflow-hidden rounded-[4px] border border-[#e5edf5] bg-white">
+          <div className="aspect-[16/9] w-full bg-white">
+            <img
+              src={activeInterfaceImage}
+              alt={`${project.title} interfaz ${normalizedInterfaceImageIndex + 1}`}
+              className="w-full h-full object-contain"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+
+          {interfaceImages.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={() => setActiveInterfaceImageIndex((current) => (current - 1 + interfaceImages.length) % interfaceImages.length)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-[4px] bg-white/90 hover:bg-white text-[#061b31] border border-[#e5edf5] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Imagen anterior"
+              >
+                <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveInterfaceImageIndex((current) => (current + 1) % interfaceImages.length)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-[4px] bg-white/90 hover:bg-white text-[#061b31] border border-[#e5edf5] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Imagen siguiente"
+              >
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+              </button>
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 rounded-full bg-white/90 border border-[#e5edf5] px-2 py-1">
+                {interfaceImages.map((image, index) => (
+                  <button
+                    key={`${image}-${index}`}
+                    type="button"
+                    onClick={() => setActiveInterfaceImageIndex(index)}
+                    className={`w-1.5 h-1.5 rounded-full transition-colors cursor-pointer ${
+                      index === normalizedInterfaceImageIndex ? 'bg-[#533afd]' : 'bg-[#b9b9f9]'
+                    }`}
+                    aria-label={`Ver imagen ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Interactive Figma Prototype (when provided) */}
       {project.prototypeUrl && (

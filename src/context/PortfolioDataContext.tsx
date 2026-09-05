@@ -49,10 +49,21 @@ const getInitialProjects = () => {
     ? VERSIONED_CONTENT.projects
     : FEATURED_PROJECTS;
 
-  return source.map((project) => ({
-    ...clone(project),
-    coverImage: resolveVersionedImage(project.coverImage)
-  }));
+  return source.map((project) => {
+    const nextProject = clone(project);
+    const interfaceImages = (nextProject.caseStudy.interfaceImages || [])
+      .map(resolveVersionedImage)
+      .filter(Boolean);
+
+    return {
+      ...nextProject,
+      coverImage: resolveVersionedImage(nextProject.coverImage),
+      caseStudy: {
+        ...nextProject.caseStudy,
+        interfaceImages: interfaceImages.length > 0 ? interfaceImages : undefined
+      }
+    };
+  });
 };
 
 export interface CurriculumEditableData {
@@ -184,12 +195,17 @@ const syncImageRepository = (projectsList: Project[], currentAssets: ImageAsset[
   const date = nowIso();
   const usage = new Map<string, string[]>();
 
-  projectsList.forEach((project) => {
-    const url = getImageUrl(project.coverImage);
+  const addUsage = (image: string, projectId: string) => {
+    const url = getImageUrl(image);
     if (!url) return;
     const usedBy = usage.get(url) || [];
-    usedBy.push(project.id);
+    if (!usedBy.includes(projectId)) usedBy.push(projectId);
     usage.set(url, usedBy);
+  };
+
+  projectsList.forEach((project) => {
+    addUsage(project.coverImage, project.id);
+    (project.caseStudy.interfaceImages || []).forEach((image) => addUsage(image, project.id));
   });
 
   const byUrl = new Map(currentAssets.map((asset) => [asset.url, asset]));
@@ -249,6 +265,9 @@ const normalizeProject = (project: Project): Project => {
     designHighlights: [],
     metrics: []
   };
+  const interfaceImages = (caseStudy.interfaceImages || [])
+    .map(getImageUrl)
+    .filter(Boolean);
 
   return {
     ...project,
@@ -271,6 +290,7 @@ const normalizeProject = (project: Project): Project => {
       researchMethodology: (caseStudy.researchMethodology || []).filter(Boolean),
       keyInsights: (caseStudy.keyInsights || []).filter(Boolean),
       designHighlights: (caseStudy.designHighlights || []).filter(Boolean),
+      interfaceImages: interfaceImages.length > 0 ? interfaceImages : undefined,
       systemComponents: caseStudy.systemComponents?.filter(Boolean),
       metrics: (caseStudy.metrics || []).filter((metric) => metric.metric || metric.label || metric.description),
       testimonial: caseStudy.testimonial?.quote

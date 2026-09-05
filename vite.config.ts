@@ -125,7 +125,7 @@ const persistImageUrl = async (rawUrl: unknown): Promise<unknown> => {
   }
 
   if (url.startsWith('blob:')) {
-    throw new Error('La portada usa una URL temporal. Vuelve a cargar la imagen antes de sincronizar.');
+    throw new Error('La imagen usa una URL temporal. Vuelve a cargarla antes de sincronizar.');
   }
 
   let pathname = url;
@@ -139,7 +139,7 @@ const persistImageUrl = async (rawUrl: unknown): Promise<unknown> => {
     const sourcePath = path.resolve(__dirname, pathname.slice(1));
     const relativeAssetPath = path.relative(SOURCE_ASSETS_DIR, sourcePath);
     if (relativeAssetPath.startsWith('..') || path.isAbsolute(relativeAssetPath)) {
-      throw new Error('La portada apunta fuera de src/assets.');
+      throw new Error('La imagen apunta fuera de src/assets.');
     }
     return `asset:${relativeAssetPath.split(path.sep).join('/')}`;
   }
@@ -147,20 +147,44 @@ const persistImageUrl = async (rawUrl: unknown): Promise<unknown> => {
   return url;
 };
 
+const persistImageUrls = async (rawImages: unknown) => {
+  if (!Array.isArray(rawImages)) return undefined;
+
+  const images = await Promise.all(rawImages.map(persistImageUrl));
+  const urls = images.filter((image): image is string => typeof image === 'string' && image.trim().length > 0);
+  return urls.length > 0 ? urls : undefined;
+};
+
 const normalizeSnapshotImages = async (snapshot: Record<string, unknown>) => {
   const projects = snapshot.projects as Array<Record<string, unknown>>;
   return {
     ...snapshot,
-    projects: await Promise.all(projects.map(async (project) => ({
-      ...project,
-      coverImage: await persistImageUrl(project.coverImage)
-    })))
+    projects: await Promise.all(projects.map(async (project) => {
+      const caseStudy = project.caseStudy && typeof project.caseStudy === 'object' && !Array.isArray(project.caseStudy)
+        ? project.caseStudy as Record<string, unknown>
+        : undefined;
+
+      return {
+        ...project,
+        coverImage: await persistImageUrl(project.coverImage),
+        caseStudy: caseStudy
+          ? {
+              ...caseStudy,
+              interfaceImages: await persistImageUrls(caseStudy.interfaceImages)
+            }
+          : project.caseStudy
+      };
+    }))
   };
 };
 
 const portfolioContentSyncPlugin = (): Plugin => ({
   name: 'portfolio-local-content-sync',
   apply: 'serve',
+  handleHotUpdate({ file }) {
+    // El admin escribe este JSON al guardar; evitar HMR mantiene estable el editor.
+    if (path.resolve(file) === CONTENT_FILE) return [];
+  },
   configureServer(server) {
     server.middlewares.use(CONTENT_SYNC_PATH, (request, response, next) => {
       if (request.method !== 'POST') {
