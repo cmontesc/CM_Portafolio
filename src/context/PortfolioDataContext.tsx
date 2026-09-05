@@ -37,6 +37,7 @@ const CONTENT_ASSET_MODULES = import.meta.glob('../assets/**/*.{avif,gif,jpeg,jp
 }) as Record<string, string>;
 const LOCAL_ADMIN_SYNC_PATH = '/__portfolio-admin/sync';
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
+export const PORTFOLIO_STORAGE_ERROR_EVENT = 'cm-portfolio-storage-error';
 
 const resolveVersionedImage = (image: string) => {
   if (!image.startsWith('asset:')) return image;
@@ -136,7 +137,20 @@ const loadStoredValue = <T,>(key: string, fallback: T): T => {
 };
 
 const saveStoredValue = (key: string, value: unknown) => {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (error) {
+    console.warn(`No se pudo guardar ${key} en el navegador:`, error);
+    window.dispatchEvent(new CustomEvent(PORTFOLIO_STORAGE_ERROR_EVENT, {
+      detail: {
+        message: error instanceof DOMException && error.name === 'QuotaExceededError'
+          ? 'El almacenamiento local está lleno. Las imágenes no se guardarán como Base64; recarga el administrador para completar la limpieza.'
+          : 'No se pudo guardar el cambio en el almacenamiento local.'
+      }
+    }));
+    return false;
+  }
 };
 
 const extractYearFromText = (text: string | number | undefined): number => {
@@ -319,6 +333,39 @@ const formatDefaultProjects = (projectsList: Project[]): Project[] => {
   return formatted.sort((a, b) => (b.year || 2020) - (a.year || 2020));
 };
 
+const isLegacyDataImage = (value: unknown): value is string => {
+  return typeof value === 'string' && value.startsWith('data:image/');
+};
+
+const replaceLegacyDataImages = (projectsList: Project[], fallbackProjects: Project[]): Project[] => {
+  return projectsList.map((project) => {
+    const fallbackProject = fallbackProjects.find((candidate) => candidate.id === project.id);
+    const fallbackInterfaceImages = fallbackProject?.caseStudy.interfaceImages || [];
+    const currentInterfaceImages = project.caseStudy.interfaceImages || [];
+    const interfaceImages = currentInterfaceImages
+      .map((image, index) => {
+        if (!isLegacyDataImage(image)) return image;
+        const fallbackImage = fallbackInterfaceImages[index];
+        return fallbackImage && !isLegacyDataImage(fallbackImage) ? fallbackImage : '';
+      })
+      .filter(Boolean);
+
+    const fallbackCover = fallbackProject?.coverImage;
+    const coverImage = isLegacyDataImage(project.coverImage)
+      ? fallbackCover && !isLegacyDataImage(fallbackCover) ? fallbackCover : ''
+      : project.coverImage;
+
+    return {
+      ...project,
+      coverImage,
+      caseStudy: {
+        ...project.caseStudy,
+        interfaceImages: interfaceImages.length > 0 ? interfaceImages : undefined
+      }
+    };
+  });
+};
+
 const buildDuplicatedProjectId = (projectId: string, projectsList: Project[]) => {
   const baseId = `${projectId}-copia`;
   let nextId = baseId;
@@ -345,9 +392,21 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
   const [recruiterMetrics, setRecruiterMetrics] = useState<MetricItem[]>(defaultCurriculum.metrics);
   const [skillCategories] = useState<SkillCategory[]>(SKILL_CATEGORIES);
   const [projects, setProjects] = useState<Project[]>(initialSortedProjects);
-  const [versions, setVersions] = useState<PortfolioVersion[]>(() => loadStoredValue<PortfolioVersion[]>(LOCAL_STORAGE_KEY_VERSIONS, []));
+  const [versions, setVersions] = useState<PortfolioVersion[]>(() => {
+    const storedVersions = loadStoredValue<PortfolioVersion[]>(LOCAL_STORAGE_KEY_VERSIONS, []);
+    const sanitizedVersions = storedVersions.map((version) => ({
+      ...version,
+      data: {
+        ...version.data,
+        projects: replaceLegacyDataImages(version.data.projects, initialSortedProjects)
+      }
+    }));
+    saveStoredValue(LOCAL_STORAGE_KEY_VERSIONS, sanitizedVersions);
+    return sanitizedVersions;
+  });
   const [imageAssets, setImageAssets] = useState<ImageAsset[]>(() => {
-    const storedAssets = loadStoredValue<ImageAsset[]>(LOCAL_STORAGE_KEY_IMAGES, []);
+    const storedAssets = loadStoredValue<ImageAsset[]>(LOCAL_STORAGE_KEY_IMAGES, [])
+      .filter((asset) => !isLegacyDataImage(asset.url));
     return syncImageRepository(initialSortedProjects, storedAssets);
   });
   const [hasHydratedStoredData, setHasHydratedStoredData] = useState(false);
@@ -408,8 +467,9 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
       if (savedProjects) {
         const parsedProjects = JSON.parse(savedProjects) as Project[];
         if (Array.isArray(parsedProjects) && parsedProjects.length > 0) {
-          const sorted = formatDefaultProjects(parsedProjects);
+          const sorted = formatDefaultProjects(replaceLegacyDataImages(parsedProjects, initialSortedProjects));
           setProjects(sorted);
+          saveStoredValue(LOCAL_STORAGE_KEY_PROJECTS, sorted);
           setImageAssets((current) => {
             const synced = syncImageRepository(sorted, current);
             saveStoredValue(LOCAL_STORAGE_KEY_IMAGES, synced);

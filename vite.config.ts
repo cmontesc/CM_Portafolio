@@ -6,7 +6,9 @@ import path from 'path';
 import { defineConfig, type Plugin } from 'vite';
 
 const CONTENT_SYNC_PATH = '/__portfolio-admin/sync';
+const IMAGE_UPLOAD_PATH = '/__portfolio-admin/upload';
 const MAX_SYNC_BYTES = 25 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
 const CONTENT_FILE = path.resolve(__dirname, 'src/data/portfolioContent.json');
 const PUBLIC_UPLOADS_DIR = path.resolve(__dirname, 'public/uploads');
 const SOURCE_ASSETS_DIR = path.resolve(__dirname, 'src/assets');
@@ -19,6 +21,7 @@ const IMAGE_EXTENSIONS: Record<string, string> = {
   'image/svg+xml': '.svg',
   'image/webp': '.webp'
 };
+const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 const jsonResponse = (response: { statusCode: number; setHeader: (name: string, value: string) => void; end: (body: string) => void }, status: number, payload: unknown) => {
   response.statusCode = status;
@@ -40,6 +43,35 @@ const readRequestBody = async (request: AsyncIterable<Buffer | string>) => {
   }
 
   return Buffer.concat(chunks).toString('utf8');
+};
+
+const readRequestBuffer = async (request: AsyncIterable<Buffer | string>, maxBytes: number) => {
+  const chunks: Buffer[] = [];
+  let receivedBytes = 0;
+
+  for await (const chunk of request) {
+    const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+    receivedBytes += buffer.length;
+    if (receivedBytes > maxBytes) {
+      throw new Error('La imagen supera el límite de 2 MB.');
+    }
+    chunks.push(buffer);
+  }
+
+  return Buffer.concat(chunks);
+};
+
+const isAllowedLocalRequest = (origin: string | undefined, host: string | undefined) => {
+  if (!origin || !host) return false;
+
+  try {
+    const parsedOrigin = new URL(origin);
+    return parsedOrigin.protocol === 'http:'
+      && ['localhost', '127.0.0.1', '[::1]'].includes(parsedOrigin.hostname)
+      && parsedOrigin.host === host;
+  } catch {
+    return false;
+  }
 };
 
 const validateSnapshot = (snapshot: Record<string, unknown>) => {
@@ -182,31 +214,80 @@ const portfolioContentSyncPlugin = (): Plugin => ({
   name: 'portfolio-local-content-sync',
   apply: 'serve',
   handleHotUpdate({ file }) {
-    // El admin escribe este JSON al guardar; evitar HMR mantiene estable el editor.
-    if (path.resolve(file) === CONTENT_FILE) return [];
+    const resolvedFile = path.resolve(file);
+    // El admin genera estos archivos; evitar HMR mantiene estable el editor.
+    if (resolvedFile === CONTENT_FILE || resolvedFile.startsWith(`${PUBLIC_UPLOADS_DIR}${path.sep}`)) return [];
   },
   configureServer(server) {
+    server.middlewares.use(IMAGE_UPLOAD_PATH, (request, response, next) => {
+      if (request.method !== 'POST') {
+        next();
+        return;
+      }
+
+      const origin = typeof request.headers.origin === 'string' ? request.headers.origin : undefined;
+      const host = typeof request.headers.host === 'string' ? request.headers.host : undefined;
+      if (!isAllowedLocalRequest(origin, host) || request.headers['x-portfolio-admin-upload'] !== '1') {
+        jsonResponse(response, 403, { success: false, message: 'Carga local no autorizada.' });
+        return;
+      }
+
+      void (async () => {
+        try {
+          const contentTypeHeader = request.headers['content-type'];
+          const contentType = typeof contentTypeHeader === 'string'
+            ? contentTypeHeader.split(';')[0].trim().toLowerCase()
+            : '';
+          if (!ALLOWED_UPLOAD_TYPES.has(contentType)) {
+            throw new Error('Formato no compatible. Usa PNG, JPG o WebP.');
+          }
+
+          const contentLength = Number(request.headers['content-length'] || 0);
+          if (contentLength > MAX_UPLOAD_BYTES) {
+            throw new Error('La imagen supera el límite de 2 MB.');
+          }
+
+          const bytes = await readRequestBuffer(request, MAX_UPLOAD_BYTES);
+          if (bytes.length === 0) throw new Error('El archivo de imagen está vacío.');
+
+          const extension = IMAGE_EXTENSIONS[contentType];
+          const hash = createHash('sha256').update(bytes).digest('hex').slice(0, 16);
+          const fileName = `${hash}${extension}`;
+          await mkdir(PUBLIC_UPLOADS_DIR, { recursive: true });
+          await writeIfChanged(path.join(PUBLIC_UPLOADS_DIR, fileName), bytes);
+
+          const encodedOriginalName = request.headers['x-file-name'];
+          let originalName = fileName;
+          if (typeof encodedOriginalName === 'string') {
+            try {
+              originalName = decodeURIComponent(encodedOriginalName);
+            } catch {
+              originalName = encodedOriginalName;
+            }
+          }
+
+          jsonResponse(response, 200, {
+            success: true,
+            url: `/uploads/${fileName}`,
+            name: originalName.replace(/\.[a-z0-9]+$/i, ''),
+            size: bytes.length
+          });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : 'No se pudo cargar la imagen.';
+          jsonResponse(response, 400, { success: false, message });
+        }
+      })();
+    });
+
     server.middlewares.use(CONTENT_SYNC_PATH, (request, response, next) => {
       if (request.method !== 'POST') {
         next();
         return;
       }
 
-      const origin = request.headers.origin;
-      let isAllowedOrigin = false;
-
-      if (origin) {
-        try {
-          const parsedOrigin = new URL(origin);
-          isAllowedOrigin = parsedOrigin.protocol === 'http:'
-            && ['localhost', '127.0.0.1', '[::1]'].includes(parsedOrigin.hostname)
-            && parsedOrigin.host === request.headers.host;
-        } catch {
-          isAllowedOrigin = false;
-        }
-      }
-
-      if (!isAllowedOrigin || request.headers['x-portfolio-admin-sync'] !== '1') {
+      const origin = typeof request.headers.origin === 'string' ? request.headers.origin : undefined;
+      const host = typeof request.headers.host === 'string' ? request.headers.host : undefined;
+      if (!isAllowedLocalRequest(origin, host) || request.headers['x-portfolio-admin-sync'] !== '1') {
         jsonResponse(response, 403, { success: false, message: 'Sincronización local no autorizada.' });
         return;
       }
@@ -240,6 +321,11 @@ const portfolioContentSyncPlugin = (): Plugin => ({
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss(), portfolioContentSyncPlugin()],
+    server: {
+      watch: {
+        ignored: ['**/public/uploads/**', '**/src/data/portfolioContent.json']
+      }
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
