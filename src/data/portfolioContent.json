@@ -104,7 +104,7 @@
       "subtitle": "Rediseño integral del sitio web institucional de Schwager con desarrollo de plugins a medida y tableros de KPIs.",
       "company": "Schwager SA",
       "category": "saas",
-      "categoryLabel": "B2B",
+      "categoryLabel": "Web & Enterprise",
       "year": 2026,
       "status": "published",
       "isPrincipal": true,
@@ -176,15 +176,12 @@
       "id": "accuhealth-telemedicina",
       "title": "Rediseño de App de Salud & Telemonitoreo Clínico",
       "subtitle": "Evolución de la experiencia de la aplicación de salud con foco prioritario en la adopción de usuarios y simplificación de arquitectura.",
+      "company": "AccuHealth",
       "category": "mobile",
       "categoryLabel": "Healthtech & Mobile",
-      "tags": [
-        "Card Sorting",
-        "Information Architecture",
-        "User Flows",
-        "Dev Handoff"
-      ],
-      "company": "AccuHealth",
+      "year": 2025,
+      "status": "published",
+      "isPrincipal": true,
       "period": "2024 — 2025",
       "role": "Senior UX Designer",
       "team": "1 UX Designer (Carlos), 1 Medical Lead, 1 PM, 4 Mobile Engineers",
@@ -192,17 +189,21 @@
       "duration": "2024 — 2025",
       "outcome": "+30% de incremento en la tasa de adopción de pacientes",
       "summary": "Reestructuración completa de la arquitectura de información mediante card sorting, redefinición de flujos de monitoreo de signos vitales y handoff detallado para desarrollo.",
-      "coverImage": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1600&auto=format&fit=crop",
-      "aspectRatioClass": "aspect-[4/5]",
+      "coverImage": "/public/uploads/a7858f4a7771245c.png",
       "accentTint": "#059669",
-      "isFeaturedMarquee": true,
+      "tags": [
+        "Card Sorting",
+        "Information Architecture",
+        "User Flows",
+        "Dev Handoff"
+      ],
       "caseStudy": {
         "overview": "AccuHealth es una plataforma de salud y telemonitoreo donde pacientes crónicos registran sus métricas diarias y reciben seguimiento por parte de equipos clínicos.",
         "problem": "La versión anterior presentaba baja recurrencia de uso y abandono en la carga de signos vitales debido a una navegación sobrecargada y menús poco intuitivos.",
         "myRole": "Lideré el diagnóstico heurístico, sesiones de Card Sorting con pacientes, diseño de flujos de usuario (user flows), prototipado y acompañamiento constante en el handoff a desarrollo.",
-        "team": "1 Senior UX Designer (Carlos), 1 Asesor Clínico, 1 PM, 4 Desarrolladores Móviles.",
+        "team": "1 UX Designer (Carlos), 1 Medical Lead, 1 PM, 4 Mobile Engineers",
         "duration": "2024 — 2025",
-        "platform": "App Móvil iOS / Android",
+        "platform": "iOS & Android Mobile App",
         "researchMethodology": [
           "Sesiones de Card Sorting abierto y cerrado con pacientes de diversos rangos etarios.",
           "Mapeo de User Flows para el registro diario de signos vitales (presión, glucosa, peso).",
@@ -234,24 +235,18 @@
             "description": "Mejora en la valoración y cumplimiento del plan de telemonitoreo por parte de pacientes."
           }
         ]
-      },
-      "year": 2025,
-      "isPrincipal": true,
-      "status": "published"
+      }
     },
     {
       "id": "twobrains-mexico-credito",
       "title": "Product Discovery & Crédito Revolvente en México",
       "subtitle": "Investigación estratégica, identificación de riesgos legales/técnicos y definición de oportunidades de negocio para crédito financiero.",
+      "company": "Financiera Montepiedad 🇲🇽",
       "category": "fintech",
       "categoryLabel": "Fintech & Strategy",
-      "tags": [
-        "Product Discovery",
-        "Crédito Revolvente",
-        "Risk Assessment",
-        "MVP Definition"
-      ],
-      "company": "Financiera Montepiedad 🇲🇽",
+      "year": 2024,
+      "status": "published",
+      "isPrincipal": true,
       "period": "2021 — 2024",
       "role": "UX Designer",
       "team": "Product Strategist (Carlos), Legal Advisor, Tech Lead, Banking Stakeholders",
@@ -259,16 +254,21 @@
       "duration": "2021 — 2024",
       "outcome": "Definición de MVP y roadmap de expansión en servicios financieros",
       "summary": "Liderazgo de procesos de Product Discovery para soluciones de crédito revolvente, analizando la viabilidad legal y técnica con equipos multidisciplinarios.",
-      "coverImage": "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1600&auto=format&fit=crop",
-      "aspectRatioClass": "aspect-[1/1]",
+      "coverImage": "/public/uploads/a519a457964012db.png",
       "accentTint": "#d97706",
+      "tags": [
+        "Product Discovery",
+        "Crédito Revolvente",
+        "Risk Assessment",
+        "MVP Definition"
+      ],
       "caseStudy": {
         "overview": "Iniciativa de expansión financiera en el mercado mexicano para estructurar una línea de crédito revolvente digital de alta agilidad.",
         "problem": "El mercado financiero mexicano requería cumplir con estrictas normativas legales y de validación de identidad sin mermar la velocidad de conversión del usuario final.",
         "myRole": "Responsable de la investigación de Product Discovery, análisis de riesgos regulatorios y técnicos, definición del MVP y formulación de hipótesis de negocio.",
-        "team": "UX Designer (Carlos), Tech Leads bancarios, Asesores regulatorios y PMs.",
+        "team": "Product Strategist (Carlos), Legal Advisor, Tech Lead, Banking Stakeholders",
         "duration": "2021 — 2024",
-        "platform": "Fintech Web / Mobile Ecosystem",
+        "platform": "Plataforma Financiera Web / Mobile",
         "researchMethodology": [
           "Workshops de Product Discovery con stakeholders de negocio, operaciones y tecnología.",
           "Mapeo de riesgos técnicos en integraciones con burós de crédito y pasarelas.",
@@ -295,10 +295,7 @@
             "description": "Mitigación de riesgos normativos y técnicos antes de iniciar la etapa de desarrollo."
           }
         ]
-      },
-      "year": 2024,
-      "isPrincipal": true,
-      "status": "published"
+      }
     },
     {
       "id": "santaisabel-app-mvp",
@@ -401,7 +398,7 @@
       "duration": "2020 — 2021",
       "outcome": "+43% en simulaciones completadas y +12% en leads calificados",
       "summary": "Rediseño del simulador y flujo de solicitud de crédito para Coomeva, implementando componentes ágiles en WordPress, HTML, CSS y Bootstrap.",
-      "coverImage": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1600&auto=format&fit=crop",
+      "coverImage": "/public/uploads/c6a9f162aa3f9d8c.png",
       "accentTint": "#7c3aed",
       "tags": [
         "Funnel Optimization",
