@@ -21,6 +21,7 @@ const IMAGE_EXTENSIONS: Record<string, string> = {
   'image/svg+xml': '.svg',
   'image/webp': '.webp'
 };
+
 const ALLOWED_UPLOAD_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 const jsonResponse = (response: { statusCode: number; setHeader: (name: string, value: string) => void; end: (body: string) => void }, status: number, payload: unknown) => {
