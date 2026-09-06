@@ -21,6 +21,7 @@ Actualizado: 2026-09-06.
 - Las imágenes del admin se cargan directamente a `public/uploads/` sin guardar Base64 en `localStorage`; el carrusel usa dropzone con progreso individual, dos cargas simultáneas, máximo 10 archivos y 2 MB por imagen.
 - La portada se edita en un bloque compacto sin mostrar su URL, con muestra de color de 24 px; las categorías de proyectos son editables y los filtros públicos se derivan del contenido publicado.
 - Caso Schwager actualizado con estrategia UX, arquitectura multinegocio, plataforma B2B y resultados cualitativos; `npm run lint` y `npm run build` pasan al 2026-09-06.
+- Monte de Piedad actualizado con dos casos publicados: Product Discovery para crédito digital y Minmueble; se documentan research, definición de MVP, userflows, triada de diseño, Design System y señales cualitativas de impacto.
 - Memoria persistente inicial instalada en `AGENTS.md`, `state/`, `decisions/`, `gotchas/`, `logs/` y `skills/`.
 
 ## Pendiente priorizado

@@ -430,54 +430,121 @@ export const FEATURED_PROJECTS: Project[] = [
   },
   {
     id: 'twobrains-mexico-credito',
-    title: 'Product Discovery & Crédito Revolvente en México',
-    subtitle: 'Investigación estratégica, identificación de riesgos legales/técnicos y definición de oportunidades de negocio para crédito financiero.',
+    title: 'Monte de Piedad: Product Discovery para crédito digital',
+    subtitle: 'Investigación, definición de MVP y alineación de negocio, legal, tecnología y diseño para nuevas experiencias de crédito.',
     category: 'fintech',
     categoryLabel: 'Fintech & Strategy',
-    tags: ['Product Discovery', 'Crédito Revolvente', 'Risk Assessment', 'MVP Definition'],
+    tags: ['Product Discovery', 'UX Research', 'MVP Definition', 'User Flows', 'Design System', 'Fintech'],
     company: 'Financiera Montepiedad 🇲🇽',
     period: '2021 — 2024',
-    role: 'UX Designer',
-    team: 'Product Strategist (Carlos), Legal Advisor, Tech Lead, Banking Stakeholders',
-    platform: 'Plataforma Financiera Web / Mobile',
-    duration: '2021 — 2024',
-    outcome: 'Definición de MVP y roadmap de expansión en servicios financieros',
-    summary: 'Liderazgo de procesos de Product Discovery para soluciones de crédito revolvente, analizando la viabilidad legal y técnica con equipos multidisciplinarios.',
+    role: 'Product Designer',
+    team: 'Triada de diseño: Product Designer, UI Designer y Writer. Colaboración con Negocio, Legal, Tecnología y Operaciones.',
+    platform: 'Experiencias financieras Web y Mobile',
+    duration: 'Proyecto transversal · 2021 — 2024',
+    outcome: 'MVP definido y decisiones críticas alineadas entre usuarios, negocio, legal, tecnología y diseño',
+    summary: 'Lideré la investigación y definición de productos financieros digitales para Monte de Piedad. El trabajo conectó entrevistas, workshops, benchmark y analytics con decisiones de MVP, userflows, contenido, componentes y validación de implementación.',
     coverImage: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1600&auto=format&fit=crop',
     aspectRatioClass: 'aspect-[1/1]',
     accentTint: '#d97706',
     caseStudy: {
-      overview: 'Iniciativa de expansión financiera en el mercado mexicano para estructurar una línea de crédito revolvente digital de alta agilidad.',
-      problem: 'El mercado financiero mexicano requería cumplir con estrictas normativas legales y de validación de identidad sin mermar la velocidad de conversión del usuario final.',
-      myRole: 'Responsable de la investigación de Product Discovery, análisis de riesgos regulatorios y técnicos, definición del MVP y formulación de hipótesis de negocio.',
-      team: 'UX Designer (Carlos), Tech Leads bancarios, Asesores regulatorios y PMs.',
-      duration: '2021 — 2024',
-      platform: 'Fintech Web / Mobile Ecosystem',
+      overview: 'Monte de Piedad exploraba nuevas experiencias digitales para ampliar su oferta financiera en México. El trabajo involucró productos con distintas condiciones de crédito, requisitos legales y dependencias operativas, por lo que cada decisión debía ser comprensible para el usuario y viable para la organización.',
+      problem: 'El reto consistía en convertir una intención de negocio en flujos digitales claros, sin perder velocidad de conversión ni trazabilidad de las restricciones legales, técnicas y operativas. En Crédito Revolvente, la investigación mostró que el público definido inicialmente no correspondía con las necesidades y comportamientos de las personas entrevistadas.',
+      myRole: 'Como Product Designer, lideré benchmark, entrevistas, analytics y workshops. Definí el MVP de Crédito Revolvente, estructuré userflows en los demás proyectos, orienté el copy, definí componentes y guié la toma de decisiones con las áreas involucradas. También coordiné revisiones de la triada, revisé handoffs, accesibilidad y la correcta aplicación del Design System antes del desarrollo.',
+      team: 'Triada de diseño: Product Designer, UI Designer y Writer. Trabajo diario con Negocio, Legal, Tecnología, Operaciones y otras áreas involucradas.',
+      duration: 'Proyecto transversal · 2021 — 2024',
+      platform: 'Experiencias financieras Web y Mobile',
       researchMethodology: [
-        'Workshops de Product Discovery con stakeholders de negocio, operaciones y tecnología.',
-        'Mapeo de riesgos técnicos en integraciones con burós de crédito y pasarelas.',
-        'Definición de prototipos de baja y alta fidelidad para validar valor percibido.'
+        'Benchmark de productos financieros, simuladores y experiencias de solicitud para entender patrones de confianza, conversión y claridad.',
+        'Entrevistas y workshops con usuarios, Negocio, Legal, Tecnología, Operaciones y las áreas responsables del servicio.',
+        'Revisión de analytics y señales de abandono para identificar momentos críticos de los simuladores y flujos de solicitud.',
+        'Síntesis de hallazgos en arquetipos, journeys, userflows y mapas de MVP, manteniendo fuera del portafolio la información comercial sensible.'
       ],
       keyInsights: [
-        'La transparencia en comisiones, tasas de interés y plazos de pago es el factor decisivo para generar confianza en productos de crédito revolvente.',
-        'La detección temprana de cuellos de botella legales ahorró meses de iteraciones en desarrollo.'
+        'En Crédito Revolvente, el público objetivo planteado por el negocio era distinto al que apareció en entrevistas y workshops. Esa diferencia cambió la definición del MVP y las prioridades del producto.',
+        'La transparencia sobre montos, cuotas, tasas, comisiones y plazos era necesaria para que las personas pudieran evaluar el crédito con confianza.',
+        'Las decisiones legales y técnicas debían entrar al flujo desde el inicio para evitar diseñar experiencias inviables o difíciles de implementar.',
+        'WhatsApp aparecía como el canal de contacto más solicitado y debía integrarse a los recorridos de solicitud y acompañamiento.'
       ],
       designHighlights: [
-        'Estructura de MVP con validación de identidad KYC en pasos progresivos.',
-        'Simulador interactivo de cuotas y líneas de crédito disponibles en tiempo real.',
-        'Documentación estratégica de oportunidades de negocio para futuras fases.'
+        'Crédito Revolvente: redefinición del MVP a partir de la diferencia entre la audiencia esperada y la audiencia descubierta.',
+        'Userflows y journeys: definición de recorridos, dependencias, puntos de decisión y necesidades de cada etapa.',
+        'Simuladores y solicitudes: priorización de información para que el usuario pudiera entender opciones antes de comprometerse.',
+        'Triada de diseño: coordinación de dailys, revisión de tareas, resolución de bloqueantes y comentarios sobre Figma para mantener una dirección común.',
+        'Design System: definición o extensión de componentes, documentación, accesibilidad y revisión del handoff antes de pasar a desarrollo.',
+        'Canales de contacto: incorporación de WhatsApp en los flujos donde el acompañamiento era una necesidad explícita.'
       ],
       metrics: [
         {
           metric: 'MVP',
-          label: 'Alcance definido',
-          description: 'Estructuración clara del alcance funcional inicial reduciendo riesgos de ejecución.'
+          label: 'Alcance redefinido',
+          description: 'La investigación permitió ajustar el producto a una audiencia distinta de la hipótesis inicial.'
         },
         {
-          metric: 'Riesgos',
-          label: 'Alineación legal y técnica',
-          description: 'Mitigación de riesgos normativos y técnicos antes de iniciar la etapa de desarrollo.'
+          metric: 'Conversión',
+          label: 'Fricciones identificadas',
+          description: 'Analytics y research ayudaron a localizar puntos de abandono en simuladores y solicitudes.'
+        },
+        {
+          metric: 'WhatsApp',
+          label: 'Canal integrado',
+          description: 'El canal de contacto más solicitado se incorporó a los recorridos donde el usuario necesitaba acompañamiento.'
+        },
+        {
+          metric: 'DS',
+          label: 'Calidad de entrega',
+          description: 'Revisión de componentes, accesibilidad, documentación e implementación antes del desarrollo.'
         }
+      ]
+    }
+  },
+  {
+    id: 'montepiedad-minmueble',
+    title: 'Minmueble: diseño del flujo de solicitud de préstamo',
+    subtitle: 'Definición de userflows, contenido y componentes para una experiencia digital de crédito con garantía inmobiliaria.',
+    category: 'fintech',
+    categoryLabel: 'Fintech & Product Design',
+    tags: ['Product Design', 'User Flow', 'UX Writing', 'Design System', 'Fintech'],
+    company: 'Nacional Monte de Piedad 🇲🇽',
+    period: '2022',
+    role: 'Product Designer',
+    team: 'Triada de diseño: Product Designer, UI Designer y Writer. Colaboración con Negocio, Legal, Tecnología y Operaciones.',
+    platform: 'Flujo financiero Web responsive',
+    duration: 'Definición y diseño de flujo · 2022',
+    outcome: 'Flujo de solicitud estructurado por etapas, con contenido y componentes alineados al proceso de evaluación',
+    summary: 'Diseñé y guié la definición de un flujo digital para solicitar un préstamo con garantía inmobiliaria, haciendo comprensibles los pasos de datos personales, inmueble, historial crediticio, autorización y contacto con un consejero.',
+    coverImage: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1600&auto=format&fit=crop',
+    aspectRatioClass: 'aspect-[16/11]',
+    accentTint: '#9f1239',
+    caseStudy: {
+      overview: 'Minmueble requería llevar una solicitud de préstamo con garantía inmobiliaria a un flujo digital. La experiencia debía ordenar información personal, datos del inmueble, historial crediticio, autorización de consulta y acompañamiento posterior sin perder claridad en un proceso sensible.',
+      problem: 'La solicitud concentraba requisitos financieros, legales y del inmueble que podían sentirse extensos o difíciles de comprender. El reto era dar al usuario una visión clara de su avance, explicar por qué se solicitaba cada dato y mantener una ruta de salida o acompañamiento cuando surgieran dudas.',
+      myRole: 'Definí el userflow y la estructura de las etapas, orienté el copy junto al Writer, revisé la definición de componentes con el UI Designer y coordiné las revisiones con las áreas involucradas. Durante el trabajo diario resolví dudas, comenté los archivos Figma, revisé accesibilidad, documentación y handoff antes de desarrollo.',
+      team: 'Triada de diseño: Product Designer, UI Designer y Writer. Trabajo colaborativo con las áreas responsables del producto y su operación.',
+      duration: 'Definición y diseño de flujo · 2022',
+      platform: 'Flujo financiero Web responsive',
+      researchMethodology: [
+        'Revisión del proceso de solicitud y de los requisitos necesarios para evaluar a la persona, el inmueble y la garantía.',
+        'Exploración de alternativas de userflow para ordenar la solicitud en etapas comprensibles.',
+        'Trabajo colaborativo con las áreas involucradas para resolver dependencias de negocio, legal, operación y tecnología.',
+        'Revisión de contenido, componentes, accesibilidad y handoff para asegurar continuidad entre definición, diseño y desarrollo.'
+      ],
+      keyInsights: [
+        'La solicitud necesitaba mostrar el avance del usuario y separar claramente información personal, datos del inmueble e historial crediticio.',
+        'La consulta al buró requería una explicación directa sobre su propósito y una autorización que el usuario pudiera entender antes de continuar.',
+        'El contenido debía acompañar decisiones sensibles sin sobrecargar el flujo con lenguaje legal difícil de interpretar.',
+        'La experiencia necesitaba conservar un canal de ayuda para las personas que no pudieran resolver el proceso de forma autónoma.'
+      ],
+      designHighlights: [
+        'Flujo por etapas: organización progresiva de la solicitud en información personal, inmueble, historial crediticio y contacto.',
+        'Revisión de buró: preguntas y autorización presentadas dentro del contexto de la evaluación, con explicación del motivo.',
+        'Contenido orientado a la decisión: copy claro para requisitos, permisos y próximos pasos, trabajado en conjunto con el Writer.',
+        'Componentes y estados: definición de controles, formularios, validaciones y estados consistentes con el Design System.',
+        'Calidad de entrega: revisión de accesibilidad, documentación y handoff antes de que el flujo pasara a desarrollo.'
+      ],
+      metrics: [
+        { metric: 'Etapas', label: 'Progreso visible', description: 'La solicitud se estructuró como un recorrido comprensible y progresivo.' },
+        { metric: 'Copy', label: 'Decisiones explicadas', description: 'El contenido acompañó autorizaciones y requisitos sin ocultar el propósito de cada paso.' },
+        { metric: 'DS', label: 'Componentes consistentes', description: 'La definición contempló reutilización, estados, accesibilidad y documentación.' }
       ]
     }
   },
