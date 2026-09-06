@@ -153,7 +153,7 @@ const persistImageUrl = async (rawUrl: unknown): Promise<unknown> => {
     const fileName = `${hash}${extension}`;
     await mkdir(PUBLIC_UPLOADS_DIR, { recursive: true });
     await writeIfChanged(path.join(PUBLIC_UPLOADS_DIR, fileName), bytes);
-    return `/uploads/${fileName}`;
+    return `/public/uploads/${fileName}`;
   }
 
   if (url.startsWith('blob:')) {
@@ -268,7 +268,7 @@ const portfolioContentSyncPlugin = (): Plugin => ({
 
           jsonResponse(response, 200, {
             success: true,
-            url: `/uploads/${fileName}`,
+            url: `/public/uploads/${fileName}`,
             name: originalName.replace(/\.[a-z0-9]+$/i, ''),
             size: bytes.length
           });
