@@ -378,90 +378,6 @@
       }
     },
     {
-      "id": "santaisabel-app-mvp",
-      "title": "Definición del MVP — Santa Isabel App (SisaApp)",
-      "subtitle": "Metodología integral de Product Discovery, investigación con 36 usuarios, definición de arquetipos y diseño de flujos clave para la app de supermercado.",
-      "category": "mobile",
-      "categoryLabel": "E-commerce & Product Discovery",
-      "tags": [
-        "Product Discovery",
-        "User Research (36 Entrevistas)",
-        "Arquetipos & Personas",
-        "Benchmark",
-        "Épicas & HU",
-        "Mobile App"
-      ],
-      "company": "Santa Isabel",
-      "period": "2021",
-      "role": "Product Designer",
-      "team": "Célula UX/UI (Carlos), PO, Marketing, TI, Fulfilment, Servicio al Cliente",
-      "platform": "Mobile App (iOS & Android) & Web Responsive",
-      "duration": "Discovery → Definición del MVP",
-      "outcome": "Metodología integral de descubrimiento, 36 entrevistas, 5 arquetipos y backlog de épicas/HU",
-      "summary": "Desarrollo de una metodología integral de Product Discovery para SisaApp: alineación de stakeholders internos y conectados, investigación con 36 usuarios, perfilamiento demográfico, 5 arquetipos, benchmark competitivo y wireframes de flujos esenciales.",
-      "coverImage": "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop",
-      "aspectRatioClass": "aspect-[3/4]",
-      "accentTint": "#e11d48",
-      "isFeaturedMarquee": true,
-      "caseStudy": {
-        "overview": "Para SisaApp se desarrolló una metodología integral cuyo enfoque se centró en identificar a los usuarios y las necesidades clave, priorizar las características esenciales e iterar rápidamente para crear una experiencia de usuario óptima.",
-        "problem": "El problema: Los clientes de supermercado demandan rapidez, variedad de productos y maximización de presupuesto, pero enfrentan quiebres de experiencia críticos como falta de stock post-compra, desconfianza en el criterio del shopper para frescos (FFW) y sustitutos no adecuados.",
-        "myRole": "Lideré el proceso de Discovery: mapeo de stakeholders internos y conectados, 36 entrevistas en profundidad, perfilamiento de clientes Santaisabel.cl, definición de 5 arquetipos (con fichas detalladas de Claudia y Loreto), benchmarking de 5 competidores y diseño de wireframes de flujos críticos (PDP, Direcciones, Login).",
-        "team": "Célula UX/UI, Product Owner, Marketing, TI, Fulfilment, Servicio al Cliente, Shoppers y Repartidores.",
-        "duration": "Discovery → Definición del MVP",
-        "platform": "App Móvil iOS / Android & Web Responsive",
-        "researchMethodology": [
-          "Mapeo de Stakeholders: 1ra etapa con internos (PO, TI, Marketing, Servicio al cliente, Célula UX/UI, Fulfilment) y 2da etapa con externos y conectados (Shoppers, Repartidores, Clientes Santa Isabel) para identificar oportunidades del MVP evolutivo.",
-          "Entrevistas en profundidad (Muestra 36 usuarios): Sesiones online de 30-45 min con hombres y mujeres en Chile (22 a 54 años): 12 clientes Santaisabel.cl, 12 clientes Sala y 12 clientes de otras marcas (Lider, Tottus, Cornershop, Rappi).",
-          "Perfilamiento Cuantitativo: Predominio de segmentos socioeconómicos C2, C3 y D (~80-83%), mujeres (76.9%), Generación X (50.2%) y Millennials (31.9%), con concentración geográfica >40.4% en Santiago, Maipú, Valparaíso y Viña del Mar.",
-          "Análisis de Competidores: Benchmarking exhaustivo de Jumbo, Lider, Cornershop, Rappi y Walmart analizando tiempos de entrega, catálogo, PDP, carro, checkout y gestión de direcciones.",
-          "Épicas e Historias de Usuario (HU): Estructuración del backlog para Onboarding, Catálogo/Búsqueda, Carro de compra, Medios de pago, Seguimiento y Perfil."
-        ],
-        "keyInsights": [
-          "Medios de pago y control: 62% de clientes Santa Isabel usa débito por control presupuestario y 38% crédito Cencosud Scotiabank por acumulación de puntos y promociones. En otras marcas, 50% débito y 25% crédito.",
-          "Quiebres de experiencia: Fricciones por falta de stock post-compra, información incompleta en fichas de producto (ingredientes, sellos), desconfianza en selección de frescos y descontento con sustitutos.",
-          "5 Arquetipos de usuario: 1) Busquilla (descubre nuevos productos a buen precio), 2) Ahorrador (ofertas y despacho gratis), 3) Comparador (revisa y contrasta precios entre cadenas), 4) Autoindulgente (compras para regalonear a la familia), 5) Planificador (compra estructurada por listas).",
-          "Personas clave: Claudia (Busquilla, 45 años, busca promociones y optimizar tiempo) y Loreto (Planificadora, 38 años, compra semanal organizada con foco en alimentación infantil)."
-        ],
-        "designHighlights": [
-          "PDP (Página de Detalle de Producto): Wireframe con detalle de compra, botón agregar al carro, visualización de ingredientes, sellos y tablas nutricionales.",
-          "Direcciones & Cobertura: Geolocalización precisa, detalle de dirección y selector de cobertura con estimación de despacho.",
-          "Flujos de Login & Onboarding: Flujos responsive para iOS y Android con inicio de sesión seguro, registro simplificado y recuperación de acceso.",
-          "Carro de Compra & Checkout: Flujo con desglose claro de promociones, selección de medios de pago y opción de sustitutos guiada."
-        ],
-        "metrics": [
-          {
-            "metric": "36",
-            "label": "Entrevistas de Usuario",
-            "description": "Muestra representativa de clientes Santaisabel.cl, Sala y usuarios de marcas competidoras."
-          },
-          {
-            "metric": "5",
-            "label": "Arquetipos Identificados",
-            "description": "Segmentación conductual y motivacional (Busquilla, Ahorrador, Comparador, Autoindulgente, Planificador)."
-          },
-          {
-            "metric": "~83%",
-            "label": "Segmento Core (C2/C3/D)",
-            "description": "Diseño enfocado en la base principal de clientes sensibles a precio y promociones."
-          },
-          {
-            "metric": "MVP",
-            "label": "Backlog Estructurado",
-            "description": "Definición completa de épicas e historias de usuario listas para desarrollo."
-          }
-        ],
-        "testimonial": {
-          "quote": "Para SisaApp desarrolló una metodología integral cuyo enfoque se centró en identificar a los usuarios y las necesidades clave, priorizar las características esenciales e iterar rápidamente para crear una experiencia de usuario óptima.",
-          "author": "Definición del MVP · SisaApp",
-          "position": "Santa Isabel"
-        }
-      },
-      "year": 2021,
-      "isPrincipal": true,
-      "status": "published"
-    },
-    {
       "id": "ecosistemas-coomeva-credito",
       "title": "Optimización de Funnel de Crédito Coomeva",
       "subtitle": "Optimización del embudo digital de conversión para créditos con implementación en WordPress, HTML y CSS.",
@@ -516,6 +432,89 @@
             "description": "Incremento directo en solicitudes de crédito enviadas a ejecutivos comerciales."
           }
         ]
+      }
+    },
+    {
+      "id": "santaisabel-app-mvp",
+      "title": "Definición del MVP — Santa Isabel App (SisaApp)",
+      "subtitle": "Metodología integral de Product Discovery, investigación con 36 usuarios, definición de arquetipos y diseño de flujos clave para la app de supermercado.",
+      "company": "Santa Isabel",
+      "category": "mobile",
+      "categoryLabel": "E-commerce & Product Discovery",
+      "year": 2021,
+      "status": "published",
+      "isPrincipal": true,
+      "period": "2021",
+      "role": "Product Designer",
+      "team": "Célula UX/UI (Carlos), PO, Marketing, TI, Fulfilment, Servicio al Cliente",
+      "platform": "Mobile App (iOS & Android) & Web Responsive",
+      "duration": "Discovery → Definición del MVP",
+      "outcome": "Metodología integral de descubrimiento, 36 entrevistas, 5 arquetipos y backlog de épicas/HU",
+      "summary": "Desarrollo de una metodología integral de Product Discovery para SisaApp: alineación de stakeholders internos y conectados, investigación con 36 usuarios, perfilamiento demográfico, 5 arquetipos, benchmark competitivo y wireframes de flujos esenciales.",
+      "coverImage": "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop",
+      "accentTint": "#e11d48",
+      "prototypeUrl": "https://embed.figma.com/design/Za29VrUaorsxrFT8yJ3TGF/Sisa-App-MVP?node-id=3297-141077&embed-host=share",
+      "tags": [
+        "Product Discovery",
+        "User Research (36 Entrevistas)",
+        "Arquetipos & Personas",
+        "Benchmark",
+        "Épicas & HU",
+        "Mobile App"
+      ],
+      "caseStudy": {
+        "overview": "Para SisaApp se desarrolló una metodología integral cuyo enfoque se centró en identificar a los usuarios y las necesidades clave, priorizar las características esenciales e iterar rápidamente para crear una experiencia de usuario óptima.",
+        "problem": "El problema: Los clientes de supermercado demandan rapidez, variedad de productos y maximización de presupuesto, pero enfrentan quiebres de experiencia críticos como falta de stock post-compra, desconfianza en el criterio del shopper para frescos (FFW) y sustitutos no adecuados.",
+        "myRole": "Lideré el proceso de Discovery: mapeo de stakeholders internos y conectados, 36 entrevistas en profundidad, perfilamiento de clientes Santaisabel.cl, definición de 5 arquetipos (con fichas detalladas de Claudia y Loreto), benchmarking de 5 competidores y diseño de wireframes de flujos críticos (PDP, Direcciones, Login).",
+        "team": "Célula UX/UI (Carlos), PO, Marketing, TI, Fulfilment, Servicio al Cliente",
+        "duration": "Discovery → Definición del MVP",
+        "platform": "Mobile App (iOS & Android) & Web Responsive",
+        "researchMethodology": [
+          "Mapeo de Stakeholders: 1ra etapa con internos (PO, TI, Marketing, Servicio al cliente, Célula UX/UI, Fulfilment) y 2da etapa con externos y conectados (Shoppers, Repartidores, Clientes Santa Isabel) para identificar oportunidades del MVP evolutivo.",
+          "Entrevistas en profundidad (Muestra 36 usuarios): Sesiones online de 30-45 min con hombres y mujeres en Chile (22 a 54 años): 12 clientes Santaisabel.cl, 12 clientes Sala y 12 clientes de otras marcas (Lider, Tottus, Cornershop, Rappi).",
+          "Perfilamiento Cuantitativo: Predominio de segmentos socioeconómicos C2, C3 y D (~80-83%), mujeres (76.9%), Generación X (50.2%) y Millennials (31.9%), con concentración geográfica >40.4% en Santiago, Maipú, Valparaíso y Viña del Mar.",
+          "Análisis de Competidores: Benchmarking exhaustivo de Jumbo, Lider, Cornershop, Rappi y Walmart analizando tiempos de entrega, catálogo, PDP, carro, checkout y gestión de direcciones.",
+          "Épicas e Historias de Usuario (HU): Estructuración del backlog para Onboarding, Catálogo/Búsqueda, Carro de compra, Medios de pago, Seguimiento y Perfil."
+        ],
+        "keyInsights": [
+          "Medios de pago y control: 62% de clientes Santa Isabel usa débito por control presupuestario y 38% crédito Cencosud Scotiabank por acumulación de puntos y promociones. En otras marcas, 50% débito y 25% crédito.",
+          "Quiebres de experiencia: Fricciones por falta de stock post-compra, información incompleta en fichas de producto (ingredientes, sellos), desconfianza en selección de frescos y descontento con sustitutos.",
+          "5 Arquetipos de usuario: 1) Busquilla (descubre nuevos productos a buen precio), 2) Ahorrador (ofertas y despacho gratis), 3) Comparador (revisa y contrasta precios entre cadenas), 4) Autoindulgente (compras para regalonear a la familia), 5) Planificador (compra estructurada por listas).",
+          "Personas clave: Claudia (Busquilla, 45 años, busca promociones y optimizar tiempo) y Loreto (Planificadora, 38 años, compra semanal organizada con foco en alimentación infantil)."
+        ],
+        "designHighlights": [
+          "PDP (Página de Detalle de Producto): Wireframe con detalle de compra, botón agregar al carro, visualización de ingredientes, sellos y tablas nutricionales.",
+          "Direcciones & Cobertura: Geolocalización precisa, detalle de dirección y selector de cobertura con estimación de despacho.",
+          "Flujos de Login & Onboarding: Flujos responsive para iOS y Android con inicio de sesión seguro, registro simplificado y recuperación de acceso.",
+          "Carro de Compra & Checkout: Flujo con desglose claro de promociones, selección de medios de pago y opción de sustitutos guiada."
+        ],
+        "metrics": [
+          {
+            "metric": "36",
+            "label": "Entrevistas de Usuario",
+            "description": "Muestra representativa de clientes Santaisabel.cl, Sala y usuarios de marcas competidoras."
+          },
+          {
+            "metric": "5",
+            "label": "Arquetipos Identificados",
+            "description": "Segmentación conductual y motivacional (Busquilla, Ahorrador, Comparador, Autoindulgente, Planificador)."
+          },
+          {
+            "metric": "~83%",
+            "label": "Segmento Core (C2/C3/D)",
+            "description": "Diseño enfocado en la base principal de clientes sensibles a precio y promociones."
+          },
+          {
+            "metric": "MVP",
+            "label": "Backlog Estructurado",
+            "description": "Definición completa de épicas e historias de usuario listas para desarrollo."
+          }
+        ],
+        "testimonial": {
+          "quote": "Para SisaApp desarrolló una metodología integral cuyo enfoque se centró en identificar a los usuarios y las necesidades clave, priorizar las características esenciales e iterar rápidamente para crear una experiencia de usuario óptima.",
+          "author": "Definición del MVP · SisaApp",
+          "position": "Santa Isabel"
+        }
       }
     },
     {
