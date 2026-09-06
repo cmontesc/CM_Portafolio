@@ -100,50 +100,79 @@
     },
     {
       "id": "schwager-rediseño-web",
-      "title": "Rediseño Web End-to-End & Arquitectura SEO Schwager",
-      "subtitle": "Rediseño integral del sitio web institucional de Schwager con desarrollo de plugins a medida y tableros de KPIs.",
-      "company": "Schwager SA",
+      "title": "Schwager: Estrategia UX, Arquitectura Multinegocio y Plataforma Digital B2B",
+      "subtitle": "Rediseño end-to-end del ecosistema digital de Schwager, desde la investigación con gerencias y la arquitectura de información hasta el diseño, desarrollo WordPress, SEO y medición de resultados.",
+      "company": "Schwager S.A.",
       "category": "saas",
       "categoryLabel": "Web & Enterprise",
       "year": 2026,
       "status": "published",
       "isPrincipal": true,
-      "period": "2026",
-      "role": "UX Engineer",
-      "team": "UX Engineer (Carlos), Desarrolladores WordPress/PHP, Content & SEO Manager",
-      "platform": "Plataforma Web Responsive",
-      "duration": "2026 (Proyecto independiente)",
-      "outcome": "Arquitectura de información redefinida, plugins a medida y KPIs en tiempo real",
-      "summary": "Entrevistas a stakeholders clave, estructuración de la arquitectura de contenidos, desarrollo de extensiones a medida y definición de tableros de medición de KPIs.",
+      "period": "2025–2026",
+      "role": "Senior Product Designer · UX Strategist · UX Engineer",
+      "team": "Carlos Montes — estrategia, UX research, arquitectura de información, UX/UI y desarrollo. Trabajo colaborativo con gerencia general, líderes de las unidades de negocio, comunicaciones, contenidos y equipos técnicos de Schwager.",
+      "platform": "WordPress · Web responsive · CMS personalizado",
+      "duration": "24 semanas · Proyecto independiente",
+      "outcome": "Unificación del ecosistema corporativo, nueva arquitectura multinegocio, administración autónoma de contenidos y base de medición con GA4, Search Console y tableros de KPIs.",
+      "summary": "Lideré la transformación del sitio corporativo de Schwager en una plataforma digital escalable, capaz de representar al holding, sus unidades de negocio y su relación con inversionistas. El proyecto integró entrevistas con stakeholders, research B2B, benchmark, arquitectura de información, estrategia de contenidos, UX/UI, desarrollo personalizado en WordPress y analítica digital.",
       "coverImage": "/uploads/af3a33cdfd12cc83.png",
       "accentTint": "#2563eb",
       "tags": [
+        "UX Research",
         "Stakeholder Interviews",
-        "Content Architecture",
-        "SEO Optimization",
-        "KPI Dashboards",
-        "WordPress"
+        "UX Strategy",
+        "Information Architecture",
+        "Content Strategy",
+        "UX/UI Design",
+        "Design System",
+        "WordPress",
+        "Elementor",
+        "ACF",
+        "PHP",
+        "JavaScript",
+        "SEO",
+        "GA4",
+        "Google Tag Manager",
+        "Search Console",
+        "Looker Studio",
+        "Responsive Design",
+        "WCAG"
       ],
       "caseStudy": {
-        "overview": "Schwager SA requería renovar por completo su presencia digital para comunicar con solidez sus diversas líneas de negocio industriales y corporativas.",
-        "problem": "El sitio web presentaba una estructura desactualizada, dificultades para que los equipos internos publicaran contenidos y nula visibilidad sobre el rendimiento del tráfico y KPIs.",
-        "myRole": "Lideré el rediseño end-to-end: entrevistas a stakeholders clave, definición de la arquitectura de información, desarrollo personalizado de plugins en WordPress/PHP, mejoras en SEO y creación de tableros de KPIs.",
-        "team": "UX Engineer (Carlos), Desarrolladores WordPress/PHP, Content & SEO Manager",
-        "duration": "2026 (Proyecto independiente)",
-        "platform": "Plataforma Web Responsive",
+        "overview": "Schwager es un holding industrial con presencia en minería, energía, biogás, logística y otros servicios especializados. Su sitio web debía cumplir simultáneamente dos funciones: comunicar la solidez y transparencia de una sociedad anónima abierta y presentar con claridad las capacidades de sus diferentes unidades de negocio. El desafío no era solamente modernizar la interfaz. Era necesario construir un ecosistema digital coherente que permitiera a clientes, potenciales inversionistas y otros públicos encontrar rápidamente información relevante, comprender la propuesta de valor de cada negocio y acceder a antecedentes técnicos, corporativos y financieros.",
+        "problem": "La estructura anterior no representaba adecuadamente el modelo de holding ni permitía diferenciar con claridad sus unidades de negocio. Los contenidos técnicos se encontraban dispersos, la información para inversionistas era difícil de localizar y los equipos internos dependían de soporte técnico para publicar documentos, proyectos y noticias. A esto se sumaban una baja jerarquización de los servicios, escasa visibilidad de las credenciales industriales, poca conexión entre páginas y falta de información integrada sobre tráfico, búsquedas y conversiones. El reto consistió en simplificar un ecosistema corporativo complejo sin perder profundidad técnica ni identidad de negocio.",
+        "myRole": "Lideré el proyecto de extremo a extremo, conectando necesidades de negocio, experiencia de usuario, contenido, tecnología y medición. Mis responsabilidades incluyeron planificación y definición del alcance; entrevistas con gerentes y líderes de las unidades; investigación del mercado industrial B2B; auditoría de contenidos y posicionamiento SEO; benchmark de competidores directos y referentes internacionales; definición de audiencias, necesidades y recorridos; arquitectura de información del holding y sus unidades; estrategia y jerarquización de contenidos; diseño de wireframes, interfaz y componentes reutilizables; implementación responsive en WordPress; desarrollo y configuración de funcionalidades personalizadas; optimización SEO técnica y semántica; integración de GA4, Google Tag Manager y Search Console; definición de tableros de seguimiento y KPIs; y validación continua con stakeholders.",
+        "team": "Carlos Montes — estrategia, UX research, arquitectura de información, UX/UI y desarrollo. Trabajo colaborativo con gerencia general, líderes de las unidades de negocio, comunicaciones, contenidos y equipos técnicos de Schwager.",
+        "duration": "24 semanas · Proyecto independiente",
+        "platform": "WordPress · Web responsive · CMS personalizado",
         "researchMethodology": [
-          "Entrevistas individuales con directores y líderes de las unidades de negocio.",
-          "Auditoría heurística de contenidos y análisis de posicionamiento SEO existente.",
-          "Benchmarking de sitios corporativos industriales globales."
+          "Diagnóstico del sitio, su estructura, contenidos y posicionamiento, seguido de entrevistas individuales con representantes de gerencia general, minería, biogás, logística y otras unidades para comprender sus objetivos, servicios, públicos, diferenciadores y necesidades de comunicación.",
+          "Auditoría heurística y revisión de la experiencia existente.",
+          "Inventario y evaluación de contenidos.",
+          "Análisis de búsquedas y oportunidades SEO.",
+          "Benchmark UX, contenido, conversión y posicionamiento.",
+          "Definición de públicos y necesidades de información.",
+          "Identificación de factores de confianza en decisiones B2B.",
+          "Revisión conjunta de propuestas con stakeholders.",
+          "Síntesis de la evidencia en principios de arquitectura, mensajes estratégicos y requerimientos funcionales para el nuevo sitio."
         ],
         "keyInsights": [
-          "Los clientes corporativos necesitan acceder directamente a fichas técnicas y certificaciones en menos de dos clics.",
-          "Los editores de contenido requerían un panel simplificado que evitara errores de formato."
+          "El sitio debía cumplir dos funciones principales: informar a accionistas e inversionistas y conectar a los usuarios con las unidades de negocio del holding.",
+          "La confianza era más determinante que el precio. Los clientes buscaban experiencia comprobable, solidez empresarial, seguridad operacional, capacidades técnicas, certificaciones y casos reales.",
+          "Cada unidad resolvía problemas distintos y necesitaba una propuesta de valor propia dentro de una experiencia corporativa común.",
+          "Los clientes industriales investigaban proveedores antes de iniciar un contacto comercial, por lo que la claridad de los servicios, las credenciales y el posicionamiento orgánico eran fundamentales.",
+          "Los contenidos estaban organizados desde la estructura interna de la empresa, no desde las preguntas y necesidades de los usuarios.",
+          "La publicación de documentos, noticias y proyectos debía quedar en manos de los equipos responsables, sin depender permanentemente de desarrollo.",
+          "La medición no podía incorporarse al final: eventos, conversiones y páginas estratégicas debían definirse junto con la experiencia."
         ],
         "designHighlights": [
-          "Desarrollo personalizado de plugins para agilizar y estandarizar la publicación de noticias y servicios.",
-          "Jerarquía visual moderna optimizada para indexación y posicionamiento orgánico en motores de búsqueda.",
-          "Tableros de control con KPIs clave configurados para seguimiento continuo del equipo directivo."
+          "Arquitectura multinegocio: se diseñó una estructura corporativa que presenta a Schwager como holding y permite acceder a cada unidad de negocio mediante recorridos diferenciados, manteniendo coherencia visual y navegación transversal.",
+          "Experiencia para inversionistas: se reorganizaron estados financieros, memorias, juntas de accionistas, información bursátil y documentos corporativos para reducir pasos y mejorar su acceso.",
+          "Contenidos orientados a necesidades: los servicios se estructuraron desde los problemas que resuelven, sus capacidades, industrias, proyectos y factores de confianza, evitando depender exclusivamente del lenguaje interno de la organización.",
+          "Sistema visual escalable: se definieron componentes, jerarquías, patrones responsive y reglas de contenido reutilizables para extender la plataforma a nuevas páginas y unidades sin perder consistencia.",
+          "Administración personalizada: se desarrollaron campos y funcionalidades en WordPress para que los equipos pudieran administrar documentos, noticias, proyectos, mapas y contenidos especializados con mayor autonomía.",
+          "Operaciones y cobertura: se implementó un mapa interactivo que permite visualizar proyectos y operaciones por ubicación y unidad de negocio, incluyendo presencia nacional e internacional.",
+          "SEO y analítica: se mejoró la estructura semántica, se organizaron páginas según intención de búsqueda y se integraron GA4, Google Tag Manager y Search Console para monitorear tráfico, comportamiento y conversiones."
         ],
         "interfaceImages": [
           "/uploads/ec5b6e6c84c5731c.png",
@@ -156,26 +185,41 @@
         ],
         "metrics": [
           {
-            "metric": "+15%",
-            "label": "Rendimiento SEO",
-            "description": "Mejora en visibilidad orgánica y arquitectura semántica estructurada."
+            "metric": "24 semanas",
+            "label": "Planificación y ejecución del proyecto end-to-end.",
+            "description": ""
           },
           {
-            "metric": "100%",
-            "label": "Stakeholders Alineados",
-            "description": "Integración de las necesidades de todas las divisiones corporativas en un único ecosistema."
+            "metric": "5 frentes estratégicos",
+            "label": "Gerencia general y unidades de negocio consideradas durante el levantamiento.",
+            "description": ""
           },
           {
-            "metric": "Design System",
-            "label": "Implementación",
-            "description": "Documentación y aplicación en la totalidad del sitio, cumpliendo normas AA de accesibilidad."
+            "metric": "1 ecosistema corporativo",
+            "label": "Integración del sitio institucional, negocios e información para inversionistas.",
+            "description": ""
           },
           {
-            "metric": "Personalización",
-            "label": "Administración",
-            "description": "Desarrollo de plugins con el fin de optimizar y facilitar la actualización de contenidos."
+            "metric": "Administración autónoma",
+            "label": "Publicación estructurada de documentos, noticias, proyectos y contenidos sin modificar código.",
+            "description": ""
+          },
+          {
+            "metric": "Analítica integrada",
+            "label": "Implementación de GA4, Google Tag Manager, Search Console y tableros de seguimiento.",
+            "description": ""
+          },
+          {
+            "metric": "Alineación de gerencias en torno a una arquitectura y narrativa común",
+            "label": "",
+            "description": ""
           }
-        ]
+        ],
+        "testimonial": {
+          "quote": "Este proyecto confirmó que rediseñar un ecosistema B2B no consiste solamente en reorganizar pantallas. Fue necesario comprender cómo funciona el negocio, traducir servicios técnicos a un lenguaje accesible y equilibrar las necesidades de clientes, inversionistas y equipos internos. El principal aprendizaje fue integrar UX, contenido, SEO, desarrollo y analítica desde el comienzo. Esa mirada permitió construir una plataforma que no solo comunica mejor, sino que también puede administrarse, medirse y evolucionar en el tiempo.",
+          "author": "",
+          "position": ""
+        }
       }
     },
     {
