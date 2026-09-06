@@ -108,3 +108,16 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #64748d;
 }
+
+/* Custom */
+.grid.gap-3 {
+    display: flex;
+    flex-wrap: wrap;
+}
+.flex.items-center.gap-2 input.w-full.px-3.py-2.bg-white.border.border-\[\#e5edf5\].rounded-\[4px\].text-\[13px\].text-\[\#061b31\].focus\:outline-none.focus\:border-\[\#533afd\].font-light {
+    max-width: 100px;
+}
+.min-w-0.flex-1.space-y-3 div label {
+    display: inline-flex;
+    margin-top: 16px;
+}
