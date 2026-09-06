@@ -1,6 +1,6 @@
 # Estado actual
 
-Actualizado: 2026-09-05.
+Actualizado: 2026-09-06.
 
 ## Hecho
 
@@ -20,7 +20,7 @@ Actualizado: 2026-09-05.
 - La edición de portadas ya no muestra el catálogo completo del repositorio; las imágenes archivadas y sin uso se pueden borrar definitivamente desde la sección Imágenes.
 - Las imágenes del admin se cargan directamente a `public/uploads/` sin guardar Base64 en `localStorage`; el carrusel usa dropzone con progreso individual, dos cargas simultáneas, máximo 10 archivos y 2 MB por imagen.
 - La portada se edita en un bloque compacto sin mostrar su URL, con muestra de color de 24 px; las categorías de proyectos son editables y los filtros públicos se derivan del contenido publicado.
-- `npm run lint` y `npm run build` pasan al 2026-09-05.
+- Caso Schwager actualizado con estrategia UX, arquitectura multinegocio, plataforma B2B y resultados cualitativos; `npm run lint` y `npm run build` pasan al 2026-09-06.
 - Memoria persistente inicial instalada en `AGENTS.md`, `state/`, `decisions/`, `gotchas/`, `logs/` y `skills/`.
 
 ## Pendiente priorizado

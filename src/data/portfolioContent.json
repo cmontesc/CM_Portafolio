@@ -197,6 +197,9 @@
       "summary": "Reestructuración completa de la arquitectura de información mediante card sorting, redefinición de flujos de monitoreo de signos vitales y handoff detallado para desarrollo.",
       "coverImage": "/uploads/abf229eaa718119f.png",
       "accentTint": "#059669",
+      "links": {
+        "vercel": "https://mio-ds-docs.vercel.app/"
+      },
       "tags": [
         "Card Sorting",
         "Information Architecture",
