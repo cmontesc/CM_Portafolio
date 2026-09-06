@@ -366,6 +366,12 @@ const replaceLegacyDataImages = (projectsList: Project[], fallbackProjects: Proj
   });
 };
 
+const mergeStoredProjectsWithVersionedContent = (storedProjects: Project[], versionedProjects: Project[]): Project[] => {
+  const storedIds = new Set(storedProjects.map((project) => project.id));
+  const missingVersionedProjects = versionedProjects.filter((project) => !storedIds.has(project.id));
+  return missingVersionedProjects.length > 0 ? [...storedProjects, ...missingVersionedProjects] : storedProjects;
+};
+
 const buildDuplicatedProjectId = (projectId: string, projectsList: Project[]) => {
   const baseId = `${projectId}-copia`;
   let nextId = baseId;
@@ -467,7 +473,8 @@ export const PortfolioDataProvider: React.FC<{ children: React.ReactNode }> = ({
       if (savedProjects) {
         const parsedProjects = JSON.parse(savedProjects) as Project[];
         if (Array.isArray(parsedProjects) && parsedProjects.length > 0) {
-          const sorted = formatDefaultProjects(replaceLegacyDataImages(parsedProjects, initialSortedProjects));
+          const mergedProjects = mergeStoredProjectsWithVersionedContent(parsedProjects, initialSortedProjects);
+          const sorted = formatDefaultProjects(replaceLegacyDataImages(mergedProjects, initialSortedProjects));
           setProjects(sorted);
           saveStoredValue(LOCAL_STORAGE_KEY_PROJECTS, sorted);
           setImageAssets((current) => {

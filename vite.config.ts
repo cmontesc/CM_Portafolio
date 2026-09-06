@@ -323,6 +323,9 @@ export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss(), portfolioContentSyncPlugin()],
     server: {
+      host: '0.0.0.0',
+      port: 3000,
+      strictPort: true,
       watch: {
         ignored: ['**/src/data/portfolioContent.json']
       }
