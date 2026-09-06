@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+.project-cover-editor-media {
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 640px) {
+  .project-cover-editor-media {
+    width: 224px;
+    flex-basis: 224px;
+  }
+}
+
 @theme {
   --font-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;

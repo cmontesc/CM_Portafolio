@@ -40,6 +40,14 @@ export const parseBooleanValue = (val: any): boolean => {
   return ['si', 'sí', 'yes', 'true', '1', 'principal', 'destacado', 'x'].includes(str);
 };
 
+const toCategorySlug = (value: string) => value
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase()
+  .trim()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '');
+
 /* =========================================================================
    1. EXPORT / GENERATE EXCEL WORKBOOKS
    ========================================================================= */
@@ -173,7 +181,7 @@ export const generateProjectsWorkbook = (projects = FEATURED_PROJECTS): XLSX.Wor
       ['Estado Publicación', p.status || 'published', 'published = visible en sitio, draft = guardado como borrador'],
       ['Principal en Home', p.isPrincipal ?? true ? 'Sí' : 'No', 'Indica si se muestra en Home (Máx 6 en Home, ordenados por año)'],
       ['Empresa / Cliente', p.company, 'Nombre de la empresa o cliente'],
-      ['Categoría', p.category, 'mobile | health | fintech | saas | ecommerce | design-system'],
+      ['Categoría', p.category, 'Identificador editable de la categoría'],
       ['Etiqueta Categoría', p.categoryLabel, 'Texto visible (ej: Healthtech y aplicación móvil)'],
       ['Rol Desempeñado', p.role, 'Tu rol en el proyecto'],
       ['Equipo', p.team, 'Miembros y roles del equipo'],
@@ -518,15 +526,14 @@ export const parseProjectsExcel = async (
     const isPrincipal = rawPrincipal !== undefined ? parseBooleanValue(rawPrincipal) : true;
 
     // Category
-    const categoryRaw = (pMap['categoría'] || pMap['categoria'] || 'saas').toLowerCase();
-    let category: Project['category'] = 'saas';
+    const categoryLabel = pMap['etiqueta categoría'] || pMap['etiqueta categoria'] || pMap['categoría'] || 'Product Design';
+    const categoryRaw = (pMap['categoría'] || pMap['categoria'] || categoryLabel || 'saas').toLowerCase();
+    let category: Project['category'] = toCategorySlug(categoryRaw) || 'saas';
     if (categoryRaw.includes('mobile') || categoryRaw.includes('app')) category = 'mobile';
     else if (categoryRaw.includes('health') || categoryRaw.includes('salud')) category = 'health';
     else if (categoryRaw.includes('fintech') || categoryRaw.includes('crédito') || categoryRaw.includes('financ')) category = 'fintech';
     else if (categoryRaw.includes('ecom') || categoryRaw.includes('comercio')) category = 'ecommerce';
     else if (categoryRaw.includes('design') || categoryRaw.includes('sistema')) category = 'design-system';
-
-    const categoryLabel = pMap['etiqueta categoría'] || pMap['etiqueta categoria'] || pMap['categoría'] || 'Product Design';
     const role = pMap['rol desempeñado'] || pMap['rol'] || 'Product Designer';
     const team = pMap['equipo'] || 'Célula multidisciplinaria (Carlos Montes, PM, Devs)';
     const platform = pMap['plataforma'] || 'Web & Mobile';

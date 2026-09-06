@@ -9,14 +9,6 @@ interface HomeViewProps {
   onSelectProject: (project: Project) => void;
 }
 
-const CATEGORY_CHIPS = [
-  { id: 'all', label: 'Todos los proyectos' },
-  { id: 'mobile', label: 'E-commerce y aplicaciones' },
-  { id: 'health', label: 'Salud y healthtech' },
-  { id: 'fintech', label: 'Fintech y crédito' },
-  { id: 'saas', label: 'Web empresarial' }
-] as const;
-
 export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onSelectProject }) => {
   const { portfolioOwner, recruiterMetrics, projects, homeProjects } = usePortfolioData();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -28,6 +20,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onSelectProject 
   // 'all' shows top 6 principal projects (sorted by year)
   // Specific category filters from full projects list (sorted by year)
   const publishedProjects = projects.filter((p) => p.status === 'published');
+  const categoryChips = [
+    { id: 'all', label: 'Todos los proyectos' },
+    ...Array.from(
+      new Map(publishedProjects.map((project) => [project.category, project.categoryLabel])).entries(),
+      ([id, label]) => ({ id, label })
+    )
+  ];
   const displayedProjects = selectedCategory === 'all'
     ? homeProjects
     : publishedProjects.filter((p) => p.category === selectedCategory);
@@ -123,7 +122,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onSelectProject 
 
         {/* Category Filter Chips (Pill 9999px) */}
         <div className="flex flex-wrap items-center gap-2 pt-1">
-          {CATEGORY_CHIPS.map((chip) => {
+          {categoryChips.map((chip) => {
             const isSelected = selectedCategory === chip.id;
             const count = chip.id === 'all'
               ? homeProjects.length

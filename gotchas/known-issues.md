@@ -24,9 +24,14 @@
 - Causa: varios proyectos dependen de URLs externas, incluidas imágenes de Unsplash.
 - Mitigación: guardar y optimizar localmente las imágenes críticas; comprobar peso y rutas con el build.
 
+## Datos Base64 heredados pueden llenar `localStorage`
+
+- Señal: al guardar o subir una imagen, el administrador deja de renderizar o el navegador informa `QuotaExceededError`.
+- Causa: versiones anteriores duplicaban la imagen Base64 en proyectos, repositorio e historial local.
+- Mitigación: las cargas nuevas se guardan directamente en `public/uploads/` y solo persisten su ruta. Al iniciar, el contexto reemplaza o retira imágenes Base64 heredadas y controla cualquier error de escritura sin dejar la página en blanco.
+
 ## `dashboard.html` puede estar desactualizado
 
 - Señal: afirma, por ejemplo, que no existe historial aunque el código ya mantiene hasta 30 versiones.
 - Causa: es un diagnóstico estático de 1.782 líneas, no una fuente de ejecución.
 - Mitigación: confirmar contra código y `state/current.md`; consultar solo secciones puntuales.
-

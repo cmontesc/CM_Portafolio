@@ -57,7 +57,7 @@ export interface Project {
   year?: number;
   isPrincipal?: boolean;
   status?: ContentStatus;
-  category: 'fintech' | 'saas' | 'design-system' | 'mobile' | 'ecommerce' | 'health';
+  category: string;
   categoryLabel: string;
   tags: string[];
   company: string;

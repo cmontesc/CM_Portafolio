@@ -23,15 +23,14 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [layoutMode, setLayoutMode] = useState<'masonry' | 'editorial' | 'rows'>('masonry');
 
+  const publishedProjects = projects.filter((p) => p.status === 'published');
   const categories = [
     { id: 'all', label: 'Todos los proyectos' },
-    { id: 'mobile', label: 'E-commerce y aplicaciones' },
-    { id: 'health', label: 'Salud y healthtech' },
-    { id: 'fintech', label: 'Fintech y crédito' },
-    { id: 'saas', label: 'Web empresarial' }
+    ...Array.from(
+      new Map(publishedProjects.map((project) => [project.category, project.categoryLabel])).entries(),
+      ([id, label]) => ({ id, label })
+    )
   ];
-
-  const publishedProjects = projects.filter((p) => p.status === 'published');
   const filteredProjects = publishedProjects.filter((p) => {
     const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
     return matchesCategory;
