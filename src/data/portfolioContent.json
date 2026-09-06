@@ -185,9 +185,9 @@
         ],
         "metrics": [
           {
-            "metric": "24 semanas",
-            "label": "Planificación y ejecución del proyecto end-to-end.",
-            "description": ""
+            "metric": "Roadmap",
+            "label": "24 semanas",
+            "description": "Planificación y ejecución del proyecto end to end."
           },
           {
             "metric": "5 frentes estratégicos",
@@ -211,14 +211,14 @@
           },
           {
             "metric": "Alineación de gerencias en torno a una arquitectura y narrativa común",
-            "label": "",
+            "label": "Impacto",
             "description": ""
           }
         ],
         "testimonial": {
           "quote": "Este proyecto confirmó que rediseñar un ecosistema B2B no consiste solamente en reorganizar pantallas. Fue necesario comprender cómo funciona el negocio, traducir servicios técnicos a un lenguaje accesible y equilibrar las necesidades de clientes, inversionistas y equipos internos. El principal aprendizaje fue integrar UX, contenido, SEO, desarrollo y analítica desde el comienzo. Esa mirada permitió construir una plataforma que no solo comunica mejor, sino que también puede administrarse, medirse y evolucionar en el tiempo.",
-          "author": "",
-          "position": ""
+          "author": "Carlos Montes",
+          "position": "Aprendizaje del proyecto"
         }
       }
     },
