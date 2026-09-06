@@ -324,7 +324,7 @@ export default defineConfig(() => {
     plugins: [react(), tailwindcss(), portfolioContentSyncPlugin()],
     server: {
       watch: {
-        ignored: ['**/src/data/portfolioContent.json']
+        ignored: ['**/public/uploads/**', '**/src/data/portfolioContent.json']
       }
     },
     resolve: {
