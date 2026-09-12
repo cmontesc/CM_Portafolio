@@ -11,5 +11,7 @@ Los registros canónicos viven en `../decisions/`; este archivo solo permite des
   - ADR-005: snapshot versionado y portadas persistentes desde el administrador local.
 - `../decisions/2026-09-05-categorias-editables.md`
   - ADR-006: categorías editables derivadas de los proyectos.
+- `../decisions/2026-09-11-contenido-editorial-opcional.md`
+  - ADR-007: contenido editorial opcional y retrocompatible por proyecto.
 
 Para una decisión nueva, añadir un registro fechado en `decisions/` y una sola línea aquí. No copiar el razonamiento completo.

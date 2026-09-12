@@ -1,3 +1,5 @@
+import { EditorialCaseStudy } from '../components/EditorialCaseStudy';
+import { safeUrl } from '../projectEditorial';
 import React, { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, MessageSquare, CheckCircle2, Quote, Users, Calendar, Laptop, Target, Award, Figma, Github, Globe2 } from 'lucide-react';
 import { Project, AppView } from '../types';
@@ -37,11 +39,14 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
     }
   })();
 
+  const editorial = project.caseStudy.editorial;
+  const liveUrl = safeUrl(editorial?.liveUrl);
   const externalLinks = [
+    liveUrl && editorial?.liveLabel?.trim() ? { label: editorial.liveLabel, href: liveUrl, icon: Globe2, target: editorial.openInNewTab ? '_blank' : '_self' } : null,
     figmaUrl ? { label: 'Figma', href: figmaUrl, icon: Figma } : null,
     project.links?.vercel ? { label: 'Vercel', href: project.links.vercel, icon: Globe2 } : null,
     project.links?.git ? { label: 'Git', href: project.links.git, icon: Github } : null
-  ].filter(Boolean) as Array<{ label: string; href: string; icon: typeof Figma }>;
+  ].filter(Boolean) as Array<{ label: string; href: string; icon: typeof Figma; target?: string }>;
   const interfaceImages = useMemo(() => {
     return (project.caseStudy.interfaceImages || [])
       .map((image) => image.trim())
@@ -145,7 +150,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
               <a
                 key={link.label}
                 href={link.href}
-                target="_blank"
+                target={link.target || "_blank"}
                 rel="noopener noreferrer"
                 className="min-h-[38px] px-3.5 py-1.5 bg-[#f8fafd] hover:bg-[#e8e9ff] text-[#061b31] hover:text-[#533afd] border border-[#e5edf5] rounded-[4px] text-[13px] font-normal transition-colors flex items-center gap-2"
               >
@@ -162,12 +167,13 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
       <div className="w-full aspect-[16/9] bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] overflow-hidden">
         <img
           src={project.coverImage}
-          alt={project.title}
+          alt={editorial?.coverAlt || project.title}
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
       </div>
 
+      {editorial ? <EditorialCaseStudy project={project} /> : <>
       {/* Context & Problem Definition */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="p-6 bg-white border border-[#e5edf5] rounded-[4px] space-y-3">
@@ -373,6 +379,8 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
           </div>
         </div>
       )}
+
+      </>}
 
       {/* Bottom Switcher & Fast Conversion Step: WhatsApp in 1-Click */}
       <div className="border-t border-[#e5edf5] pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">

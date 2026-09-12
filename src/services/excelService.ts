@@ -1,3 +1,4 @@
+import { ProjectEditorial, validateEditorial } from '../projectEditorial';
 import * as XLSX from 'xlsx';
 import { 
   Project, 
@@ -209,7 +210,11 @@ export const generateProjectsWorkbook = (projects = FEATURED_PROJECTS): XLSX.Wor
       ['Métrica 4', formatMetric(p.caseStudy.metrics[3]), 'Formato: Valor | Etiqueta | Descripción'],
       ['Testimonio Cita', p.caseStudy.testimonial?.quote || '', 'Frase destacada o aprendizaje'],
       ['Testimonio Autor', p.caseStudy.testimonial?.author || '', 'Autor del testimonio o aprendizaje'],
-      ['Testimonio Cargo', p.caseStudy.testimonial?.position || '', 'Cargo o contexto']
+      ['Testimonio Cargo', p.caseStudy.testimonial?.position || '', 'Cargo o contexto'],
+      ...(p.caseStudy.editorial ? [
+        ['Contenido Editorial JSON', JSON.stringify(p.caseStudy.editorial), 'Secciones opcionales, galería y resultados; conservar para el respaldo.'],
+        ['Revisión de Contenido', String(p.contentRevision || 0), 'Revisión adoptada del snapshot local']
+      ] : [])
     ];
 
     const wsProject = XLSX.utils.aoa_to_sheet(projectData);
@@ -607,7 +612,15 @@ export const parseProjectsExcel = async (
     const author = pMap['testimonio autor'] || '';
     const position = pMap['testimonio cargo'] || '';
 
+    let editorial: ProjectEditorial | undefined;
+    if (pMap['contenido editorial json']) {
+      const parsed = JSON.parse(pMap['contenido editorial json']);
+      const error = validateEditorial(parsed);
+      if (error) throw new Error(`${title}: ${error}`);
+      editorial = parsed;
+    }
     const project: Project = {
+      ...(editorial ? { contentRevision: Number(pMap['revisión de contenido']) || 0 } : {}),
       id,
       title,
       subtitle,
@@ -630,6 +643,7 @@ export const parseProjectsExcel = async (
       prototypeUrl,
       links: Object.values(links).some(Boolean) ? links : undefined,
       caseStudy: {
+        ...(editorial ? { editorial } : {}),
         overview,
         problem,
         myRole,
@@ -640,7 +654,7 @@ export const parseProjectsExcel = async (
         keyInsights,
         designHighlights,
         interfaceImages: interfaceImages.length > 0 ? interfaceImages : undefined,
-        metrics,
+        metrics: editorial?.results !== undefined ? [] : metrics,
         testimonial: quote ? { quote, author: author || 'Cliente', position: position || 'Líder del Proyecto' } : undefined
       }
     };

@@ -1,3 +1,4 @@
+import type { ProjectEditorial } from './projectEditorial';
 export type AppView = 'home' | 'curriculum' | 'projects' | 'project-detail' | 'contact' | 'design-system';
 
 export type ContentStatus = 'published' | 'draft' | 'archived';
@@ -21,6 +22,7 @@ export interface PortfolioOwner {
 }
 
 export interface ProjectCaseStudy {
+  editorial?: ProjectEditorial;
   overview: string;
   problem: string;
   myRole: string;
@@ -51,6 +53,7 @@ export interface ProjectExternalLinks {
 }
 
 export interface Project {
+  contentRevision?: number;
   id: string;
   title: string;
   subtitle: string;

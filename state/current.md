@@ -1,6 +1,6 @@
 # Estado actual
 
-Actualizado: 2026-09-06.
+Actualizado: 2026-09-11.
 
 ## Hecho
 
@@ -20,7 +20,7 @@ Actualizado: 2026-09-06.
 - La edición de portadas ya no muestra el catálogo completo del repositorio; las imágenes archivadas y sin uso se pueden borrar definitivamente desde la sección Imágenes.
 - Las imágenes del admin se cargan directamente a `public/uploads/` sin guardar Base64 en `localStorage`; el carrusel usa dropzone con progreso individual, dos cargas simultáneas, máximo 10 archivos y 2 MB por imagen.
 - La portada se edita en un bloque compacto sin mostrar su URL, con muestra de color de 24 px; las categorías de proyectos son editables y los filtros públicos se derivan del contenido publicado.
-- Caso Schwager actualizado con estrategia UX, arquitectura multinegocio, plataforma B2B y resultados cualitativos; `npm run lint` y `npm run build` pasan al 2026-09-06.
+- Caso Schwager ampliado como estudio end-to-end: audiencias, proceso, hallazgos vinculados a decisiones, arquitectura multinegocio, galería clasificada, restricciones, resultados cualitativos, aprendizajes y enlace publicado. Los campos son opcionales, editables desde el admin local y compatibles con Excel; los otros siete proyectos conservan su render anterior.
 - Monte de Piedad actualizado con dos casos publicados: Product Discovery para crédito digital y Minmueble; se documentan research, definición de MVP, userflows, triada de diseño, Design System y señales cualitativas de impacto.
 - Memoria persistente inicial instalada en `AGENTS.md`, `state/`, `decisions/`, `gotchas/`, `logs/` y `skills/`.
 
@@ -28,7 +28,7 @@ Actualizado: 2026-09-06.
 
 1. Definir dónde y cómo se publicará el sitio público.
 2. Respaldar/optimizar imágenes externas críticas para evitar roturas y reducir peso.
-3. Probar los flujos públicos y del admin en móvil y navegador real.
+3. Completar una revisión integral del resto de los flujos públicos y del admin en móvil; Schwager ya fue verificado en 375, 768 y 1440 px.
 4. Decidir si el contenido seguirá siendo local o migrará a un backend/CMS compartido.
 5. Revisar consistencia de idioma en textos públicos.
 
@@ -38,7 +38,7 @@ Actualizado: 2026-09-06.
 
 ## Verificación rápida
 
-- Desarrollo: `npm run dev` → `http://127.0.0.1:3000/`.
-- Admin: `http://127.0.0.1:3000/admin-local.html`.
+- Desarrollo: `npm run dev` sin sobrescribir host → `http://localhost:3000/`.
+- Admin: `http://localhost:3000/admin-local.html`.
 - Tipos: `npm run lint`.
 - Producción: `npm run build` y comprobar que `dist/` no contiene el admin.

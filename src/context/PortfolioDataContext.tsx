@@ -221,6 +221,17 @@ const syncImageRepository = (projectsList: Project[], currentAssets: ImageAsset[
   projectsList.forEach((project) => {
     addUsage(project.coverImage, project.id);
     (project.caseStudy.interfaceImages || []).forEach((image) => addUsage(image, project.id));
+    const editorial = project.caseStudy.editorial;
+    if (editorial) {
+      const images = [
+        ...(editorial.gallery || []).map(item => item.src),
+        ...(editorial.decisionCases || []).map(item => item.image),
+        ...(editorial.processSteps || []).map(item => item.image),
+        ...(editorial.beforeAfter || []).flatMap(item => [item.beforeImage, item.afterImage]),
+        editorial.informationArchitecture?.beforeImage, editorial.informationArchitecture?.afterImage
+      ];
+      images.filter(Boolean).forEach(image => addUsage(image, project.id));
+    }
   });
 
   const byUrl = new Map(currentAssets.map((asset) => [asset.url, asset]));
@@ -296,6 +307,7 @@ const normalizeProject = (project: Project): Project => {
     tags: (project.tags || []).filter(Boolean),
     links: normalizeLinks(project.links),
     caseStudy: {
+      ...(caseStudy.editorial ? { editorial: caseStudy.editorial } : {}),
       overview: caseStudy.overview || project.summary,
       problem: caseStudy.problem,
       myRole: caseStudy.myRole || project.role,
@@ -369,7 +381,12 @@ const replaceLegacyDataImages = (projectsList: Project[], fallbackProjects: Proj
 const mergeStoredProjectsWithVersionedContent = (storedProjects: Project[], versionedProjects: Project[]): Project[] => {
   const storedIds = new Set(storedProjects.map((project) => project.id));
   const missingVersionedProjects = versionedProjects.filter((project) => !storedIds.has(project.id));
-  return missingVersionedProjects.length > 0 ? [...storedProjects, ...missingVersionedProjects] : storedProjects;
+  // Adopt explicitly revised content once; subsequent admin edits retain that revision.
+  const currentProjects = storedProjects.map((stored) => {
+    const versioned = versionedProjects.find((item) => item.id === stored.id);
+    return versioned && (versioned.contentRevision || 0) > (stored.contentRevision || 0) ? versioned : stored;
+  });
+  return [...currentProjects, ...missingVersionedProjects];
 };
 
 const buildDuplicatedProjectId = (projectId: string, projectsList: Project[]) => {

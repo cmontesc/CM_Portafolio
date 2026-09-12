@@ -35,3 +35,9 @@
 - Señal: afirma, por ejemplo, que no existe historial aunque el código ya mantiene hasta 30 versiones.
 - Causa: es un diagnóstico estático de 1.782 líneas, no una fuente de ejecución.
 - Mitigación: confirmar contra código y `state/current.md`; consultar solo secciones puntuales.
+
+## Orígenes locales muestran contenidos distintos
+
+- Señal verificada el 2026-09-11: `127.0.0.1:3000` mostraba portadas antiguas de Unsplash; `localhost:3000` cargaba las imágenes de `public/uploads/` y textos actualizados.
+- Causa: el contexto carga datos de `localStorage`, separado por origen, sobre el snapshot versionado. Mismo commit y puerto no implican el mismo contenido visible.
+- Mitigación: iniciar con `npm run dev` y abrir siempre `http://localhost:3000/`, como en la tarea «Iniciar». No borrar almacenamiento ni abrir el admin del origen antiguo para diagnosticar: podría sincronizar contenido obsoleto al JSON.
