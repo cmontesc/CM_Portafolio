@@ -308,11 +308,6 @@
          GOOGLE ANALYTICS
     ====================================================== -->
 
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-RG7VERNXSH">
-    </script>
-
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -320,9 +315,17 @@
         dataLayer.push(arguments);
       }
 
-      gtag('js', new Date());
+      const isLocalAnalyticsHost = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+      if (!isLocalAnalyticsHost) {
+        const googleTag = document.createElement('script');
+        googleTag.async = true;
+        googleTag.src = 'https://www.googletagmanager.com/gtag/js?id=G-RG7VERNXSH';
+        document.head.appendChild(googleTag);
 
-      gtag('config', 'G-RG7VERNXSH');
+        gtag('js', new Date());
+        // Page views are emitted by the SPA when its React view changes.
+        gtag('config', 'G-RG7VERNXSH', { send_page_view: false });
+      }
     </script>
 
   </head>

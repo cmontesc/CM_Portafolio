@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
+import { AnalyticsTracker } from './components/AnalyticsTracker';
 import { HomeView } from './views/HomeView';
 import { CurriculumView } from './views/CurriculumView';
 import { ProjectsView } from './views/ProjectsView';
@@ -91,6 +92,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-[#061b31] font-sans antialiased selection:bg-[#e8e9ff] selection:text-[#533afd] flex flex-col justify-between">
+      <AnalyticsTracker currentView={currentView} selectedProject={selectedProject} />
       {/* 1. Global Navigation Header */}
       <Header
         currentView={currentView}
@@ -98,7 +100,7 @@ export default function App() {
       />
 
       {/* 2. Main Content View Container (Strict 80px+ horizontal padding on desktop & 1320px max-width) */}
-      <main className="max-w-[1320px] mx-auto px-6 sm:px-12 md:px-16 lg:px-20 w-full flex-1">
+      <main data-analytics-view-root className="max-w-[1320px] mx-auto px-6 sm:px-12 md:px-16 lg:px-20 w-full flex-1">
         {/* Screen 1: Home */}
         {currentView === 'home' && (
           <HomeView
