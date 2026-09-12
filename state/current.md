@@ -16,6 +16,7 @@ Actualizado: 2026-09-11.
 - Los casos de estudio admiten un carrusel opcional de imágenes de interfaz, persistido desde el admin y compatible con Excel.
 - Repositorio Git inicializado en `main` y enlazado al remoto público `https://github.com/cmontesc/CM_Portafolio`.
 - Google Analytics configurado en el sitio público con la propiedad `G-RG7VERNXSH`.
+- Analytics mide pageviews virtuales de la SPA, aperturas de contenidos y secciones visibles durante al menos un segundo. La propiedad CM_Portafolio tiene nueve dimensiones personalizadas para analizar contenido, sección, categoría y empresa; localhost queda excluido de la recolección real.
 - El administrador sincroniza contenido automáticamente con `src/data/portfolioContent.json`; las portadas locales persistentes se guardan en `public/uploads/`.
 - La edición de portadas ya no muestra el catálogo completo del repositorio; las imágenes archivadas y sin uso se pueden borrar definitivamente desde la sección Imágenes.
 - Las imágenes del admin se cargan directamente a `public/uploads/` sin guardar Base64 en `localStorage`; el carrusel usa dropzone con progreso individual, dos cargas simultáneas, máximo 10 archivos y 2 MB por imagen.

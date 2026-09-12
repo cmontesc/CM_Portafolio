@@ -13,5 +13,7 @@ Los registros canónicos viven en `../decisions/`; este archivo solo permite des
   - ADR-006: categorías editables derivadas de los proyectos.
 - `../decisions/2026-09-11-contenido-editorial-opcional.md`
   - ADR-007: contenido editorial opcional y retrocompatible por proyecto.
+- `../decisions/2026-09-11-analitica-contenidos-spa.md`
+  - ADR-008: pageviews virtuales y eventos de contenido/sección para GA4.
 
 Para una decisión nueva, añadir un registro fechado en `decisions/` y una sola línea aquí. No copiar el razonamiento completo.
