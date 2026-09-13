@@ -12,7 +12,7 @@ El sistema visual **Olivia** (nombrado en honor a mi hija) se fundamenta en la c
 1. **Jerarquía Whisper-Weight (300 Light)**: Los títulos y encabezados de gran escala se ejecutan en peso liviano (`font-light` / 300) con tracking negativo matemáticamente calibrado, generando alto contraste y elegancia sin saturación visual.
 2. **Geometría Rigurosa (4px Radius)**: Todas las tarjetas, botones, inputs y contenedores modulares utilizan un radio de esquina uniforme de **4px** (`rounded-[4px]`), reservando `rounded-full` exclusivamente para badges y chips de categoría píldora.
 3. **Lienzo Limpio y Bordes de 1px**: Ausencia de sombras pesadas (*drop shadows*) o efectos de cristal difuminado (*glassmorphism*). La profundidad se logra mediante contrastes de superficie sutiles (blanco puro `#ffffff` y niebla `#f8fafd`) enmarcados por bordes precisos de 1px (`#e5edf5`).
-4. **Espaciado Rítmico de Contenedor**: Contenedor principal de contenido con ancho máximo estricto de **1320px**, con padding horizontal en escritorio de **80px** (`px-6 md:px-12 lg:px-20`) y separación vertical de secciones de **96px** (`py-12 md:py-24`).
+4. **Espaciado Rítmico de Contenedor**: Contenedor principal de contenido con ancho máximo estricto de **1320px**, con padding horizontal en escritorio de **80px** (`px-6 sm:px-12 md:px-16 lg:px-20`) y separación de secciones Home de **64 / 80 / 96px**; casos de estudio de **48px**.
 
 ---
 
@@ -53,19 +53,21 @@ El sistema visual **Olivia** (nombrado en honor a mi hija) se fundamenta en la c
 
 ## 3. Sistema Tipográfico & Escala
 
-**Fuentes:** `Inter Tight` (títulos y display) y `Inter` (cuerpo de texto y metadatos).
+**Fuente aplicada:** `Inter Tight` en títulos, cuerpo y UI (`--font-sans` y `--font-display` en `src/index.css`). Inter y Sohne no se aplican como familias separadas. Peso 300 en títulos principales y lectura, 400 en controles, 500 en énfasis editorial puntual.
 
-```
-Display (H1 Hero)       → 56px (Desktop) / 40px (Mobile) | Line Height: 1.03 | Tracking: -1.40px | Weight: 300
-Heading Large (H2)      → 48px (Desktop) / 36px (Mobile) | Line Height: 1.03 | Tracking: -0.96px | Weight: 300
-Heading (H3)            → 32px (Desktop) / 26px (Mobile) | Line Height: 1.10 | Tracking: -0.64px | Weight: 300
-Heading Small (H4)      → 26px (Desktop) / 22px (Mobile) | Line Height: 1.12 | Tracking: -0.26px | Weight: 300
-Subheading (H5)         → 22px (Desktop) / 18px (Mobile) | Line Height: 1.10 | Tracking: -0.22px | Weight: 300
-Body Large              → 20px (Desktop) / 17px (Mobile) | Line Height: 1.40 | Tracking: -0.20px | Weight: 300
-Body Regular            → 16px (Desktop) / 15px (Mobile) | Line Height: 1.50 | Tracking: -0.16px | Weight: 300
-Body Small / UI         → 14px (Desktop) / 13px (Mobile) | Line Height: 1.40 | Tracking: -0.14px | Weight: 400
-Caption / Metadata      → 12px (Desktop) / 11px (Mobile) | Line Height: 1.45 | Tracking: -0.12px | Weight: 400 (Uppercase)
-```
+| Uso actual | Móvil → sm (640px) → md (768px) | Interlineado / tracking |
+| :--- | :--- | :--- |
+| H1 Home | 36 → 46 → 56px | 1.05 → 1.03 / -1.4px |
+| H1 catálogo | 36 → 48 → 48px | 1.03 / -0.96px |
+| H1 caso de estudio | 32 → 44 → 50px | 1.12 / tight |
+| H2 Home | 26 → 32 → 32px | normal / -0.64px |
+| H2 editorial | 22px | normal / tight |
+| Introducción Home | 16 → 18 → 19px | 1.625 / -0.16px |
+| Lectura editorial | 14 → 16 → 16px | 1.625 |
+| UI | 13–14px | según control / peso 400 |
+| Metadatos | 11–12px | según contexto |
+
+La escala visible documenta clases aplicadas; no implica variables CSS `--text-*`. Números tabulares mediante `font-feature-settings: 'ss01' on, 'tnum' on`.
 
 ---
 
@@ -77,16 +79,31 @@ Caption / Metadata      → 12px (Desktop) / 11px (Mobile) | Line Height: 1.45 |
 - **Botón Ghost Outline (Indigo)**: `bg-white hover:bg-[#e8e9ff] text-[#533afd] border border-[#b9b9f9] px-5 py-2.5 text-[14px] font-normal`.
 - **Botón Ghost Neutral**: `bg-[#f8fafd] hover:bg-[#e5edf5] text-[#061b31] border border-[#e5edf5] px-4 py-2 text-[13px] font-normal`.
 
-### Tarjetas de Proyecto (Product Cards)
-- **Contenedor**: `bg-white border border-[#e5edf5] rounded-[4px] overflow-hidden hover:border-[#b9b9f9] transition-all duration-200`.
-- **Imagen / Mockup**: Proporción 16:10 o altura uniforme con `bg-[#f8fafd]`.
-- **Padding Interior**: `p-6 md:p-8 space-y-4`.
-- **Chips de Categoría**: `px-3 py-1 bg-[#f8fafd] text-[#50617a] text-[12px] rounded-full border border-[#e5edf5] whitespace-nowrap`.
+### Tarjetas y catálogo
+- Fuente: `src/components/ProjectCard.tsx`. La documentación reutiliza este componente con proyectos publicados, sin réplicas estáticas.
+- Mosaico: 1 / 2 / 3 columnas (base / sm / lg). Editorial: 1 / 2 columnas (base / sm). Ambas usan altura 420 / 490px (base / sm), imagen `object-cover`, título y CTA visibles en móvil y overlay al hover/foco de teclado.
+- Filas: una columna, altura uniforme 430 / 340 / 300px (base / sm / lg), overlay oscuro permanente; impacto lateral desde lg.
+- Categorías derivadas del contenido publicado; etiquetas Figma, Vercel y Git según enlaces disponibles. Selección mediante clic, Enter o Espacio; foco índigo de 2px.
+- Bordes Frost de 1px, radio de 4px. El overlay tonal oscuro sirve a la legibilidad de imágenes; no es un gradiente multicolor decorativo.
+- Esmeralda se usa para señales de impacto y rosa para errores; no son nuevos acentos de marca.
 
-### Barra de Métricas de Reclutador
-- **Banda de Ancho Completo**: `w-full bg-[#f8fafd] border-y border-[#e5edf5] py-12 md:py-16`.
-- **Retícula Interior**: Contenedor centrado `max-w-[1320px] mx-auto px-6 md:px-12 lg:px-20 grid grid-cols-2 lg:grid-cols-4 gap-8`.
-- **Números de Impacto**: `text-[36px] sm:text-[44px] font-light text-[#061b31] tracking-tight tabular-nums`.
+### Home y navegación
+- Home muestra hasta seis principales publicados; fallback a publicados si no hay principales.
+- Banda de métricas Mist: `py-8 sm:py-12`, dos columnas y cuatro desde md, cifras 30 / 40 / 48px, gap 24 / 32 / 40px.
+- Header de 64px, navegación desktop desde md y menú hamburguesa en móvil. Seleccionar una vista cierra el menú; no se usa scroll horizontal.
+- Contenedor público: máximo 1320px, padding 24 / 48 / 64 / 80px (base / sm / md / lg).
+
+### Casos de estudio y evidencia
+- Ficha con metadatos en 2 / 4 columnas, introducción de 18 / 20px y separación de secciones de 48px.
+- Carrusel opcional 16:9 con `object-contain`, anterior/siguiente e indicadores cuando hay más de una imagen.
+- `EditorialCaseStudy` incorpora audiencias, proceso, hallazgo → decisión → solución, arquitectura, antes/después, restricciones y aprendizajes. Paneles Mist con padding 20 / 24px y títulos de sección de 22px.
+- Galería editorial: solo evidencias públicas con URL y texto alternativo válidos, ordenadas por su orden editorial; imágenes sin recorte, con título/categoría/descripción cuando existen.
+- Resultados cuantitativos, operativos y organizacionales: cifras solo si están verificadas; omitir secciones vacías. Testimonios solo con autorización registrada.
+
+### Documentación viva
+- `DesignSystemView.tsx` lee el bloque `@theme` desde `src/index.css` para mostrar y copiar la misma definición.
+- La escala, radios y espaciados descriptivos no se presentan como tokens exportados si no existen en CSS.
+- Las invariantes de 4px, bordes y ausencia de sombras oscuras siguen vigentes. Algunas implementaciones heredadas del sitio conservan detalles fuera de esas normas; documentar el estado no los convierte en nuevas reglas.
 
 ---
 
@@ -102,8 +119,8 @@ Caption / Metadata      → 12px (Desktop) / 11px (Mobile) | Line Height: 1.45 |
 
 ## 6. Sincronización de Datos vía Excel (`.xlsx`) y Panel Admin
 
-El gestor de contenidos reside en una ruta protegida (`admin`) con control de acceso por credenciales:
-- **Puerta de Entrada (Login Gate)**: Formulario seguro con usuario y contraseña, visibilidad configurable y sesión guardada en `sessionStorage`.
+El gestor de contenidos es local, en `admin-local.html`, excluido del build público:
+- **Puerta de Entrada (Login Gate)**: Validación de usuario y contraseña en el cliente, sin seguridad de producción, visibilidad configurable y sesión guardada en `sessionStorage`.
 - **`curriculum.xlsx`**:
   - Pestaña 1: `Perfil_Contacto` (Datos personales, links, resumen bio).
   - Pestañas 2+: Una pestaña por empresa con estructura estándar (`Rol`, `Periodo`, `Tipo`, `Descripcion`, `Logros`, `Skills`).

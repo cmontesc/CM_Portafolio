@@ -1,10 +1,10 @@
 # Estado actual
 
-Actualizado: 2026-09-11.
+Actualizado: 2026-09-13.
 
 ## Hecho
 
-- SPA pública con Home, currículum, catálogo, detalle de proyecto, contacto y documentación visual.
+- SPA pública con Home, currículum, catálogo, detalle, contacto y Olivia homologado: componentes reales, tres vistas, patrones editoriales y tokens CSS vigentes.
 - Administrador disponible solo en desarrollo local mediante `admin-local.html`.
 - Edición de perfil, currículum y proyectos; estados de publicación, duplicado, archivo y restauración.
 - Importación/exportación Excel de currículum y proyectos.
@@ -23,7 +23,7 @@ Actualizado: 2026-09-11.
 - La portada se edita en un bloque compacto sin mostrar su URL, con muestra de color de 24 px; las categorías de proyectos son editables y los filtros públicos se derivan del contenido publicado.
 - Caso Schwager ampliado como estudio end-to-end: audiencias, proceso, hallazgos vinculados a decisiones, arquitectura multinegocio, galería clasificada, restricciones, resultados cualitativos, aprendizajes y enlace publicado. Los campos son opcionales, editables desde el admin local y compatibles con Excel; los otros siete proyectos conservan su render anterior.
 - Monte de Piedad actualizado con dos casos publicados: Product Discovery para crédito digital y Minmueble; se documentan research, definición de MVP, userflows, triada de diseño, Design System y señales cualitativas de impacto.
-- Memoria persistente inicial instalada en `AGENTS.md`, `state/`, `decisions/`, `gotchas/`, `logs/` y `skills/`.
+- Carpeta activa depurada; respaldos de Vite y Schwager, diagnóstico, script puntual, OG e imagen sin referencias están en `deprecado/`, excluido de TypeScript/Tailwind. Inventario: `deprecado/README.md`.
 
 ## Pendiente priorizado
 

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source not "../deprecado";
 
 .project-cover-editor-media {
   width: 100%;

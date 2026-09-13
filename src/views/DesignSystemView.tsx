@@ -5,9 +5,6 @@ import {
   Check, 
   ArrowRight, 
   ArrowUpRight, 
-  CheckCircle2, 
-  Smartphone, 
-  Activity, 
   TrendingUp, 
   ShieldCheck, 
   Code2, 
@@ -18,7 +15,16 @@ import {
   Sliders
 } from 'lucide-react';
 
+import { ProjectCard } from '../components/ProjectCard';
+import { EditorialCaseStudy } from '../components/EditorialCaseStudy';
+import { usePortfolioData } from '../context/PortfolioDataContext';
+import type { Project } from '../types';
+import stylesheet from '../index.css?raw';
+
+const themeDefinition = stylesheet.match(/@theme\s*\{[^}]*\}/)?.[0] ?? '';
+
 interface DesignSystemViewProps {
+  onSelectProject: (project: Project) => void;
   onShowToast?: (msg: string) => void;
 }
 
@@ -56,27 +62,27 @@ const COLOR_TOKENS: ColorToken[] = [
 ];
 
 const TYPOGRAPHY_SCALE = [
-  { role: 'display', size: '56px', sizeSm: '40px', lineHeight: '1.03', tracking: '-1.4px', weight: '300', sample: 'Diseño de Productos Digitales', token: '--text-display' },
-  { role: 'heading-lg', size: '48px', sizeSm: '36px', lineHeight: '1.03', tracking: '-0.96px', weight: '300', sample: 'Experiencias Claras y Funcionales', token: '--text-heading-lg' },
-  { role: 'heading', size: '32px', sizeSm: '26px', lineHeight: '1.10', tracking: '-0.64px', weight: '300', sample: 'Proyectos destacados e impacto', token: '--text-heading' },
-  { role: 'heading-sm', size: '26px', sizeSm: '22px', lineHeight: '1.12', tracking: '-0.26px', weight: '300', sample: 'Arquitectura de Información & UI', token: '--text-heading-sm' },
-  { role: 'subheading', size: '22px', sizeSm: '18px', lineHeight: '1.10', tracking: '-0.22px', weight: '300', sample: 'Sistemas escalables en fintech y salud', token: '--text-subheading' },
-  { role: 'body-lg', size: '20px', sizeSm: '17px', lineHeight: '1.40', tracking: '-0.20px', weight: '300', sample: 'Diseñador de Productos Digitales con más de 10 años creando interfaces limpias.', token: '--text-body-lg' },
-  { role: 'body', size: '16px', sizeSm: '15px', lineHeight: '1.20', tracking: '-0.16px', weight: '300', sample: 'Investigación con usuarios, definición de flujos, wireframes y sistemas de diseño.', token: '--text-body' },
-  { role: 'body-sm', size: '14px', sizeSm: '13px', lineHeight: '1.40', tracking: '-0.14px', weight: '400', sample: 'Acciones de navegación, textos de botones y etiquetas de campos interactivos.', token: '--text-body-sm' },
-  { role: 'caption', size: '12px', sizeSm: '11px', lineHeight: '1.45', tracking: '-0.12px', weight: '400', sample: 'METADATOS · CATEGORÍAS · FIGMA PROTOTYPE · 2026', token: '--text-caption' },
+  { role: 'H1 · Home', size: '56px', sizeSm: '36px', sizeMd: '46px', lineHeight: '1.03', tracking: '-1.4px', weight: '300', sample: 'Hola, soy Carlos.' },
+  { role: 'H1 · Catálogo', size: '48px', sizeSm: '36px', sizeMd: '48px', lineHeight: '1.03', tracking: '-0.96px', weight: '300', sample: 'Casos de estudio y proyectos' },
+  { role: 'H1 · Caso de estudio', size: '50px', sizeSm: '32px', sizeMd: '44px', lineHeight: '1.12', tracking: '-0.025em', weight: '300', sample: 'Diseño de productos digitales' },
+  { role: 'H2 · Home', size: '32px', sizeSm: '26px', sizeMd: '32px', lineHeight: '1.5', tracking: '-0.64px', weight: '300', sample: 'Proyectos destacados' },
+  { role: 'H2 · Editorial', size: '22px', sizeSm: '22px', sizeMd: '22px', lineHeight: '1.5', tracking: '-0.025em', weight: '300', sample: 'Hallazgo → decisión → solución' },
+  { role: 'Introducción · Home', size: '19px', sizeSm: '16px', sizeMd: '18px', lineHeight: '1.625', tracking: '-0.16px', weight: '300', sample: 'Comprender el problema antes de definir la solución.' },
+  { role: 'Lectura · Editorial', size: '16px', sizeSm: '14px', sizeMd: '16px', lineHeight: '1.625', tracking: 'normal', weight: '300', sample: 'Investigación con usuarios, definición de flujos y sistemas de diseño.' },
+  { role: 'UI · Acciones', size: '14px', sizeSm: '14px', sizeMd: '14px', lineHeight: '1.5', tracking: '-0.14px', weight: '400', sample: 'Ver experiencia · Ver todos los proyectos' },
+  { role: 'Metadatos', size: '12px', sizeSm: '11px', sizeMd: '12px', lineHeight: '1.5', tracking: '-0.12px', weight: '400', sample: 'Categoría · Plataforma · Periodo' },
 ];
 
 const SPACING_TOKENS = [
   { name: 'spacing-8', value: '8px', rem: '0.5rem', use: 'Gap entre elementos compactos, padding de tags' },
   { name: 'spacing-16', value: '16px', rem: '1.0rem', use: 'Padding estándar de tarjetas móviles, gap de columnas' },
-  { name: 'spacing-24', value: '24px', rem: '1.5rem', use: 'Padding horizontal de botones, gap de grillas' },
-  { name: 'spacing-32', value: '32px', rem: '2.0rem', use: 'Padding interno de Product Feature Cards' },
+  { name: 'spacing-24', value: '24px', rem: '1.5rem', use: 'Padding horizontal móvil y gap de grillas' },
+  { name: 'spacing-32', value: '32px', rem: '2.0rem', use: 'Padding de bloques amplios y gap intermedio' },
   { name: 'spacing-40', value: '40px', rem: '2.5rem', use: 'Separación entre bloques de contenido relacionados' },
-  { name: 'spacing-48', value: '48px', rem: '3.0rem', use: 'Gap entre títulos y párrafos explicativos' },
-  { name: 'spacing-64', value: '64px', rem: '4.0rem', use: 'Margen superior de secciones intermedias' },
+  { name: 'spacing-48', value: '48px', rem: '3.0rem', use: 'Padding horizontal sm y separación en casos de estudio' },
+  { name: 'spacing-64', value: '64px', rem: '4.0rem', use: 'Padding horizontal md y separación móvil de Home' },
   { name: 'spacing-80', value: '80px', rem: '5.0rem', use: 'Padding horizontal en desktop (1320px layout)' },
-  { name: 'spacing-96', value: '96px', rem: '6.0rem', use: 'Separación vertical estándar entre secciones' },
+  { name: 'spacing-96', value: '96px', rem: '6.0rem', use: 'Separación de secciones Home desde md' },
 ];
 
 const RADIUS_TOKENS = [
@@ -86,13 +92,22 @@ const RADIUS_TOKENS = [
   { name: 'radius-tags', value: '9999px', class: 'rounded-full', appliesTo: 'Chips de categoría, badges de estado, contadores píldora' },
 ];
 
-export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast }) => {
+export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast, onSelectProject }) => {
+  const { projects } = usePortfolioData();
+  const publishedProjects = projects.filter(project => project.status === 'published');
+  const editorialProject = publishedProjects.find(project => project.caseStudy.editorial);
+  const [layout, setLayout] = useState<'masonry' | 'editorial' | 'row'>('masonry');
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'all' | 'colors' | 'typography' | 'spacing' | 'components' | 'guidelines'>('all');
   const [demoChipCategory, setDemoChipCategory] = useState<string>('all');
 
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
+  const copyToClipboard = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      onShowToast?.('No se pudo copiar. Selecciona el texto e inténtalo nuevamente.');
+      return;
+    }
     setCopiedToken(text);
     if (onShowToast) {
       onShowToast(`Copiado: ${label}`);
@@ -103,31 +118,31 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
   };
 
   return (
-    <div className="py-12 md:py-20 space-y-24 animate-in fade-in duration-200">
+    <div className="py-8 sm:py-12 md:py-20 space-y-16 sm:space-y-20 md:space-y-24 animate-in fade-in duration-200">
       
       {/* 1. Header & System Intro */}
       <section className="space-y-6 max-w-4xl">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#e8e9ff] text-[#533afd] text-[12px] font-normal rounded-full border border-[#b9b9f9]/40">
             <Sparkles className="w-3.5 h-3.5" strokeWidth={1.5} />
-            <span>Sistema de Diseño v2.0 · Olivia</span>
+            <span>Olivia · Sistema de diseño</span>
           </span>
           <span className="text-[13px] text-[#64748d] font-light">
-            · Documentación Oficial de Tokens y Componentes
+            Actualizado con el portafolio · Septiembre 2026
           </span>
         </div>
 
         <div className="space-y-3">
-          <h1 className="text-[44px] sm:text-[56px] font-light text-[#061b31] tracking-[-1.4px] leading-[1.03]">
+          <h1 className="text-[36px] sm:text-[46px] md:text-[56px] font-light text-[#061b31] tracking-[-1.4px] leading-[1.03]">
             Olivia — Design System
           </h1>
           <p className="text-[20px] sm:text-[22px] text-[#533afd] font-light tracking-[-0.22px]">
-            indigo-ink ledger on frosted glass · nombrado en honor a mi hija
+            Claridad, tipografía y espacio · nombrado en honor a mi hija
           </p>
         </div>
 
         <p className="text-[17px] text-[#50617a] font-light leading-relaxed max-w-3xl tracking-[-0.16px]">
-          Lenguaje visual sobrio de precisión financiera: un lienzo blanco frío (<code className="px-1.5 py-0.5 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] text-[13px] text-[#061b31]">#ffffff</code>) con tipografía en negro profundo (<code className="px-1.5 py-0.5 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] text-[13px] text-[#061b31]">#061b31</code>) a peso 300 (<em className="italic">whisper weight</em>), ausencia total de sombras y un único acento índigo (<code className="px-1.5 py-0.5 bg-[#533afd] text-white rounded-[4px] text-[13px]">#533afd</code>) que se reserva exclusivamente para acciones y momentos de conversión.
+          El lenguaje visual del portafolio: un lienzo blanco frío (<code className="px-1.5 py-0.5 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] text-[13px] text-[#061b31]">#ffffff</code>) con tipografía en negro profundo (<code className="px-1.5 py-0.5 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] text-[13px] text-[#061b31]">#061b31</code>) a peso 300 (<em className="italic">whisper weight</em>), bordes sutiles y un único acento índigo (<code className="px-1.5 py-0.5 bg-[#533afd] text-white rounded-[4px] text-[13px]">#533afd</code>) que se reserva para acciones, navegación y énfasis.
         </p>
 
         {/* Quick Filter Navigation */}
@@ -137,16 +152,17 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
             { id: 'colors', label: 'Colores & Superficies', icon: Palette },
             { id: 'typography', label: 'Tipografía & Escala', icon: Type },
             { id: 'spacing', label: 'Espaciado & Formas', icon: Sliders },
-            { id: 'components', label: 'Componentes & Mosaico', icon: Component },
-            { id: 'guidelines', label: 'Reglas Do / Don’t', icon: ShieldCheck },
+            { id: 'components', label: 'Componentes y patrones', icon: Component },
+            { id: 'guidelines', label: 'Directrices', icon: ShieldCheck },
           ].map((tab) => {
             const Icon = tab.icon;
             const isSelected = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`px-3.5 py-1.5 rounded-[4px] text-[13px] font-normal tracking-[-0.14px] transition-colors flex items-center gap-2 cursor-pointer ${
+                onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                aria-pressed={isSelected}
+                className={`px-3.5 py-1.5 rounded-[4px] text-[13px] font-normal tracking-[-0.14px] transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd] ${
                   isSelected
                     ? 'bg-[#533afd] text-white'
                     : 'bg-[#f8fafd] hover:bg-[#e8e9ff] text-[#50617a] hover:text-[#061b31] border border-[#e5edf5]'
@@ -191,7 +207,7 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
                   >
                     <button
                       onClick={() => copyToClipboard(token.hex, token.name)}
-                      className={`absolute top-2 right-2 p-1.5 rounded-[4px] text-[11px] flex items-center gap-1 transition-all cursor-pointer ${
+                      className={`absolute top-2 right-2 p-1.5 rounded-[4px] text-[11px] flex items-center gap-1 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd] ${
                         token.textDark
                           ? 'bg-[#061b31]/10 hover:bg-[#061b31]/20 text-[#061b31]'
                           : 'bg-white/20 hover:bg-white/30 text-white'
@@ -205,13 +221,13 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
 
                   {/* Token Metadata */}
                   <div className="space-y-1.5">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
                       <span className="text-[14px] font-normal text-[#061b31] tracking-[-0.14px]">
                         {token.name}
                       </span>
                       <button
                         onClick={() => copyToClipboard(token.token, token.token)}
-                        className="text-[11px] text-[#533afd] hover:text-[#7389ff] font-mono cursor-pointer"
+                        className="text-[11px] text-[#533afd] hover:text-[#7389ff] font-mono cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd]"
                         title="Copiar token CSS"
                       >
                         {token.token}
@@ -227,11 +243,11 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
           </div>
 
           {/* Surface Progression Visualizer */}
-          <div className="p-6 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] space-y-4">
+          <div className="py-6 space-y-4">
             <div className="text-[13px] font-normal text-[#061b31] tracking-[-0.14px]">
               Niveles de Superficie (Surface Tint Progression)
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
               {[
                 { level: '0 · Canvas', name: 'Pure White', bg: 'bg-[#ffffff]', text: 'text-[#061b31]', hex: '#ffffff', desc: 'Fondo de página' },
                 { level: '1 · Band', name: 'Mist', bg: 'bg-[#f8fafd]', text: 'text-[#061b31]', hex: '#f8fafd', desc: 'Bandas y footer' },
@@ -258,10 +274,10 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
               Tokens · Typography Scale
             </div>
             <h2 className="text-[32px] font-light text-[#061b31] tracking-[-0.64px]">
-              Tipografía Sohne-Var / Inter Tight a Peso 300
+              Inter Tight · Tipografía del portafolio
             </h2>
             <p className="text-[16px] text-[#64748d] font-light tracking-[-0.16px] max-w-3xl">
-              Firma tipográfica: los títulos no gritan (<em className="italic">whisper weight 300</em>) incluso a 56px de tamaño display. El espaciado entre letras (<code className="text-[13px] text-[#061b31]">letter-spacing</code>) se contrae progresivamente a medida que el tamaño crece para lograr la sensación pulida característica.
+              Inter Tight se aplica a títulos, cuerpo y controles. Peso 300 para lectura y títulos; 400 para UI y 500 para énfasis puntual. Los títulos no gritan (<em className="italic">whisper weight 300</em>) incluso a 56px de tamaño display. El espaciado entre letras (<code className="text-[13px] text-[#061b31]">letter-spacing</code>) se contrae progresivamente a medida que el tamaño crece para lograr la sensación pulida característica.
             </p>
           </div>
 
@@ -270,27 +286,29 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
             <div className="divide-y divide-[#e5edf5]">
               {TYPOGRAPHY_SCALE.map((item) => (
                 <div key={item.role} className="p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6 hover:bg-[#f8fafd]/60 transition-colors">
-                  <div className="w-64 shrink-0 space-y-1">
+                  <div className="w-full lg:w-64 shrink-0 space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="text-[13px] font-normal text-[#061b31] font-mono">{item.role}</span>
                       <span className="px-2 py-0.5 bg-[#f8fafd] border border-[#e5edf5] rounded-full text-[11px] text-[#64748d]">
-                        {item.size} / {item.weight}
+                        {item.sizeSm} / {item.sizeMd} / {item.size}
                       </span>
                     </div>
-                    <div className="text-[11px] text-[#64748d] font-mono">
-                      tracking: {item.tracking} · leading: {item.lineHeight}
+                    <div className="text-[11px] text-[#64748d] font-mono break-words">
+                      Peso {item.weight} · tracking {item.tracking} · leading {item.lineHeight}
                     </div>
                   </div>
 
-                  <div className="flex-1 overflow-hidden">
+                  <div className="flex-1 min-w-0">
                     <p
-                      className="text-[#061b31] truncate"
+                      className="text-[#061b31] break-words text-[length:var(--sample-mobile)] sm:text-[length:var(--sample-tablet)] md:text-[length:var(--sample-desktop)]"
                       style={{
-                        fontSize: item.size,
+                        '--sample-mobile': item.sizeSm,
+                        '--sample-tablet': item.sizeMd,
+                        '--sample-desktop': item.size,
                         lineHeight: item.lineHeight,
                         letterSpacing: item.tracking,
                         fontWeight: item.weight,
-                      }}
+                      } as React.CSSProperties}
                     >
                       {item.sample}
                     </p>
@@ -304,13 +322,13 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
           <div className="p-6 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="space-y-1 min-w-0 flex-1">
               <div className="text-[14px] font-normal text-[#061b31] tracking-[-0.14px] leading-relaxed">
-                Números Tabulares Activos (<code className="text-[#533afd] font-mono text-[12px] break-words">font-feature-settings: 'ss01' on, 'tnum' on</code>)
+                Números tabulares · valores ilustrativos (<code className="text-[#533afd] font-mono text-[12px] break-words">font-feature-settings: 'ss01' on, 'tnum' on</code>)
               </div>
               <p className="text-[13px] text-[#64748d] font-light max-w-xl leading-relaxed">
                 Asegura que los dígitos numéricos compartan el mismo ancho óptico en métricas, tablas de impacto y estadísticas de reclutadores.
               </p>
             </div>
-            <div className="flex flex-nowrap items-center gap-3 sm:gap-5 lg:gap-6 tabular-nums text-[20px] sm:text-[28px] lg:text-[32px] font-light text-[#533afd] whitespace-nowrap shrink-0">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-5 lg:gap-6 tabular-nums text-[20px] sm:text-[28px] lg:text-[32px] font-light text-[#533afd] whitespace-nowrap">
               <div>+35%</div>
               <div>10+ Años</div>
               <div>$1.2M</div>
@@ -328,10 +346,10 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
               Tokens · Spacing & Radius
             </div>
             <h2 className="text-[32px] font-light text-[#061b31] tracking-[-0.64px]">
-              Retícula Base de 8px y Radios de Borde
+              Espaciado, contenedor y radios
             </h2>
             <p className="text-[16px] text-[#64748d] font-light tracking-[-0.16px] max-w-3xl">
-              Toda la composición espacial se deriva de la unidad base de 8px. Las tarjetas y botones usan rigurosamente un radio de 4px (<code className="text-[13px] text-[#061b31]">rounded-[4px]</code>) para transmitir rigor profesional. Los tags y chips usan píldoras (<code className="text-[13px] text-[#061b31]">9999px</code>).
+              Contenedor de 1320px con padding de 24 / 48 / 64 / 80px. Ritmo principal de 8px con ajustes de 4px y controles compactos. Home separa secciones 64 / 80 / 96px; los casos de estudio, 48px. Las tarjetas y botones usan rigurosamente un radio de 4px (<code className="text-[13px] text-[#061b31]">rounded-[4px]</code>) para transmitir rigor profesional. Los tags y chips usan píldoras (<code className="text-[13px] text-[#061b31]">9999px</code>).
             </p>
           </div>
 
@@ -345,7 +363,7 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
                 </div>
                 <div className="w-full bg-[#f8fafd] h-8 rounded-[4px] flex items-center px-2 border border-[#e5edf5]/60">
                   <div
-                    className="h-4 bg-[#533afd] rounded-[2px]"
+                    className="h-4 bg-[#533afd] rounded-[4px]"
                     style={{ width: sp.value }}
                   />
                 </div>
@@ -359,7 +377,7 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
           {/* Radius Tokens Table */}
           <div className="border border-[#e5edf5] rounded-[4px] overflow-hidden bg-white">
             <div className="p-4 bg-[#f8fafd] border-b border-[#e5edf5] text-[13px] font-normal text-[#061b31]">
-              Tokens de Radio de Borde (Corner Radii)
+              Radios por uso · referencias de aplicación
             </div>
             <div className="divide-y divide-[#e5edf5]">
               {RADIUS_TOKENS.map((r) => (
@@ -391,7 +409,7 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
               Biblioteca de Componentes Oficiales
             </h2>
             <p className="text-[16px] text-[#64748d] font-light tracking-[-0.16px] max-w-3xl">
-              Componentes interactivos creados estrictamente con los tokens del sistema Olivia: botones de 4px, chips en píldora, tarjetas de mosaico con hover reveal sin sombras.
+              Botones de 4px, chips en píldora y tarjetas del catálogo actual. La muestra permite revisar estados, formatos y contenido real del portafolio.
             </p>
           </div>
 
@@ -400,16 +418,16 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
             <div className="flex items-center justify-between border-b border-[#e5edf5] pb-3">
               <div>
                 <h3 className="text-[18px] font-normal text-[#061b31] tracking-[-0.18px]">1. Botones y Enlaces de Acción</h3>
-                <p className="text-[13px] text-[#64748d] font-light">4px de radio, sin sombras, textos a 14px peso 400.</p>
+                <p className="text-[13px] text-[#64748d] font-light">4px de radio, sin sombras, textos a 13–14px peso 400. Acciones de muestra.</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Primary Filled Button */}
-              <div className="p-5 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] space-y-4">
+              <div className="py-5 space-y-4">
                 <div className="text-[12px] font-mono text-[#64748d]">Primary Filled Button</div>
-                <button className="px-5 py-2.5 bg-[#533afd] hover:bg-[#7389ff] text-white rounded-[4px] text-[14px] font-normal tracking-[-0.14px] transition-colors flex items-center gap-2 cursor-pointer shadow-none">
-                  <span>Empieza ahora</span>
+                <button onClick={() => onShowToast?.('Ejemplo de botón Olivia')} className="min-h-[44px] whitespace-nowrap px-5 py-3 bg-[#533afd] hover:bg-[#7389ff] text-white rounded-[4px] text-[14px] font-normal tracking-[-0.14px] transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd] shadow-none">
+                  <span>Ver proyectos</span>
                   <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
                 </button>
                 <div className="text-[11px] text-[#64748d] font-mono">
@@ -418,10 +436,10 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
               </div>
 
               {/* Ghost Outline Button */}
-              <div className="p-5 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] space-y-4">
+              <div className="py-5 space-y-4">
                 <div className="text-[12px] font-mono text-[#64748d]">Ghost Outline Button</div>
-                <button className="px-5 py-2.5 bg-transparent hover:bg-[#e8e9ff]/50 text-[#533afd] border border-[#b9b9f9] rounded-[4px] text-[14px] font-normal tracking-[-0.14px] transition-colors flex items-center gap-2 cursor-pointer">
-                  <span>Accede con Google</span>
+                <button onClick={() => onShowToast?.('Ejemplo de botón Olivia')} className="min-h-[44px] whitespace-nowrap px-5 py-3 bg-transparent hover:bg-[#e8e9ff]/50 text-[#533afd] border border-[#b9b9f9] rounded-[4px] text-[14px] font-normal tracking-[-0.14px] transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd]">
+                  <span>Ver currículum</span>
                   <ArrowUpRight className="w-4 h-4" strokeWidth={1.5} />
                 </button>
                 <div className="text-[11px] text-[#64748d] font-mono">
@@ -430,14 +448,14 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
               </div>
 
               {/* Tertiary & Text Links */}
-              <div className="p-5 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] space-y-4">
+              <div className="py-5 space-y-4">
                 <div className="text-[12px] font-mono text-[#64748d]">Tertiary & Inline Links</div>
                 <div className="flex flex-col gap-2.5 items-start">
-                  <button className="px-3.5 py-1.5 bg-white text-[#533afd] border border-[#d6d9fc] rounded-[4px] text-[13px] font-normal cursor-pointer hover:bg-[#f8fafd]">
-                    Conoce su historia ›
+                  <button onClick={() => onShowToast?.('Ejemplo de acción secundaria')} className="whitespace-nowrap px-3.5 py-1.5 bg-white text-[#533afd] border border-[#d6d9fc] rounded-[4px] text-[13px] font-normal cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd] hover:bg-[#f8fafd]">
+                    Volver a proyectos
                   </button>
-                  <a href="#demo" className="text-[14px] text-[#533afd] hover:text-[#7389ff] underline underline-offset-4 decoration-1">
-                    Ver especificaciones completas
+                  <a href="#olivia-patterns" className="text-[14px] text-[#533afd] hover:text-[#7389ff] underline underline-offset-4 decoration-1">
+                    Ver patrones del portafolio
                   </a>
                 </div>
                 <div className="text-[11px] text-[#64748d] font-mono">
@@ -452,24 +470,22 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
             <div className="flex items-center justify-between border-b border-[#e5edf5] pb-3">
               <div>
                 <h3 className="text-[18px] font-normal text-[#061b31] tracking-[-0.18px]">2. Chips de Categoría y Badges</h3>
-                <p className="text-[13px] text-[#64748d] font-light">Píldora completa (9999px), iconos de 1.5px de trazo y contadores integrados.</p>
+                <p className="text-[13px] text-[#64748d] font-light">Píldora completa (9999px), iconos de 1.5px de trazo y contadores del catálogo publicado. Los badges de disponibilidad e impacto son ilustrativos.</p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
               {[
-                { id: 'all', label: 'Todos los proyectos', count: 6 },
-                { id: 'mobile', label: 'E-commerce y aplicaciones', count: 2 },
-                { id: 'health', label: 'Salud y healthtech', count: 2 },
-                { id: 'fintech', label: 'Fintech y crédito', count: 2 },
-                { id: 'saas', label: 'Web empresarial', count: 1 },
+                { id: 'all', label: 'Todos los proyectos', count: publishedProjects.length },
+                ...Array.from(new Map(publishedProjects.map(project => [project.category, project.categoryLabel])), ([id, label]) => ({ id, label, count: publishedProjects.filter(project => project.category === id).length })),
               ].map((chip) => {
                 const isSelected = demoChipCategory === chip.id;
                 return (
                   <button
                     key={chip.id}
                     onClick={() => setDemoChipCategory(chip.id)}
-                    className={`px-3.5 py-1.5 rounded-full text-[13px] font-normal tracking-[-0.14px] transition-colors flex items-center gap-2 cursor-pointer select-none ${
+                    aria-pressed={isSelected}
+                    className={`px-3.5 py-1.5 rounded-full text-[13px] font-normal tracking-[-0.14px] transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd] select-none ${
                       isSelected
                         ? 'bg-[#533afd] text-white shadow-none'
                         : 'bg-white hover:bg-[#f8fafd] text-[#50617a] hover:text-[#061b31] border border-[#e5edf5]'
@@ -501,130 +517,33 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
             </div>
           </div>
 
-          {/* Component Category: Case Study Mosaic Card Demo (Hover Overlay) */}
-          <div className="p-6 bg-white border border-[#e5edf5] rounded-[4px] space-y-6">
-            <div className="flex items-center justify-between border-b border-[#e5edf5] pb-3">
-              <div>
-                <h3 className="text-[18px] font-normal text-[#061b31] tracking-[-0.18px]">3. Tarjeta de Caso de Estudio (Mosaico & Hover Reveal)</h3>
-                <p className="text-[13px] text-[#64748d] font-light">490px de alto, 4px de radio, 1px borde en #e5edf5, sin sombras. Pasa el cursor por encima para ver la revelación en capas.</p>
-              </div>
+          <div id="olivia-patterns" className="space-y-6 scroll-mt-24">
+            <div className="space-y-2">
+              <h3 className="text-[26px] font-light">3. Catálogo · Mosaico, Editorial y Filas</h3>
+              <p className="text-[14px] text-[#50617a] leading-relaxed">Las tarjetas usan el mismo componente y contenido publicado que el sitio. Los filtros anteriores actualizan esta muestra de hasta tres proyectos. Selecciona una tarjeta para abrir su caso de estudio.</p>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Mini Interactive Demo Card 1 */}
-              <div className="group relative w-full h-[490px] flex flex-col cursor-pointer rounded-[4px] overflow-hidden bg-[#f8fafd] border border-[#e5edf5] select-none">
-                <img
-                  src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop"
-                  alt="Echomusic Demo"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
-                />
-
-                {/* Permanent badges */}
-                <div className="absolute top-3.5 left-3.5 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/95 text-[#061b31] border border-[#e5edf5] rounded-full text-[11px] font-normal">
-                    <Smartphone className="w-3.5 h-3.5 text-[#533afd]" strokeWidth={1.5} />
-                    <span>Aplicación móvil y marketplace</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#533afd] text-white rounded-full text-[10px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-                    <span>Prototipo en Figma</span>
-                  </span>
-                </div>
-
-                {/* Full Overlay on Hover */}
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#061b31]/95 via-[#061b31]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end gap-3 text-white pointer-events-none">
-                  <div className="flex items-center justify-between text-[12px] text-white/80">
-                    <span className="font-normal text-white">Echomusic</span>
-                    <span className="text-[11px] text-[#e8e9ff] px-2 py-0.5 rounded-full bg-white/10 border border-white/15">
-                      UX / UI Designer
-                    </span>
-                  </div>
-                  <h4 className="text-[20px] font-light text-white tracking-[-0.2px]">
-                    Marketplace y aplicación móvil para música nacional
-                  </h4>
-                  <p className="text-[13px] text-white/85 font-light leading-relaxed line-clamp-3">
-                    Diseño integral de una plataforma digital para visibilizar y comercializar música en vivo.
-                  </p>
-                  <div className="pt-3 border-t border-white/15 flex items-center justify-between gap-2">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-full text-[11px]">
-                      <TrendingUp className="w-3 h-3 text-emerald-400" strokeWidth={1.5} />
-                      <span>3 arquetipos validados</span>
-                    </div>
-                    <div className="inline-flex items-center gap-1 text-[12px] text-white">
-                      <span>Ver caso de estudio</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-[#b9b9f9]" strokeWidth={1.5} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Mini Interactive Demo Card 2 */}
-              <div className="group relative w-full h-[490px] flex flex-col cursor-pointer rounded-[4px] overflow-hidden bg-[#f8fafd] border border-[#e5edf5] select-none">
-                <img
-                  src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop"
-                  alt="Isapre Esencial Demo"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
-                />
-
-                <div className="absolute top-3.5 left-3.5 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/95 text-[#061b31] border border-[#e5edf5] rounded-full text-[11px] font-normal">
-                    <Activity className="w-3.5 h-3.5 text-[#533afd]" strokeWidth={1.5} />
-                    <span>Salud y diseño de producto</span>
-                  </span>
-                </div>
-
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#061b31]/95 via-[#061b31]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end gap-3 text-white pointer-events-none">
-                  <div className="flex items-center justify-between text-[12px] text-white/80">
-                    <span className="font-normal text-white">Isapre Esencial</span>
-                    <span className="text-[11px] text-[#e8e9ff] px-2 py-0.5 rounded-full bg-white/10 border border-white/15">
-                      Product Designer
-                    </span>
-                  </div>
-                  <h4 className="text-[20px] font-light text-white tracking-[-0.2px]">
-                    Rediseño del trámite de licencias médicas
-                  </h4>
-                  <p className="text-[13px] text-white/85 font-light leading-relaxed line-clamp-3">
-                    Diagnóstico y rediseño integral para reducir reclamos e incertidumbre en cada etapa del trámite.
-                  </p>
-                  <div className="pt-3 border-t border-white/15 flex items-center justify-between gap-2">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 rounded-full text-[11px]">
-                      <TrendingUp className="w-3 h-3 text-emerald-400" strokeWidth={1.5} />
-                      <span>-10% consultas de usuarios</span>
-                    </div>
-                    <div className="inline-flex items-center gap-1 text-[12px] text-white">
-                      <span>Ver caso de estudio</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-[#b9b9f9]" strokeWidth={1.5} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Product Feature Card (Olivia pure white spec) */}
-              <div className="p-8 bg-white border border-[#e5edf5] rounded-[4px] flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  <span className="text-[12px] uppercase tracking-wider text-[#839bc8] font-normal">
-                    Product Feature Spec
-                  </span>
-                  <h4 className="text-[26px] font-light text-[#061b31] tracking-[-0.26px] leading-tight">
-                    Auditorías UX & Sistemas de Diseño
-                  </h4>
-                  <p className="text-[14px] text-[#50617a] font-light leading-relaxed">
-                    Estandarización de componentes en Figma y código React con tokens semánticos, contratos de accesibilidad WCAG AA y documentación viva.
-                  </p>
-                </div>
-
-                <div className="space-y-2 pt-4 border-t border-[#e5edf5]">
-                  <div className="flex items-center gap-2 text-[13px] text-[#061b31]">
-                    <CheckCircle2 className="w-4 h-4 text-[#533afd]" strokeWidth={1.5} />
-                    <span>0% Deuda técnica en tokens</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[13px] text-[#061b31]">
-                    <CheckCircle2 className="w-4 h-4 text-[#533afd]" strokeWidth={1.5} />
-                    <span>100% Compatibilidad Tailwind v4</span>
-                  </div>
-                </div>
-              </div>
+            <div className="flex flex-wrap gap-2" aria-label="Formato de la muestra">
+              {([{ id: 'masonry', label: 'Mosaico' }, { id: 'editorial', label: 'Editorial' }, { id: 'row', label: 'Filas' }] as const).map(mode => <button key={mode.id} aria-pressed={layout === mode.id} onClick={() => setLayout(mode.id)} className={`px-3.5 py-2 rounded-[4px] border text-[13px] whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd] transition-colors ${layout === mode.id ? 'bg-white text-[#533afd] border-[#b9b9f9]' : 'bg-[#f8fafd] text-[#64748d] border-[#e5edf5] hover:bg-[#e8e9ff]'}`}>{mode.label}</button>)}
             </div>
+            <p className="text-[13px] text-[#64748d]">{layout === 'row' ? 'Una columna. Altura: 430px móvil, 340px desde 640px y 300px desde 1024px. Información siempre visible.' : layout === 'editorial' ? 'Una columna en móvil y dos desde 640px. Altura: 420px móvil y 490px desde 640px.' : 'Una columna en móvil, dos desde 640px y tres desde 1024px. Altura: 420px móvil y 490px desde 640px.'} En Mosaico y Editorial, los detalles aparecen al pasar el cursor o enfocar con teclado; en móvil, título y acción permanecen visibles.</p>
+            <div className={layout === 'row' ? 'flex flex-col gap-4' : layout === 'editorial' ? 'grid grid-cols-1 sm:grid-cols-2 gap-6' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'}>
+              {publishedProjects.filter(project => demoChipCategory === 'all' || project.category === demoChipCategory).slice(0, 3).map(project => <ProjectCard key={project.id} project={project} layoutVariant={layout} onSelect={onSelectProject} />)}
+            </div>
+            {publishedProjects.length === 0 && <p className="p-6 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px]">No hay proyectos publicados para mostrar.</p>}
+          </div>
+          <div className="space-y-6 border-t border-[#e5edf5] pt-8">
+            <h3 className="text-[26px] font-light">4. Patrones de página y casos de estudio</h3>
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[14px] leading-relaxed">
+              {[
+                ['Navegación responsive', 'Header de 64px; enlaces desde 768px y menú hamburguesa en móvil. La sección activa usa índigo y superficie Mist. El menú se cierra al seleccionar una vista.'],
+                ['Home y métricas', 'Hasta seis proyectos principales publicados, con fallback a publicados. Banda Mist con métricas en dos columnas, cuatro desde 768px; cifras de 30 / 40 / 48px.'],
+                ['Ficha de proyecto', 'Título de 32 / 44 / 50px, introducción de 18 / 20px y metadatos en dos o cuatro columnas. Acciones Figma, Vercel, Git y sitio publicado según los enlaces disponibles.'],
+                ['Carrusel de interfaces', 'Imágenes opcionales con navegación anterior/siguiente e indicador de posición. La galería editorial muestra evidencias públicas con texto alternativo, título, categoría y descripción.'],
+                ['Narrativa editorial', 'Audiencias, proceso, hallazgo → decisión → solución, arquitectura, antes/después, restricciones y aprendizajes. Secciones separadas 48px; paneles Mist con padding de 20 / 24px.'],
+                ['Resultados y evidencia', 'Distinguir resultados cuantitativos, operativos y organizacionales. Las cifras editoriales solo aparecen si están verificadas; las secciones sin contenido se omiten.'],
+              ].map(([title, description]) => <div key={title} className="space-y-2"><dt className="font-normal text-[#061b31]">{title}</dt><dd className="text-[#50617a]">{description}</dd></div>)}
+            </dl>
+            {editorialProject && <details className="border-t border-[#e5edf5] pt-5"><summary className="text-[#533afd] cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd] text-[14px] py-2">Ver ejemplo editorial real · {editorialProject.company}</summary><div className="pt-6"><EditorialCaseStudy project={editorialProject} /></div></details>}
           </div>
         </section>
       )}
@@ -640,7 +559,7 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
               Directrices de Implementación (Do's & Don'ts)
             </h2>
             <p className="text-[16px] text-[#64748d] font-light tracking-[-0.16px] max-w-3xl">
-              Reglas inquebrantables para preservar la elegancia técnica y la coherencia del ledger en cualquier vista o componente nuevo.
+              Reglas inquebrantables para preservar la elegancia técnica y la coherencia del portafolio en cualquier vista o componente nuevo.
             </p>
           </div>
 
@@ -658,7 +577,7 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#533afd] font-bold">·</span>
-                  <span>Mantener todos los títulos a <strong className="text-[#061b31] font-normal">peso 300 (whisper weight)</strong> sin negritas pesadas.</span>
+                  <span>Mantener los títulos principales a <strong className="text-[#061b31] font-normal">peso 300 (whisper weight)</strong> sin negritas pesadas.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#533afd] font-bold">·</span>
@@ -666,7 +585,7 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#533afd] font-bold">·</span>
-                  <span>Separar secciones con líneas de 1px en <code className="text-[#533afd] font-mono text-[12px]">#e5edf5</code> y 96px de espaciado vertical.</span>
+                  <span>Separar secciones con líneas de 1px en <code className="text-[#533afd] font-mono text-[12px]">#e5edf5</code> y espaciado responsive según la página.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-[#533afd] font-bold">·</span>
@@ -684,11 +603,11 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
               <ul className="space-y-3 text-[14px] text-[#50617a] font-light leading-relaxed">
                 <li className="flex items-start gap-2">
                   <span className="text-rose-500 font-bold">·</span>
-                  <span><strong className="text-[#061b31] font-normal">No usar sombras (box-shadow) ni efectos glassmorphic</strong>. La elevación viene de los tintes.</span>
+                  <span><strong className="text-[#061b31] font-normal">Evitar sombras oscuras difusas y efectos de cristal en paneles</strong>. La elevación viene de los tintes.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-rose-500 font-bold">·</span>
-                  <span>No introducir colores adicionales de acento (amarillos, púrpuras, naranjas); el sistema es monocrómico + índigo.</span>
+                  <span>Reservar índigo para la marca. Esmeralda comunica impacto y rosa errores; los colores propios de los proyectos permanecen en sus imágenes.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-rose-500 font-bold">·</span>
@@ -709,7 +628,7 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
       )}
 
       {/* 7. Code Export / CSS Root Cheat Sheet */}
-      <section className="p-8 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] space-y-6">
+      <section className="p-5 sm:p-8 bg-[#f8fafd] border border-[#e5edf5] rounded-[4px] space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-[16px] font-normal text-[#061b31]">
@@ -717,64 +636,21 @@ export const DesignSystemView: React.FC<DesignSystemViewProps> = ({ onShowToast 
               <span>Variables CSS & Tokens `@theme` Tailwind v4</span>
             </div>
             <p className="text-[13px] text-[#64748d] font-light">
-              Exportación lista para producción integrada en <code className="text-[12px] text-[#061b31]">/src/index.css</code>.
+              Bloque @theme vigente; los radios heredados de 2 y 6px no sustituyen la regla de 4px para componentes. Fuente: <code className="text-[12px] text-[#061b31]">/src/index.css</code>.
             </p>
           </div>
 
           <button
-            onClick={() => copyToClipboard(`@theme {
-  --font-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --color-indigo-ink: #533afd;
-  --color-indigo-hover: #7389ff;
-  --color-midnight-ink: #061b31;
-  --color-slate: #64748d;
-  --color-steel: #50617a;
-  --color-smoke: #839bc8;
-  --color-pure-white: #ffffff;
-  --color-mist: #f8fafd;
-  --color-frost: #e5edf5;
-  --color-lavender-border: #b9b9f9;
-  --color-lilac-border: #d6d9fc;
-  --color-periwinkle-wash: #e8e9ff;
-  --color-deep-violet: #182659;
-  --color-amethyst-edge: #7f71e6;
-  --radius-sm: 4px;
-  --radius-md: 4px;
-  --radius-full: 9999px;
-}`, 'Tokens CSS')}
-            className="px-4 py-2 bg-white hover:bg-[#e8e9ff] text-[#533afd] border border-[#b9b9f9] rounded-[4px] text-[13px] font-normal transition-colors flex items-center gap-2 cursor-pointer self-start sm:self-auto"
+            onClick={() => copyToClipboard(themeDefinition, 'Tokens CSS')}
+            className="px-4 py-2 bg-white hover:bg-[#e8e9ff] text-[#533afd] border border-[#b9b9f9] rounded-[4px] text-[13px] font-normal whitespace-nowrap transition-colors flex items-center gap-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#533afd] self-start sm:self-auto"
           >
             <Copy className="w-3.5 h-3.5" strokeWidth={1.5} />
-            <span>Copiar Definición de Tokens</span>
+            <span>Copiar tokens CSS</span>
           </button>
         </div>
 
         <pre className="p-4 bg-white border border-[#e5edf5] rounded-[4px] text-[12px] font-mono text-[#061b31] overflow-x-auto leading-relaxed">
-{`:root {
-  /* Colors */
-  --color-indigo-ink: #533afd;
-  --color-indigo-hover: #7389ff;
-  --color-midnight-ink: #061b31;
-  --color-slate: #64748d;
-  --color-steel: #50617a;
-  --color-smoke: #839bc8;
-  --color-pure-white: #ffffff;
-  --color-mist: #f8fafd;
-  --color-frost: #e5edf5;
-  --color-lavender-border: #b9b9f9;
-  --color-lilac-border: #d6d9fc;
-  --color-periwinkle-wash: #e8e9ff;
-
-  /* Typography */
-  --font-sans: 'Inter Tight', -apple-system, sans-serif;
-  font-feature-settings: 'ss01' on, 'tnum' on;
-
-  /* Shapes & Radii */
-  --radius-cards: 4px;
-  --radius-buttons: 4px;
-  --radius-tags: 9999px;
-  --section-gap: 96px;
-}`}
+{themeDefinition}
         </pre>
       </section>
 

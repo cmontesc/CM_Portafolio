@@ -143,7 +143,7 @@ export default function App() {
 
         {/* Screen 5: Design System Documentation */}
         {currentView === 'design-system' && (
-          <DesignSystemView
+          <DesignSystemView onSelectProject={handleSelectProject}
             onShowToast={handleShowToast}
           />
         )}

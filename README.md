@@ -136,6 +136,7 @@ Vite genera `dist/` usando únicamente `index.html`. `dist/` es una salida gener
 │   ├── data/
 │   ├── services/
 │   └── views/
+├── deprecado/       # Respaldos y artefactos históricos excluidos de compilación
 ├── contexto/
 ├── decisions/
 ├── gotchas/

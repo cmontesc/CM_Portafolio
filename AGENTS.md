@@ -44,7 +44,7 @@ Leer solo hasta obtener el contexto suficiente para la tarea:
 
 No cargar por defecto:
 
-- `dashboard.html`: artefacto diagnóstico histórico, no código de ejecución; buscar secciones puntuales si hiciera falta.
+- `deprecado/dashboard.html`: artefacto diagnóstico histórico, no código de ejecución; buscar secciones puntuales si hiciera falta.
 - `src/data/portfolioData.ts`: abrir solo la sección del contenido que se va a modificar.
 - `src/context/PortfolioDataContext.tsx` y `src/services/excelService.ts`: son extensos; buscar primero símbolos o claves concretas.
 - `dist/`, `node_modules/`, `package-lock.json` o todo `src/` de una vez.
